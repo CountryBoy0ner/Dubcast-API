@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dubcast PoC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style> body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:32px} button{padding:10px 16px;font-size:16px} </style>
+</head>
+<body>
+<h1>Dubcast PoC</h1>
+<p id="title">—</p>
+<audio id="player" preload="none" controls></audio>
+<div style="margin-top:12px">
+    <button id="play">▶ Play</button>
+    <span id="status"></span>
+</div>
+
+<script>
+    const audio = document.getElementById('player');
+    const title = document.getElementById('title');
+    const statusEl = document.getElementById('status');
+
+    let currentTrackId = null;
+    let startedAt = 0;
+
+    async function fetchNow() {
+        const r = await fetch('/api/now');
+        return await r.json();
+    }
+
+    async function sync() {
+        try {
+            const now = await fetchNow();
+
+            // если трек сменился — подменяем src
+            if (now.trackId !== currentTrackId) {
+                currentTrackId = now.trackId;
+                startedAt = now.startedAt;
+                audio.src = now.streamUrl;
+                title.textContent = `Now playing: ${now.title}`;
+                // не автостартуем без жеста пользователя — нажимай кнопку Play один раз
+            } else {
+                // мягкий ресинк позиции
+                const expectedSec = Math.max(0, (Date.now() - startedAt) / 1000);
+                const delta = Math.abs(audio.currentTime - expectedSec);
+                if (delta > 0.30) audio.currentTime = expectedSec;
+            }
+            statusEl.textContent = `pos: ${audio.currentTime.toFixed(1)}s`;
+        } catch (e) {
+            statusEl.textContent = 'sync error';
+            console.error(e);
+        }
+    }
+
+    document.getElementById('play').addEventListener('click', async () => {
+        // первый жест пользователя — запускаем и дальше автопереходы не блокируются
+        await sync();
+        try { await audio.play(); } catch(e) { console.warn(e); }
+    });
+
+    setInterval(sync, 5000);
+</script>
+</body>
+</html>
