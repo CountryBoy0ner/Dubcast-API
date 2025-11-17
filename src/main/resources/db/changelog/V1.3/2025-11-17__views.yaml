@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-views
+      author: dubcast
+      changes:
+        - sql: |
+            CREATE VIEW v_now_playing AS
+            SELECT
+                se.id          AS schedule_entry_id,
+                se.start_time,
+                se.end_time,
+                t.id           AS track_id,
+                t.title,
+                t.sc_url,
+                t.embed_code,
+                t.artwork_url
+            FROM schedule_entries se
+            JOIN tracks t ON t.id = se.track_id
+            WHERE now() BETWEEN se.start_time AND se.end_time;
+
+        - sql: |
+            CREATE MATERIALIZED VIEW mv_today_schedule AS
+            SELECT
+                se.id          AS schedule_entry_id,
+                se.start_time,
+                se.end_time,
+                t.id           AS track_id,
+                t.title,
+                t.sc_url,
+                t.embed_code
+            FROM schedule_entries se
+            JOIN tracks t ON t.id = se.track_id
+            WHERE se.start_time::date = current_date
+            ORDER BY se.start_time;
+
+        - sql: |
+            CREATE INDEX idx_mv_today_schedule_time
+                ON mv_today_schedule (start_time, end_time);
