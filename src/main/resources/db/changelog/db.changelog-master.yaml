@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - includeAll:
+      path: db/changelog/V1.0
+
+  - includeAll:
+      path: db/changelog/V1.1
+
+  - includeAll:
+      path: db/changelog/V1.2
