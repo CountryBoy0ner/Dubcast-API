@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-schedule-overlap-trigger
+      author: dubcast
+      changes:
+        - sql: |
+            CREATE OR REPLACE FUNCTION no_schedule_overlap()
+            RETURNS trigger AS $$
+            BEGIN
+                IF EXISTS (
+                    SELECT 1 FROM schedule_entries
+                    WHERE tstzrange(start_time, end_time)
+                          && tstzrange(NEW.start_time, NEW.end_time)
+                ) THEN
+                    RAISE EXCEPTION 'Schedule overlaps another entry';
+                END IF;
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;
+        - sql: |
+            CREATE TRIGGER trg_schedule_no_overlap
+            BEFORE INSERT OR UPDATE ON schedule_entries
+            FOR EACH ROW EXECUTE FUNCTION no_schedule_overlap();
