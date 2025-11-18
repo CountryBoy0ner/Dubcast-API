@@ -2,6 +2,7 @@ package com.Tsimur.Dubcast.service.impl;
 
 
 import com.Tsimur.Dubcast.dto.UserDto;
+import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import com.Tsimur.Dubcast.mapper.UserMapper;
 import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.repository.UserRepository;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserDto getById(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+                .orElseThrow(() -> NotFoundException.of("User", "id", id));
         return userMapper.toDto(user);
     }
 
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto update(UUID id, UserDto dto) {
         User existing = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+                .orElseThrow(() -> NotFoundException.of("User", "id", id));
 
         // не даём менять email на уже занятый
         if (dto.getEmail() != null
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(UUID id) {
         if (!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("User not found: " + id);
+            throw NotFoundException.of("User", "id", id);
         }
         userRepository.deleteById(id);
     }
@@ -89,7 +90,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(UUID id, String rawPassword) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+                .orElseThrow(() -> NotFoundException.of("User", "id", id));
 
         user.setPassword(passwordEncoder.encode(rawPassword));
         userRepository.save(user);
