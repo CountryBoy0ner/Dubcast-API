@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.OffsetDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -31,4 +32,6 @@ public class User {
 
     @Column(nullable = false)
     private OffsetDateTime createdAt;
+
+
 }
