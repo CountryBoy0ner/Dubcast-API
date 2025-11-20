@@ -15,6 +15,7 @@ import jakarta.validation.constraints.*;
 @Builder
 public class UserDto {
 
+    @NotBlank
     private UUID id;
 
     @Email

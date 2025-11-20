@@ -2,10 +2,10 @@ package com.Tsimur.Dubcast.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.OffsetDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -27,9 +27,12 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 20)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
+
+    @CreationTimestamp
+    @Setter(AccessLevel.NONE)
     @Column(nullable = false)
     private OffsetDateTime createdAt;
 
