@@ -4,7 +4,9 @@ package com.Tsimur.Dubcast.service.impl;
 import com.Tsimur.Dubcast.dto.request.LoginRequest;
 import com.Tsimur.Dubcast.dto.request.RegisterRequest;
 import com.Tsimur.Dubcast.dto.request.ValidateTokenRequest;
+import com.Tsimur.Dubcast.dto.response.AuthResponse;
 import com.Tsimur.Dubcast.dto.response.ValidateTokenResponse;
+import com.Tsimur.Dubcast.exception.type.EmailAlreadyUsedException;
 import com.Tsimur.Dubcast.model.Role;
 import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.security.jwt.JwtService;
@@ -28,15 +30,15 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
 
     @Override
-    public String login(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
-
-        return jwtService.generateToken(user);
+        String token = jwtService.generateToken(user);
+        return new AuthResponse(token);
     }
 
     @Transactional
@@ -62,10 +64,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public String register(RegisterRequest request) {
+    public AuthResponse register(RegisterRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already used");
+            throw new EmailAlreadyUsedException("Email already used");
         }
 
         User user = new User();
@@ -75,8 +77,8 @@ public class AuthServiceImpl implements AuthService {
 
 
         userRepository.save(user);
-
-        return jwtService.generateToken(user);
+        String token = jwtService.generateToken(user);
+        return new AuthResponse(token);
     }
 
 }

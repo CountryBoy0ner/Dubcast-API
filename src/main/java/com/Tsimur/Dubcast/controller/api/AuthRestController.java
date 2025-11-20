@@ -1,8 +1,9 @@
-package com.Tsimur.Dubcast.controller.rest;
+package com.Tsimur.Dubcast.controller.api;
 
 import com.Tsimur.Dubcast.dto.request.LoginRequest;
 import com.Tsimur.Dubcast.dto.request.RegisterRequest;
 import com.Tsimur.Dubcast.dto.request.ValidateTokenRequest;
+import com.Tsimur.Dubcast.dto.response.AuthResponse;
 import com.Tsimur.Dubcast.dto.response.ValidateTokenResponse;
 import com.Tsimur.Dubcast.service.AuthService;
 import jakarta.validation.Valid;
@@ -19,15 +20,15 @@ public class AuthRestController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterRequest request) {
-        String token = authService.register(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(token);
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
+        AuthResponse response = authService.register(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequest request) {
-        String token = authService.login(request);
-        return ResponseEntity.ok(token);
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest request) {
+        AuthResponse response  = authService.login(request);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/validate")

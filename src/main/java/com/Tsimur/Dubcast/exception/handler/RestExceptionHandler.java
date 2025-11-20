@@ -1,5 +1,7 @@
-package com.Tsimur.Dubcast.exception;
+package com.Tsimur.Dubcast.exception.handler;
 
+import com.Tsimur.Dubcast.exception.ErrorResponse;
+import com.Tsimur.Dubcast.exception.type.EmailAlreadyUsedException;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,8 +19,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-@RestControllerAdvice
-public class GlobalExceptionHandler {
+@RestControllerAdvice(basePackages = "com.Tsimur.Dubcast.controller.api")
+public class RestExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidation(
@@ -45,7 +47,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(body);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ExceptionHandler({DataIntegrityViolationException.class, EmailAlreadyUsedException.class})
     public ResponseEntity<ErrorResponse> handleDuplicate(DataIntegrityViolationException ex, HttpServletRequest request) {
         return build(HttpStatus.CONFLICT, "User with this email already exists", request);
     }

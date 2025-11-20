@@ -1,4 +1,4 @@
-package com.Tsimur.Dubcast.controller.rest;
+package com.Tsimur.Dubcast.controller.api;
 
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.service.TrackService;
