@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class ParseUrlRequest {
+public class UrlRequest {
     @NotBlank
     String url;
 }

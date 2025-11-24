@@ -1,7 +1,7 @@
 package com.Tsimur.Dubcast.controller.api;
 
 import com.Tsimur.Dubcast.dto.TrackDto;
-import com.Tsimur.Dubcast.dto.request.ParseUrlRequest;
+import com.Tsimur.Dubcast.dto.request.UrlRequest;
 import com.Tsimur.Dubcast.dto.response.DurationOfTrackInSecondsResponse;
 import com.Tsimur.Dubcast.service.impl.ParserService;
 import jakarta.validation.Valid;
@@ -16,12 +16,12 @@ public class ParserRestController {
     private final ParserService parserService;
 
     @PostMapping("/track")
-    public TrackDto parseTrack(@RequestBody @Valid ParseUrlRequest request) {
+    public TrackDto parseTrack(@RequestBody @Valid UrlRequest request) {
         return parserService.parseTracksByUrl(request.getUrl());
     }
 
     @PostMapping("/duration")
-    public DurationOfTrackInSecondsResponse getDuration(@RequestBody @Valid ParseUrlRequest request) {
+    public DurationOfTrackInSecondsResponse getDuration(@RequestBody @Valid UrlRequest request) {
         Integer seconds = parserService.getDurationSecondsByUrl(request.getUrl());
         return new DurationOfTrackInSecondsResponse(seconds);
     }
