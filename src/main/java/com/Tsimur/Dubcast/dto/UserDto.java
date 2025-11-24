@@ -15,7 +15,6 @@ import jakarta.validation.constraints.*;
 @Builder
 public class UserDto {
 
-    @NotBlank
     private UUID id;
 
     @Email
@@ -24,5 +23,4 @@ public class UserDto {
     @NotBlank
     private String role;
 
-    private Instant createdAt;
 }

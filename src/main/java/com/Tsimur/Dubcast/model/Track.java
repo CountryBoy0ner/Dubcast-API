@@ -3,6 +3,7 @@ package com.Tsimur.Dubcast.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
 
@@ -33,6 +34,8 @@ public class Track {
 
     private String artworkUrl;
 
+    @CreationTimestamp
+    @Setter(AccessLevel.NONE)
     @Column(nullable = false)
     private OffsetDateTime createdAt;
 }

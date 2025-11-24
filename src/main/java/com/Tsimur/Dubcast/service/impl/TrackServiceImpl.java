@@ -2,12 +2,12 @@ package com.Tsimur.Dubcast.service.impl;
 
 
 import com.Tsimur.Dubcast.dto.TrackDto;
+import com.Tsimur.Dubcast.exception.type.DuplicateTrackException;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import com.Tsimur.Dubcast.mapper.TrackMapper;
 import com.Tsimur.Dubcast.model.Track;
 import com.Tsimur.Dubcast.repository.TrackRepository;
 import com.Tsimur.Dubcast.service.TrackService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +22,13 @@ public class TrackServiceImpl implements TrackService {
     private final TrackRepository trackRepository;
     private final TrackMapper trackMapper;
 
+
     @Override
     public TrackDto create(TrackDto dto) {
         Track entity = trackMapper.toEntity(dto);
-        entity.setId(null);
+        if (trackRepository.existsByScUrl(dto.getSoundcloudUrl())) {
+            throw new DuplicateTrackException("Track with url: " + dto.getSoundcloudUrl() + " already exists");
+        }
         Track saved = trackRepository.save(entity);
         return trackMapper.toDto(saved);
     }
@@ -34,7 +37,7 @@ public class TrackServiceImpl implements TrackService {
     @Transactional(readOnly = true)
     public TrackDto getById(Long id) {
         Track track = trackRepository.findById(id)
-                .orElseThrow(() -> NotFoundException.of("Track","id", id));
+                .orElseThrow(() -> NotFoundException.of("Track", "id", id));
         return trackMapper.toDto(track);
     }
 
@@ -47,7 +50,7 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDto update(Long id, TrackDto dto) {
         Track existing = trackRepository.findById(id)
-                .orElseThrow(() -> NotFoundException.of("Track","id", id));
+                .orElseThrow(() -> NotFoundException.of("Track", "id", id));
 
         trackMapper.updateEntityFromDto(dto, existing);
 
@@ -58,8 +61,10 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public void delete(Long id) {
         if (!trackRepository.existsById(id)) {
-            throw NotFoundException.of("Track","id", id);
+            throw NotFoundException.of("Track", "id", id);
         }
         trackRepository.deleteById(id);
     }
+
+
 }

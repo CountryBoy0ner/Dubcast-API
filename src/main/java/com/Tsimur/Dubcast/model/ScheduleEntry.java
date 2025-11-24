@@ -3,6 +3,7 @@ package com.Tsimur.Dubcast.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
 
@@ -29,6 +30,8 @@ public class ScheduleEntry {
     @Column(nullable = false)
     private OffsetDateTime endTime;
 
+    @CreationTimestamp
+    @Setter(AccessLevel.NONE)
     @Column(nullable = false)
     private OffsetDateTime createdAt;
 }

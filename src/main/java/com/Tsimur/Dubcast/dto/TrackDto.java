@@ -30,5 +30,4 @@ public class TrackDto {
 
     private String artworkUrl;
 
-    private Instant createdAt;
 }

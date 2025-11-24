@@ -12,6 +12,7 @@ import jakarta.validation.constraints.*;
 @Builder
 public class ScheduleEntryDto {
 
+
     private Long id;
 
     @NotNull
@@ -23,5 +24,4 @@ public class ScheduleEntryDto {
     @NotNull
     private Instant endTime;
 
-    private Instant createdAt;
 }
