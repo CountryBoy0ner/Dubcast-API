@@ -2,6 +2,7 @@ package com.Tsimur.Dubcast.service.impl;
 
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.integration.soundcloud.SoundcloudOEmbedResponse;
+import com.Tsimur.Dubcast.service.ParserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -67,24 +68,21 @@ public class ParserServiceImpl implements ParserService {
                     .timeout(10000)
                     .get();
 
-            // 1) Пытаемся вытащить <meta itemprop="duration" ...> из noscript/schema.org
             Element durationMeta = doc.selectFirst("noscript article meta[itemprop=duration]");
             if (durationMeta != null) {
-                String iso = durationMeta.attr("content"); // например "PT00H05M04S"
+                String iso = durationMeta.attr("content");
                 if (iso != null && !iso.isBlank()) {
                     try {
-                        Duration d = Duration.parse(iso);        // java.time.Duration
+                        Duration d = Duration.parse(iso);
                         long seconds = d.getSeconds();
                         if (seconds > 0 && seconds < 8 * 60 * 60) {
                             return (int) seconds;
                         }
                     } catch (Exception ignored) {
-                        // если формат внезапно нестандартный — пойдём к fallback ниже
                     }
                 }
             }
 
-            // 2) Fallback: парсим JSON из window.__sc_hydration и ищем "duration":число
             for (Element script : doc.select("script")) {
                 String data = script.data();
                 if (data == null || data.isEmpty()) {
@@ -104,7 +102,7 @@ public class ParserServiceImpl implements ParserService {
                 }
                 if (start == pos) continue;
 
-                String millisStr = data.substring(start, pos); // 304046 и т.п., в миллисекундах
+                String millisStr = data.substring(start, pos);
                 long millis = Long.parseLong(millisStr);
                 long seconds = millis / 1000L;
 

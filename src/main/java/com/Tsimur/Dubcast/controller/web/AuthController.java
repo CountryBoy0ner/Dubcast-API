@@ -1,6 +1,5 @@
 package com.Tsimur.Dubcast.controller.web;
 
-import com.Tsimur.Dubcast.dto.request.LoginRequest;
 import com.Tsimur.Dubcast.dto.request.RegisterRequest;
 import com.Tsimur.Dubcast.service.AuthService;
 import jakarta.validation.Valid;
@@ -31,8 +30,6 @@ public class AuthController {
     }
 
 
-
-
     @PostMapping("/register")
     public String processRegister(
             @Valid @ModelAttribute("registerRequest") RegisterRequest request,
@@ -42,10 +39,14 @@ public class AuthController {
             return "register";
         }
 
-        // Если email уже занят, authService.register() бросит EmailAlreadyUsedException
-        // и её перехватит WebExceptionHandler.handleEmailAlreadyUsed()
         authService.register(request);
 
         return "redirect:/login?registered";
     }
+
+    @GetMapping("/reel-radio-poc")
+    public String reelRadioPoc() {
+        return "reelRadioPoc";
+    }
+
 }

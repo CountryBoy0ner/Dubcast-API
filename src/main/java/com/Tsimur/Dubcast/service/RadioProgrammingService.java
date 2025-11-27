@@ -8,8 +8,8 @@ public interface RadioProgrammingService { //orchestrator
 
     TrackDto createTrackFromUrl(String soundcloudUrl);
 
-    ScheduleEntryDto createTrackFromUrlAndScheduleNow(String soundcloudUrl);
+        ScheduleEntryDto createTrackFromUrlAndScheduleNow(String soundcloudUrl);
 
-    ScheduleEntryDto scheduleExistingTrackNow(Long trackId);
+        ScheduleEntryDto scheduleExistingTrackNow(Long trackId);
 
 }

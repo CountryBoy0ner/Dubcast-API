@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dubcast Radio PoC</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<header>
+    <a th:href="@{/}">Dubcast</a>
+
+    <div>
+        <a th:href="@{/login}">Login</a>
+        <a th:href="@{/register}">Register</a>
+        <a th:href="@{/profile}">Profile</a>
+    </div>
+</header>
+
+<main>
+    <h1>Online radio – PoC playlist</h1>
+
+    <section style="margin-top: 20px;">
+        <h2>Reel Radio PoC</h2>
+
+        <p id="status-text">
+            Click "Start radio" to unlock audio and start the playlist.
+        </p>
+
+        <p id="track-title">
+            Track: —
+        </p>
+
+        <button id="start-radio-btn" style="margin-top: 10px;">
+            Start radio
+        </button>
+
+        <!-- Debug-переключатель: можно спрятать/показать плеер -->
+        <div style="margin-top: 10px;">
+            <label>
+                <input type="checkbox" id="show-player-checkbox">
+                Show SoundCloud player (debug)
+            </label>
+        </div>
+
+        <!-- Скрытый контейнер с iframe (сам embed) -->
+        <div id="sc-player-container"
+             style="width: 0; height: 0; overflow: hidden;">
+
+            <!-- Твой плейлист embed -->
+            <iframe
+                    id="sc-poc-iframe"
+                    width="100%"
+                    height="450"
+                    scrolling="no"
+                    frameborder="no"
+                    allow="autoplay"
+                    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1658178091&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+            </iframe>
+        </div>
+    </section>
+</main>
+
+<!-- SoundCloud Widget API -->
+<script src="https://w.soundcloud.com/player/api.js"></script>
+
+<script>
+    let widget = null;
+    let radioStarted = false;
+    let autoNextTimer = null;
+
+    const startBtn = document.getElementById('start-radio-btn');
+    const statusEl = document.getElementById('status-text');
+    const titleEl = document.getElementById('track-title');
+    const showPlayerCheckbox = document.getElementById('show-player-checkbox');
+    const playerContainer = document.getElementById('sc-player-container');
+
+    // --- debug: показать/спрятать iframe, чтобы можно было посмотреть глазами ---
+    showPlayerCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            playerContainer.style.width = '100%';
+            playerContainer.style.height = '450px';
+        } else {
+            playerContainer.style.width = '0';
+            playerContainer.style.height = '0';
+        }
+    });
+
+    // По умолчанию плеер спрятан
+    showPlayerCheckbox.checked = false;
+
+    // --- Инициализация SC.Widget после загрузки страницы ---
+    window.addEventListener('load', function () {
+        const iframe = document.getElementById('sc-poc-iframe');
+        widget = SC.Widget(iframe);
+
+        widget.bind(SC.Widget.Events.READY, function () {
+            console.log('[SC] READY (playlist loaded)');
+            statusEl.textContent = 'Ready. Click "Start radio" to play.';
+        });
+
+        // Когда начинается PLAY — достаём текущий трек и обновляем заголовок
+        widget.bind(SC.Widget.Events.PLAY, function () {
+            widget.getCurrentSound(function (sound) {
+                console.log('[SC] PLAY event', sound);
+                if (sound && sound.title) {
+                    titleEl.textContent = 'Track: ' + sound.title;
+                } else {
+                    titleEl.textContent = 'Track: (unknown)';
+                }
+            });
+        });
+    });
+
+    // --- Запуск радио одном кликом ---
+    startBtn.addEventListener('click', function () {
+        if (!widget || radioStarted) {
+            return;
+        }
+
+        radioStarted = true;
+        startBtn.disabled = true;
+        startBtn.textContent = 'Radio is playing';
+        statusEl.textContent = 'Playing playlist (10s per track PoC)...';
+
+        // Это первый клик пользователя → разблокируем звук
+        widget.setVolume(70);
+        widget.play();
+
+        // После этого можем сами крутить next() каждые 10 секунд
+        startAutoNext();
+    });
+
+    function startAutoNext() {
+        if (autoNextTimer) {
+            clearInterval(autoNextTimer);
+        }
+
+        autoNextTimer = setInterval(function () {
+            if (!widget) return;
+            console.log('[SC] next() called by timer');
+            widget.next();
+        }, 10000); // 10 секунд на трек
+    }
+</script>
+
+</body>
+</html>

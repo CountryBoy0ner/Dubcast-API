@@ -5,12 +5,14 @@ import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.dto.request.TrackScheduleNowRequest;
 import com.Tsimur.Dubcast.dto.request.UrlRequest;
+import com.Tsimur.Dubcast.radio.events.ScheduleUpdatedEvent;
 import com.Tsimur.Dubcast.service.RadioProgrammingService;
 import com.Tsimur.Dubcast.service.ScheduleEntryService;
 import com.Tsimur.Dubcast.service.TrackService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +26,10 @@ public class RadioProgrammingRestController {
 
     private final RadioProgrammingService radioProgrammingService;
     private final ScheduleEntryService scheduleEntryService;
+    private final ApplicationEventPublisher eventPublisher;
 
-    @PostMapping("/tracks/from-url")
-    public ResponseEntity<TrackDto> createTrackFromUrl(@RequestBody @Valid UrlRequest request) {
-        TrackDto track = radioProgrammingService.createTrackFromUrl(request.getUrl());
-        return ResponseEntity.ok(track);
-    }
+
+
 
     /**
      * 2) Импортировать трек по URL И сразу поставить в эфир "сейчас/в конец очереди"
@@ -38,8 +38,9 @@ public class RadioProgrammingRestController {
     public ResponseEntity<ScheduleEntryDto> createTrackFromUrlAndScheduleNow(
             @RequestBody @Valid UrlRequest request
     ) {
-        ScheduleEntryDto entry =
-                radioProgrammingService.createTrackFromUrlAndScheduleNow(request.getUrl());
+        ScheduleEntryDto entry = radioProgrammingService.createTrackFromUrlAndScheduleNow(request.getUrl());
+        eventPublisher.publishEvent(new ScheduleUpdatedEvent(OffsetDateTime.now()));
+
         return ResponseEntity.ok(entry);
     }
 

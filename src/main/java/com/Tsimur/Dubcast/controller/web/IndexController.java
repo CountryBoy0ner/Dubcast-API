@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.OffsetDateTime;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
@@ -17,11 +18,8 @@ public class IndexController {
         OffsetDateTime now = OffsetDateTime.now();
 
         var currentOpt = scheduleEntryService.getCurrent(now);
-        var nextOpt = scheduleEntryService.getNext(now);
 
         currentOpt.ifPresent(c -> model.addAttribute("current", c));
-        nextOpt.ifPresent(n -> model.addAttribute("next", n));
-
         return "index";
     }
 

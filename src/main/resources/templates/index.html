@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Dubcast Radio</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
@@ -12,14 +13,287 @@
         <a th:href="@{/login}">Login</a>
         <a th:href="@{/register}">Register</a>
         <a th:href="@{/profile}">Profile</a>
-
-        <!-- потом сюда можно добавить отображение username + logout -->
     </div>
 </header>
 
 <main>
-    <h1>Онлайн-радио</h1>
-    <!-- здесь потом вставишь плеер, списки треков и т.д. -->
+    <h1>Online radio</h1>
+
+    <section style="margin-top: 20px;">
+        <h2>Now playing</h2>
+
+        <!-- Обложка -->
+        <div>
+            <img id="artwork"
+                 src=""
+                 alt="Artwork"
+                 style="max-width: 200px; display: none;">
+        </div>
+
+        <!-- Название трека -->
+        <p id="track-title">Now playing: nothing right now.</p>
+
+        <!-- Кнопка старт радиостанции -->
+        <button id="start-radio-btn" style="margin-top: 10px;">
+            Start radio
+        </button>
+
+        <!-- Громкость -->
+        <div style="margin-top: 10px;">
+            <label for="volume-range">Volume:</label>
+            <input type="range" id="volume-range" min="0" max="100" step="1">
+        </div>
+
+        <!-- Debug: показывать / скрывать реальный плеер -->
+        <div style="margin-top: 10px;">
+            <label>
+                <input type="checkbox" id="show-player-checkbox" checked>
+                Show SoundCloud player (debug)
+            </label>
+        </div>
+
+        <!-- Контейнер, куда будет вставляться embedCode -->
+        <div id="sc-player-wrapper" style="margin-top: 10px;">
+            <!-- сюда js будет подставлять iframe -->
+        </div>
+    </section>
 </main>
+
+<!-- SockJS + STOMP -->
+<!-- SockJS + STOMP -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+<!-- SoundCloud Widget API -->
+<script src="https://w.soundcloud.com/player/api.js"></script>
+
+<script>
+    let stompClient = null;
+    let radioStarted = false;        // пользователь нажал Start radio?
+    let currentTrack = null;         // последний payload (REST/WS)
+    let scWidget = null;             // SC.Widget instance (ОДИН на страницу)
+    let userVolume = 70;             // 0..100
+
+    const artworkEl = document.getElementById('artwork');
+    const titleEl = document.getElementById('track-title');
+    const volumeEl = document.getElementById('volume-range');
+    const startBtn = document.getElementById('start-radio-btn');
+    const showPlayerCheckbox = document.getElementById('show-player-checkbox');
+    const playerWrapper = document.getElementById('sc-player-wrapper');
+
+    // ----------------- VOLUME -----------------
+
+    (function initVolume() {
+        const saved = localStorage.getItem('dubcast_volume');
+        userVolume = saved != null ? parseInt(saved, 10) : 70;
+        if (isNaN(userVolume)) userVolume = 70;
+        volumeEl.value = userVolume;
+    })();
+
+    volumeEl.addEventListener('input', function () {
+        userVolume = parseInt(this.value, 10);
+        localStorage.setItem('dubcast_volume', String(userVolume));
+        if (scWidget) {
+            scWidget.setVolume(userVolume);
+        }
+    });
+
+    // ----------------- SHOW / HIDE IFRAME (debug) -----------------
+
+    showPlayerCheckbox.addEventListener('change', function () {
+        playerWrapper.style.display = this.checked ? 'block' : 'none';
+    });
+
+    // ----------------- START RADIO BUTTON -----------------
+
+    startBtn.addEventListener('click', async function () {
+        if (radioStarted) return;
+
+        radioStarted = true;
+        startBtn.disabled = true;
+        startBtn.innerText = 'Radio is playing';
+
+        console.log('[Radio] User started radio, fetching /api/radio/now ...');
+
+        try {
+            const resp = await fetch('/api/radio/now');
+            if (resp.status === 204) {
+                console.log('[REST] 204 No Content – сейчас ничего не играет');
+                return;
+            }
+            if (!resp.ok) {
+                console.error('[REST] now error', resp.status);
+                return;
+            }
+
+            const payload = await resp.json();
+            console.log('[REST] now-playing payload', payload);
+            currentTrack = payload;
+
+            updateUiFromPayload(payload);
+            ensureWidgetIframe(payload);     // создаём iframe, если его ещё нет
+            if (payload.playing) {
+                loadAndPlayTrack(payload);  // первый трек – по клику, это разрешено
+            }
+        } catch (e) {
+            console.error('[REST] now exception', e);
+        }
+    });
+
+    // ----------------- WEBSOCKET / STOMP -----------------
+
+    function connectWs() {
+        console.log('Opening Web Socket...');
+        const socket = new SockJS('/radio-ws');
+        stompClient = Stomp.over(socket);
+        // stompClient.debug = null; // выключить болтливость
+
+        stompClient.connect({}, function (frame) {
+            console.log('WS connected: ' + frame);
+
+            stompClient.subscribe('/topic/now-playing', function (message) {
+                const payload = JSON.parse(message.body);
+                console.log('[WS] now-playing payload', payload);
+                handleNowPlaying(payload);
+            });
+        }, function (error) {
+            console.error('WS error', error);
+        });
+    }
+
+    function handleNowPlaying(payload) {
+        currentTrack = payload;
+        updateUiFromPayload(payload);
+
+        if (!radioStarted) {
+            console.log('[Radio] Not started yet, ignore autoplay. Waiting for user click.');
+            return;
+        }
+        if (!payload.playing) {
+            console.log('[Radio] Payload says nothing is playing now.');
+            return;
+        }
+
+        ensureWidgetIframe(payload);
+        loadAndPlayTrack(payload);      // после первого клика новые треки запускаем сами
+    }
+
+    // ----------------- UI UPDATE -----------------
+
+    function updateUiFromPayload(payload) {
+        if (payload.artworkUrl) {
+            artworkEl.src = payload.artworkUrl;
+            artworkEl.style.display = 'block';
+        } else {
+            artworkEl.style.display = 'none';
+        }
+
+        if (payload.playing && payload.title) {
+            titleEl.innerText = 'Now playing: ' + payload.title;
+        } else {
+            titleEl.innerText = 'Now playing: nothing right now.';
+        }
+    }
+
+    // ----------------- SOUNDLOUD WIDGET -----------------
+
+    // Создаём iframe с первым embedCode ОДИН РАЗ
+    function ensureWidgetIframe(track) {
+        if (scWidget) return;
+        if (!track || !track.embedCode) {
+            console.warn('[SC] No embedCode to init widget');
+            return;
+        }
+
+        playerWrapper.innerHTML = track.embedCode;
+
+        const iframe = playerWrapper.querySelector('iframe');
+        if (!iframe) {
+            console.error('[SC] No iframe found in embedCode');
+            return;
+        }
+
+        scWidget = SC.Widget(iframe);
+        console.log('[SC] Widget initialized');
+    }
+
+    // считаем позицию с учётом startedAt / durationSeconds
+    function computePositionMs(track) {
+        if (!track || !track.startedAt || !track.durationSeconds) {
+            return 0;
+        }
+        const startedAtMs = Date.parse(track.startedAt);
+        if (Number.isNaN(startedAtMs)) return 0;
+
+        const nowMs = Date.now();
+        const diff = nowMs - startedAtMs;
+        const durationMs = track.durationSeconds * 1000;
+
+        return Math.max(0, Math.min(diff, durationMs - 1000));
+    }
+
+    // достаём URL трека из scUrl или из embedCode
+    function getTrackUrl(track) {
+        if (track.scUrl) return track.scUrl;
+
+        if (track.embedCode) {
+            const srcMatch = track.embedCode.match(/src="([^"]+)"/);
+            if (srcMatch) {
+                try {
+                    const urlObj = new URL(srcMatch[1]);
+                    const scParam = urlObj.searchParams.get('url');
+                    return scParam ? decodeURIComponent(scParam) : srcMatch[1];
+                } catch (e) {
+                    return srcMatch[1];
+                }
+            }
+        }
+        return null;
+    }
+
+    // Загружаем трек в уже существующий виджет и запускаем
+    function loadAndPlayTrack(track) {
+        if (!scWidget) {
+            console.warn('[SC] Widget is not initialized yet');
+            return;
+        }
+
+        const trackUrl = getTrackUrl(track);
+        if (!trackUrl) {
+            console.error('[SC] Cannot get track URL');
+            return;
+        }
+
+        const positionMs = computePositionMs(track);
+
+        // чтобы READY не вызывался по 10 раз, очищаем старые хэндлеры
+        scWidget.unbind(SC.Widget.Events.READY);
+
+        scWidget.bind(SC.Widget.Events.READY, function () {
+            console.log('[SC] READY for track', track.title);
+            scWidget.setVolume(userVolume);
+
+            if (positionMs > 0) {
+                scWidget.seekTo(positionMs);
+            }
+
+            // Это уже не нарушает autoplay policy – пользователь
+            // раньше нажал Start radio, а AudioContext тот же.
+            scWidget.play();
+        });
+
+        console.log('[SC] load()', trackUrl, 'position', positionMs, 'ms');
+        scWidget.load(trackUrl, {
+            auto_play: false,
+            visual: true
+        });
+    }
+
+    // ----------------- STARTUP -----------------
+
+    window.addEventListener('load', connectWs);
+</script>
+
+
 </body>
 </html>

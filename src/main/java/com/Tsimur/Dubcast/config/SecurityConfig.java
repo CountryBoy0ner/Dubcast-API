@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/parser/**").permitAll()
+                        .requestMatchers("/api/radio/**").permitAll()   // ✅ правильно
                         .requestMatchers("/api/programming/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -40,6 +41,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     // -------- WEB (Thymeleaf, session) --------
     @Bean
@@ -57,7 +59,10 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/js/**",
                                 "/images/**",
-                                "/profile"
+                                "/profile",
+                                "/radio-ws/**",
+                                "/reel-radio-poc"   // ← вот это добавь //todo remoove later
+
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -75,6 +80,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -1,4 +1,4 @@
-package com.Tsimur.Dubcast.service.impl;
+package com.Tsimur.Dubcast.service;
 
 import com.Tsimur.Dubcast.dto.TrackDto;
 

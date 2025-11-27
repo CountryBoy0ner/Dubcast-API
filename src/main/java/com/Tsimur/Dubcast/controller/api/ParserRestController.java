@@ -3,7 +3,7 @@ package com.Tsimur.Dubcast.controller.api;
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.dto.request.UrlRequest;
 import com.Tsimur.Dubcast.dto.response.DurationOfTrackInSecondsResponse;
-import com.Tsimur.Dubcast.service.impl.ParserService;
+import com.Tsimur.Dubcast.service.ParserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
