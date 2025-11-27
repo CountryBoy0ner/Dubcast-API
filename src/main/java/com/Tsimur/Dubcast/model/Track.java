@@ -23,7 +23,8 @@ public class Track {
     @Column(nullable = false, unique = true)
     private String scUrl;
 
-    @Column(nullable = false, columnDefinition = "text")
+    @Deprecated
+    @Column(name = "embed_code", columnDefinition = "TEXT")
     private String embedCode;
 
     @Column(nullable = false)

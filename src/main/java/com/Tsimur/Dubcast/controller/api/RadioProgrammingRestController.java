@@ -2,15 +2,13 @@ package com.Tsimur.Dubcast.controller.api;
 
 
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
-import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.dto.request.TrackScheduleNowRequest;
 import com.Tsimur.Dubcast.dto.request.UrlRequest;
+import com.Tsimur.Dubcast.dto.response.PlaylistScheduleResponse;
 import com.Tsimur.Dubcast.radio.events.ScheduleUpdatedEvent;
 import com.Tsimur.Dubcast.service.RadioProgrammingService;
 import com.Tsimur.Dubcast.service.ScheduleEntryService;
-import com.Tsimur.Dubcast.service.TrackService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +28,7 @@ public class RadioProgrammingRestController {
 
 
 
-
-    /**
-     * 2) Импортировать трек по URL И сразу поставить в эфир "сейчас/в конец очереди"
-     */
+    @Deprecated
     @PostMapping("/schedule/now-from-url")
     public ResponseEntity<ScheduleEntryDto> createTrackFromUrlAndScheduleNow(
             @RequestBody @Valid UrlRequest request
@@ -43,10 +38,7 @@ public class RadioProgrammingRestController {
 
         return ResponseEntity.ok(entry);
     }
-
-    /**
-     * 3) Поставить уже существующий трек (по id из БД) в эфир сейчас / в конец очереди
-     */
+    @Deprecated
     @PostMapping("/schedule/now")
     public ResponseEntity<ScheduleEntryDto> scheduleExistingTrackNow(
             @RequestBody @Valid TrackScheduleNowRequest request
@@ -56,9 +48,6 @@ public class RadioProgrammingRestController {
         return ResponseEntity.ok(entry);
     }
 
-    /**
-     * 4) Что играет сейчас
-     */
     @GetMapping("/current")
     public ResponseEntity<ScheduleEntryDto> getCurrent() {
         Optional<ScheduleEntryDto> current =
@@ -68,9 +57,6 @@ public class RadioProgrammingRestController {
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
-    /**
-     * 5) Следующий трек
-     */
     @GetMapping("/next")
     public ResponseEntity<ScheduleEntryDto> getNext() {
         Optional<ScheduleEntryDto> next =
@@ -79,4 +65,13 @@ public class RadioProgrammingRestController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }
+
+    @PostMapping("/playlists/{playlistId}/append")
+    public ResponseEntity<PlaylistScheduleResponse> appendPlaylistToSchedule(@PathVariable Long playlistId) {
+        PlaylistScheduleResponse response = radioProgrammingService.appendPlaylistToSchedule(playlistId);
+        return ResponseEntity.ok(response);
+    }
+
+
+
 }

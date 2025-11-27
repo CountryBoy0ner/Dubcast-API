@@ -47,4 +47,7 @@ public interface ScheduleEntryRepository extends JpaRepository<ScheduleEntry, Lo
        """)
     List<ScheduleEntry> findNext(@Param("now") OffsetDateTime now, Pageable pageable);
 
+    @Query("select max(e.endTime) from ScheduleEntry e")
+    OffsetDateTime findMaxEndTime();
+
 }

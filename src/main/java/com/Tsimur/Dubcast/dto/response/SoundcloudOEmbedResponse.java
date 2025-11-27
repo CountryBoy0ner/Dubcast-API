@@ -1,4 +1,4 @@
-package com.Tsimur.Dubcast.integration.soundcloud;
+package com.Tsimur.Dubcast.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

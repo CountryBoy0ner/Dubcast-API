@@ -1,34 +1,24 @@
 package com.Tsimur.Dubcast.dto;
 
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
-import java.time.Instant;
-
-import jakarta.validation.constraints.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TrackDto {
+public class PlaylistDto {
 
     private Long id;
 
     @NotBlank
     private String soundcloudUrl;
 
-    @Deprecated
-    @NotBlank
-    private String embedCode;
-
     @NotBlank
     private String title;
 
-    @NotNull
     @Positive
-    private Integer durationSeconds;
-
-    private String artworkUrl;
-
+    private Integer totalTracks;
 }

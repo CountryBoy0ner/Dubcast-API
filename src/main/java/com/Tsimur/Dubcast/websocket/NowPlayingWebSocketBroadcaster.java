@@ -9,6 +9,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+
+@Deprecated // TODO: delete or change after implementing Playlists
 @Slf4j
 @Component
 @RequiredArgsConstructor

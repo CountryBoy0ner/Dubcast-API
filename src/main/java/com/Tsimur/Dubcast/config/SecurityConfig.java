@@ -32,7 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/parser/**").permitAll()
-                        .requestMatchers("/api/radio/**").permitAll()   // ✅ правильно
+                        .requestMatchers("/api/radio/**").permitAll()
+                        .requestMatchers("/api/playlists/**").permitAll()
                         .requestMatchers("/api/programming/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -61,7 +62,7 @@ public class SecurityConfig {
                                 "/images/**",
                                 "/profile",
                                 "/radio-ws/**",
-                                "/reel-radio-poc"   // ← вот это добавь //todo remoove later
+                                "/reel-radio-poc"
 
                         ).permitAll()
                         .anyRequest().authenticated()
