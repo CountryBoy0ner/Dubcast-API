@@ -11,11 +11,13 @@ import com.Tsimur.Dubcast.model.Playlist;
 import com.Tsimur.Dubcast.model.PlaylistTrack;
 import com.Tsimur.Dubcast.model.ScheduleEntry;
 import com.Tsimur.Dubcast.model.Track;
+import com.Tsimur.Dubcast.radio.events.ScheduleUpdatedEvent;
 import com.Tsimur.Dubcast.repository.PlaylistRepository;
 import com.Tsimur.Dubcast.repository.PlaylistTrackRepository;
 import com.Tsimur.Dubcast.repository.ScheduleEntryRepository;
 import com.Tsimur.Dubcast.service.*;
 import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,8 @@ public class SoundCloudRadioProgrammingServiceImpl implements RadioProgrammingSe
     private final ScheduleEntryService scheduleEntryService;
     private final ScheduleEntryRepository scheduleEntryRepository;
     private final ScheduleEntryMapper scheduleEntryMapper;
+
+    private final ApplicationEventPublisher eventPublisher;
 
 
     @Override
@@ -69,24 +73,19 @@ public class SoundCloudRadioProgrammingServiceImpl implements RadioProgrammingSe
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new NotFoundException("Playlist not found: " + playlistId));
 
-        // --- выбираем корректную точку старта ---
         OffsetDateTime now = OffsetDateTime.now();
-        OffsetDateTime lastEnd = scheduleEntryRepository.findMaxEndTime();
+        OffsetDateTime maxEndTime = scheduleEntryRepository.findMaxEndTime();
 
-        OffsetDateTime startTime;
-        if (lastEnd == null || lastEnd.isBefore(now)) {
-            // расписание пустое или уже всё в прошлом — начинаем с "сейчас"
-            startTime = now;
-        } else {
-            // есть будущие записи — продолжаем с последнего конца
-            startTime = lastEnd;
-        }
-        // ----------------------------------------
+        OffsetDateTime startTime =
+                (maxEndTime == null || maxEndTime.isBefore(now))
+                        ? now
+                        : maxEndTime;
 
         List<PlaylistTrack> pts =
                 playlistTrackRepository.findByPlaylistIdOrderByPositionAsc(playlistId);
 
         List<ScheduleEntryDto> result = new ArrayList<>();
+        OffsetDateTime firstStartTime = null;
 
         for (PlaylistTrack pt : pts) {
             Track track = pt.getTrack();
@@ -99,14 +98,24 @@ public class SoundCloudRadioProgrammingServiceImpl implements RadioProgrammingSe
 
             ScheduleEntry entry = ScheduleEntry.builder()
                     .track(track)
+                    .playlist(playlist)
                     .startTime(startTime)
                     .endTime(endTime)
                     .build();
+
+            if (firstStartTime == null) {
+                firstStartTime = startTime;
+            }
 
             ScheduleEntry saved = scheduleEntryRepository.save(entry);
             result.add(scheduleEntryMapper.toDto(saved));
 
             startTime = endTime;
+        }
+
+        // уведомляем радио, что расписание с такого-то момента поменялось
+        if (firstStartTime != null) {
+            eventPublisher.publishEvent(new ScheduleUpdatedEvent(firstStartTime));
         }
 
         PlaylistDto playlistDto = playlistMapper.toDto(playlist);

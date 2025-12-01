@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Dubcast Radio</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 <header>
-    <a th:href="@{/}">Dubcast</a>
+    <a href="/">Dubcast</a>
 
     <div>
-        <a th:href="@{/login}">Login</a>
-        <a th:href="@{/register}">Register</a>
-        <a th:href="@{/profile}">Profile</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/profile">Profile</a>
     </div>
 </header>
 
@@ -52,14 +52,15 @@
             </label>
         </div>
 
-        <!-- Контейнер, куда будет вставляться embedCode -->
+        <!-- Контейнер, куда будет вставляться embed-код плейлиста -->
         <div id="sc-player-wrapper" style="margin-top: 10px;">
-            <!-- сюда js будет подставлять iframe -->
+            <!-- сюда js подставит playlistEmbedCode -->
         </div>
     </section>
 </main>
 
-<!-- SockJS + STOMP -->
+
+
 <!-- SockJS + STOMP -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
@@ -68,11 +69,13 @@
 <script src="https://w.soundcloud.com/player/api.js"></script>
 
 <script>
+    // ----------- STATE -----------
+
     let stompClient = null;
-    let radioStarted = false;        // пользователь нажал Start radio?
-    let currentTrack = null;         // последний payload (REST/WS)
-    let scWidget = null;             // SC.Widget instance (ОДИН на страницу)
-    let userVolume = 70;             // 0..100
+    let radioStarted = false;      // пользователь нажал Start radio?
+    let currentPayload = null;     // NowPlayingResponse
+    let scWidget = null;           // SC.Widget одного трека
+    let userVolume = 70;
 
     const artworkEl = document.getElementById('artwork');
     const titleEl = document.getElementById('track-title');
@@ -81,30 +84,174 @@
     const showPlayerCheckbox = document.getElementById('show-player-checkbox');
     const playerWrapper = document.getElementById('sc-player-wrapper');
 
-    // ----------------- VOLUME -----------------
+    // ----------- INIT VOLUME -----------
 
     (function initVolume() {
         const saved = localStorage.getItem('dubcast_volume');
         userVolume = saved != null ? parseInt(saved, 10) : 70;
         if (isNaN(userVolume)) userVolume = 70;
         volumeEl.value = userVolume;
+        console.log('[VOL] initial =', userVolume);
     })();
 
     volumeEl.addEventListener('input', function () {
         userVolume = parseInt(this.value, 10);
         localStorage.setItem('dubcast_volume', String(userVolume));
+        console.log('[VOL] change ->', userVolume);
         if (scWidget) {
             scWidget.setVolume(userVolume);
         }
     });
 
-    // ----------------- SHOW / HIDE IFRAME (debug) -----------------
+    // ----------- SHOW / HIDE IFRAME (debug) -----------
 
     showPlayerCheckbox.addEventListener('change', function () {
         playerWrapper.style.display = this.checked ? 'block' : 'none';
     });
 
-    // ----------------- START RADIO BUTTON -----------------
+    // ----------- UI UPDATE -----------
+
+    function updateUiFromPayload(payload) {
+        console.log('[UI] update', payload);
+
+        if (!payload || !payload.playing) {
+            artworkEl.style.display = 'none';
+            titleEl.innerText = 'Now playing: nothing right now.';
+            return;
+        }
+
+        if (payload.artworkUrl) {
+            artworkEl.src = payload.artworkUrl;
+            artworkEl.style.display = 'block';
+        } else {
+            artworkEl.style.display = 'none';
+        }
+
+        titleEl.innerText = 'Now playing: ' + (payload.title || 'unknown track');
+    }
+
+    // ----------- HELPERS -----------
+
+    function computeTrackPositionMs(payload) {
+        if (!payload || !payload.startedAt || !payload.durationSeconds) {
+            return 0;
+        }
+        const startedAtMs = Date.parse(payload.startedAt);
+        if (Number.isNaN(startedAtMs)) {
+            return 0;
+        }
+        const nowMs = Date.now();
+        let elapsedSec = Math.max(0, (nowMs - startedAtMs) / 1000);
+        if (elapsedSec > payload.durationSeconds - 1) {
+            elapsedSec = payload.durationSeconds - 1;
+        }
+        const pos = Math.floor(elapsedSec * 1000);
+        console.log('[POS] =', pos, 'ms from', payload.startedAt);
+        return pos;
+    }
+
+    // ----------- WIDGET SETUP -----------
+
+    function ensureWidgetIframe() {
+        if (scWidget) {
+            return;
+        }
+
+        // Заглушка: любой публичный трек, чтобы инициализировать iframe.
+        // Потом мы всегда будем делать widget.load(payload.trackUrl)
+        const placeholderTrack = 'https://soundcloud.com/ppjrecordings/ontology-maximum-ruffness-krave-remix';
+
+        const src = 'https://w.soundcloud.com/player'
+            + '?visual=true'
+            + '&url=' + encodeURIComponent(placeholderTrack)
+            + '&auto_play=false';
+
+        playerWrapper.innerHTML = `
+            <iframe
+                id="sc-widget"
+                width="100%"
+                height="450"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                src="${src}">
+            </iframe>
+        `;
+
+        const iframe = document.getElementById('sc-widget');
+        scWidget = SC.Widget(iframe);
+        console.log('[SC] widget created with placeholder');
+
+        scWidget.bind(SC.Widget.Events.READY, function () {
+            console.log('[SC] READY event');
+        });
+
+        scWidget.bind(SC.Widget.Events.ERROR, function (e) {
+            console.error('[SC] ERROR event', e);
+        });
+    }
+
+    // Загрузить конкретный трек по URL и перейти на нужную позицию
+    function loadAndPlayFromPayload(payload) {
+        if (!payload || !payload.playing) {
+            console.log('[Radio] loadAndPlay: nothing playing in payload');
+            return;
+        }
+        if (!payload.trackUrl) {
+            console.error('[Radio] payload.trackUrl is missing');
+            return;
+        }
+
+        ensureWidgetIframe();
+        if (!scWidget) {
+            console.error('[Radio] scWidget is null even after ensureWidgetIframe()');
+            return;
+        }
+
+        const url = payload.trackUrl;
+        const posMs = computeTrackPositionMs(payload);
+
+        console.log('[Radio] widget.load(url, auto_play=true) url =', url, 'posMs =', posMs);
+
+        scWidget.load(url, {
+            auto_play: true,
+            visual: true,
+            callback: function () {
+                console.log('[SC] load() callback, seekTo', posMs, 'ms, setVolume', userVolume);
+                scWidget.setVolume(userVolume);
+                if (posMs > 0) {
+                    scWidget.seekTo(posMs);
+                }
+            }
+        });
+    }
+
+    // ----------- REST: /api/radio/now -----------
+
+    async function fetchCurrentForUiOnly() {
+        try {
+            console.log('[REST] GET /api/radio/now for UI');
+            const resp = await fetch('/api/radio/now');
+            if (resp.status === 204) {
+                console.log('[REST] 204 No Content');
+                currentPayload = null;
+                updateUiFromPayload(null);
+                return;
+            }
+            if (!resp.ok) {
+                console.error('[REST] /api/radio/now error', resp.status);
+                return;
+            }
+            const payload = await resp.json();
+            console.log('[REST] initial payload', payload);
+            currentPayload = payload;
+            updateUiFromPayload(payload);   // только UI, звук не трогаем
+        } catch (e) {
+            console.error('[REST] current-for-ui error', e);
+        }
+    }
+
+    // ----------- START RADIO BUTTON -----------
 
     startBtn.addEventListener('click', async function () {
         if (radioStarted) return;
@@ -113,43 +260,36 @@
         startBtn.disabled = true;
         startBtn.innerText = 'Radio is playing';
 
-        console.log('[Radio] User started radio, fetching /api/radio/now ...');
+        console.log('[Radio] Start button clicked');
 
         try {
-            const resp = await fetch('/api/radio/now');
-            if (resp.status === 204) {
-                console.log('[REST] 204 No Content – сейчас ничего не играет');
-                return;
-            }
-            if (!resp.ok) {
-                console.error('[REST] now error', resp.status);
-                return;
+            if (!currentPayload) {
+                console.log('[Radio] no currentPayload, fetch now');
+                const resp = await fetch('/api/radio/now');
+                if (resp.status === 204 || !resp.ok) {
+                    console.log('[REST] no current track on start, status =', resp.status);
+                    return;
+                }
+                currentPayload = await resp.json();
             }
 
-            const payload = await resp.json();
-            console.log('[REST] now-playing payload', payload);
-            currentTrack = payload;
-
-            updateUiFromPayload(payload);
-            ensureWidgetIframe(payload);     // создаём iframe, если его ещё нет
-            if (payload.playing) {
-                loadAndPlayTrack(payload);  // первый трек – по клику, это разрешено
-            }
+            updateUiFromPayload(currentPayload);
+            loadAndPlayFromPayload(currentPayload); // ВАЖНО: это внутри клика, браузер это считает жестом пользователя
         } catch (e) {
-            console.error('[REST] now exception', e);
+            console.error('[Radio] start-radio exception', e);
         }
     });
 
-    // ----------------- WEBSOCKET / STOMP -----------------
+    // ----------- WS / STOMP -----------
 
     function connectWs() {
-        console.log('Opening Web Socket...');
+        console.log('[WS] Opening Web Socket...');
         const socket = new SockJS('/radio-ws');
         stompClient = Stomp.over(socket);
-        // stompClient.debug = null; // выключить болтливость
+        // stompClient.debug = null;
 
         stompClient.connect({}, function (frame) {
-            console.log('WS connected: ' + frame);
+            console.log('[WS] connected:', frame);
 
             stompClient.subscribe('/topic/now-playing', function (message) {
                 const payload = JSON.parse(message.body);
@@ -157,141 +297,35 @@
                 handleNowPlaying(payload);
             });
         }, function (error) {
-            console.error('WS error', error);
+            console.error('[WS] error', error);
         });
     }
 
     function handleNowPlaying(payload) {
-        currentTrack = payload;
+        console.log('[WS] handleNowPlaying', payload);
+        currentPayload = payload;
         updateUiFromPayload(payload);
 
         if (!radioStarted) {
-            console.log('[Radio] Not started yet, ignore autoplay. Waiting for user click.');
+            console.log('[Radio] not started yet, just update UI');
             return;
         }
         if (!payload.playing) {
-            console.log('[Radio] Payload says nothing is playing now.');
+            console.log('[Radio] payload says nothing playing');
             return;
         }
 
-        ensureWidgetIframe(payload);
-        loadAndPlayTrack(payload);      // после первого клика новые треки запускаем сами
+        // Новый трек по расписанию → грузим его
+        loadAndPlayFromPayload(payload);
     }
 
-    // ----------------- UI UPDATE -----------------
+    // ----------- STARTUP -----------
 
-    function updateUiFromPayload(payload) {
-        if (payload.artworkUrl) {
-            artworkEl.src = payload.artworkUrl;
-            artworkEl.style.display = 'block';
-        } else {
-            artworkEl.style.display = 'none';
-        }
-
-        if (payload.playing && payload.title) {
-            titleEl.innerText = 'Now playing: ' + payload.title;
-        } else {
-            titleEl.innerText = 'Now playing: nothing right now.';
-        }
-    }
-
-    // ----------------- SOUNDLOUD WIDGET -----------------
-
-    // Создаём iframe с первым embedCode ОДИН РАЗ
-    function ensureWidgetIframe(track) {
-        if (scWidget) return;
-        if (!track || !track.embedCode) {
-            console.warn('[SC] No embedCode to init widget');
-            return;
-        }
-
-        playerWrapper.innerHTML = track.embedCode;
-
-        const iframe = playerWrapper.querySelector('iframe');
-        if (!iframe) {
-            console.error('[SC] No iframe found in embedCode');
-            return;
-        }
-
-        scWidget = SC.Widget(iframe);
-        console.log('[SC] Widget initialized');
-    }
-
-    // считаем позицию с учётом startedAt / durationSeconds
-    function computePositionMs(track) {
-        if (!track || !track.startedAt || !track.durationSeconds) {
-            return 0;
-        }
-        const startedAtMs = Date.parse(track.startedAt);
-        if (Number.isNaN(startedAtMs)) return 0;
-
-        const nowMs = Date.now();
-        const diff = nowMs - startedAtMs;
-        const durationMs = track.durationSeconds * 1000;
-
-        return Math.max(0, Math.min(diff, durationMs - 1000));
-    }
-
-    // достаём URL трека из scUrl или из embedCode
-    function getTrackUrl(track) {
-        if (track.scUrl) return track.scUrl;
-
-        if (track.embedCode) {
-            const srcMatch = track.embedCode.match(/src="([^"]+)"/);
-            if (srcMatch) {
-                try {
-                    const urlObj = new URL(srcMatch[1]);
-                    const scParam = urlObj.searchParams.get('url');
-                    return scParam ? decodeURIComponent(scParam) : srcMatch[1];
-                } catch (e) {
-                    return srcMatch[1];
-                }
-            }
-        }
-        return null;
-    }
-
-    // Загружаем трек в уже существующий виджет и запускаем
-    function loadAndPlayTrack(track) {
-        if (!scWidget) {
-            console.warn('[SC] Widget is not initialized yet');
-            return;
-        }
-
-        const trackUrl = getTrackUrl(track);
-        if (!trackUrl) {
-            console.error('[SC] Cannot get track URL');
-            return;
-        }
-
-        const positionMs = computePositionMs(track);
-
-        // чтобы READY не вызывался по 10 раз, очищаем старые хэндлеры
-        scWidget.unbind(SC.Widget.Events.READY);
-
-        scWidget.bind(SC.Widget.Events.READY, function () {
-            console.log('[SC] READY for track', track.title);
-            scWidget.setVolume(userVolume);
-
-            if (positionMs > 0) {
-                scWidget.seekTo(positionMs);
-            }
-
-            // Это уже не нарушает autoplay policy – пользователь
-            // раньше нажал Start radio, а AudioContext тот же.
-            scWidget.play();
-        });
-
-        console.log('[SC] load()', trackUrl, 'position', positionMs, 'ms');
-        scWidget.load(trackUrl, {
-            auto_play: false,
-            visual: true
-        });
-    }
-
-    // ----------------- STARTUP -----------------
-
-    window.addEventListener('load', connectWs);
+    window.addEventListener('load', () => {
+        console.log('[BOOT] Page loaded, init WS + fetch current');
+        connectWs();
+        fetchCurrentForUiOnly();
+    });
 </script>
 
 

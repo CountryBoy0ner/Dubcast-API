@@ -4,6 +4,7 @@ import com.Tsimur.Dubcast.dto.PlaylistDto;
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.dto.request.UrlRequest;
 import com.Tsimur.Dubcast.dto.response.DurationOfTrackInSecondsResponse;
+import com.Tsimur.Dubcast.dto.response.OembedHtmlResponse;
 import com.Tsimur.Dubcast.service.ParserService;
 import io.micrometer.core.ipc.http.HttpSender;
 import jakarta.validation.Valid;
@@ -38,6 +39,8 @@ public class ParserScRestController {
         return ResponseEntity.ok(tracks);
     }
 
-
-
+@PostMapping("/embedHtml")
+    public OembedHtmlResponse embedHtml(@RequestBody @Valid UrlRequest request) {
+            return new OembedHtmlResponse(parserService.fetchOEmbedHtml(request.getUrl()));
+    }
 }

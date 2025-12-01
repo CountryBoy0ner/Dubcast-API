@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-01-schedule-entry-playlist
+      author: tsimur
+      changes:
+        - addColumn:
+            tableName: schedule_entries
+            columns:
+              - column:
+                  name: playlist_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: schedule_entries
+            baseColumnNames: playlist_id
+            referencedTableName: playlists
+            referencedColumnNames: id
+            constraintName: fk_schedule_entry_playlist
+            onDelete: SET NULL

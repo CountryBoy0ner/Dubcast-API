@@ -1,8 +1,7 @@
 package com.Tsimur.Dubcast.mapper;
 
-
-import com.Tsimur.Dubcast.model.ScheduleEntry;
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
+import com.Tsimur.Dubcast.model.ScheduleEntry;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -13,8 +12,10 @@ import java.util.List;
 )
 public interface ScheduleEntryMapper {
 
+    @Mapping(source = "playlist.id", target = "playlistId")
     ScheduleEntryDto toDto(ScheduleEntry entity);
 
+    @Mapping(source = "playlistId", target = "playlist.id")
     ScheduleEntry toEntity(ScheduleEntryDto dto);
 
     List<ScheduleEntryDto> toDtoList(List<ScheduleEntry> entities);
@@ -24,5 +25,6 @@ public interface ScheduleEntryMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "playlist", ignore = true) // 👈 плейлист не меняем патчем
     void updateEntityFromDto(ScheduleEntryDto dto, @MappingTarget ScheduleEntry entity);
 }

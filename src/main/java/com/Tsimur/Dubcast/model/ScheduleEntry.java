@@ -34,4 +34,8 @@ public class ScheduleEntry {
     @Setter(AccessLevel.NONE)
     @Column(nullable = false)
     private OffsetDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "playlist_id")
+    private Playlist playlist;
 }

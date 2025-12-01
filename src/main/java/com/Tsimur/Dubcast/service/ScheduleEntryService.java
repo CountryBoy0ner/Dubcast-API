@@ -19,11 +19,9 @@ public interface ScheduleEntryService {
     void delete(Long id);
 
     @Deprecated
-        // TODO: delete after implementing Playlists
     ScheduleEntryDto scheduleAt(Long trackId, OffsetDateTime startTime);
 
     @Deprecated
-        // TODO: delete after implementing Playlists
     ScheduleEntryDto scheduleNow(Long trackId);
 
     Optional<ScheduleEntryDto> getCurrent(OffsetDateTime now);

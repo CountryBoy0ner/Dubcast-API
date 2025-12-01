@@ -30,11 +30,13 @@ public class SecurityConfig {
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/parser/**").permitAll()
-                        .requestMatchers("/api/radio/**").permitAll()
-                        .requestMatchers("/api/playlists/**").permitAll()
-                        .requestMatchers("/api/programming/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
+//
+//                        .requestMatchers("/api/auth/**").permitAll()
+//                        .requestMatchers("/api/parser/**").permitAll()
+//                        .requestMatchers("/api/radio/**").permitAll()
+//                        .requestMatchers("/api/playlists/**").permitAll()
+//                        .requestMatchers("/api/programming/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter,

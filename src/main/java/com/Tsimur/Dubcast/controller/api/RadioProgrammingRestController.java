@@ -8,9 +8,7 @@ import com.Tsimur.Dubcast.dto.response.PlaylistScheduleResponse;
 import com.Tsimur.Dubcast.radio.events.ScheduleUpdatedEvent;
 import com.Tsimur.Dubcast.service.RadioProgrammingService;
 import com.Tsimur.Dubcast.service.ScheduleEntryService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,29 +22,10 @@ public class RadioProgrammingRestController {
 
     private final RadioProgrammingService radioProgrammingService;
     private final ScheduleEntryService scheduleEntryService;
-    private final ApplicationEventPublisher eventPublisher;
 
 
 
-    @Deprecated
-    @PostMapping("/schedule/now-from-url")
-    public ResponseEntity<ScheduleEntryDto> createTrackFromUrlAndScheduleNow(
-            @RequestBody @Valid UrlRequest request
-    ) {
-        ScheduleEntryDto entry = radioProgrammingService.createTrackFromUrlAndScheduleNow(request.getUrl());
-        eventPublisher.publishEvent(new ScheduleUpdatedEvent(OffsetDateTime.now()));
 
-        return ResponseEntity.ok(entry);
-    }
-    @Deprecated
-    @PostMapping("/schedule/now")
-    public ResponseEntity<ScheduleEntryDto> scheduleExistingTrackNow(
-            @RequestBody @Valid TrackScheduleNowRequest request
-    ) {
-        ScheduleEntryDto entry =
-                radioProgrammingService.scheduleExistingTrackNow(request.getTrackId());
-        return ResponseEntity.ok(entry);
-    }
 
     @GetMapping("/current")
     public ResponseEntity<ScheduleEntryDto> getCurrent() {

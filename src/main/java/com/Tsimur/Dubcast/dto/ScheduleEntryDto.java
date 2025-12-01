@@ -1,6 +1,5 @@
 package com.Tsimur.Dubcast.dto;
 
-
 import lombok.*;
 import java.time.Instant;
 import jakarta.validation.constraints.*;
@@ -11,7 +10,6 @@ import jakarta.validation.constraints.*;
 @AllArgsConstructor
 @Builder
 public class ScheduleEntryDto {
-
 
     private Long id;
 
@@ -24,4 +22,6 @@ public class ScheduleEntryDto {
     @NotNull
     private Instant endTime;
 
+    
+    private Long playlistId;
 }

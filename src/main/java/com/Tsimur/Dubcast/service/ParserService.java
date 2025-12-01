@@ -11,5 +11,8 @@ public interface ParserService {
 
     List<TrackDto> parsePlaylistByUrl(String playlistUrl);
 
+    String fetchOEmbedHtml(String soundcloudUrl);
+
+
 
 }

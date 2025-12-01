@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -16,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ParserScServiceImpl implements ParserService {
 
     private final RestTemplate restTemplate;
@@ -68,12 +69,6 @@ public class ParserScServiceImpl implements ParserService {
         return extractDurationSecondsByScraping(url);
     }
 
-// ----------------------------------------------------------------------------------------------
-//    На каждый запрос мы поднимаем headless Chromium. Потом TODO НАДО:
-//    сделать отдельный @Component, который держит один Browser и даёт новые Page;
-//    или ограничить этот функционал только админскими/ручными задачами.
-// ----------------------------------------------------------------------------------------------
-
     @Override
     public List<TrackDto> parsePlaylistByUrl(String playlistUrl) {
         List<TrackDto> result = new ArrayList<>();
@@ -92,17 +87,14 @@ public class ParserScServiceImpl implements ParserService {
 
             System.out.println("[SCRAPER] goto " + playlistUrl);
             page.navigate(playlistUrl);
-            // дождаться загрузки JS, чтобы __sc_hydration уже был на странице
             page.waitForLoadState(LoadState.NETWORKIDLE);
 
-            // забираем window.__sc_hydration целиком как строку JSON
             String hydrationJson = page.evaluate(
                     "() => JSON.stringify(window.__sc_hydration || [])"
             ).toString();
 
             JsonNode hydration = objectMapper.readTree(hydrationJson);
 
-            // ищем объект с hydratable == "playlist"
             JsonNode playlistData = null;
             if (hydration.isArray()) {
                 for (JsonNode node : hydration) {
@@ -128,7 +120,6 @@ public class ParserScServiceImpl implements ParserService {
             }
 
             for (JsonNode t : tracks) {
-                // policy: ALLOW/BLOCK/SNIP – берём только ALLOW
                 String policy = t.path("policy").asText("ALLOW");
                 if (!"ALLOW".equals(policy)) {
                     continue;
@@ -139,7 +130,6 @@ public class ParserScServiceImpl implements ParserService {
                 int durationMs = t.path("duration").asInt(0);
 
                 if (url == null || title == null || durationMs <= 0) {
-                    // это те укороченные объекты, где только id и policy – пропускаем
                     continue;
                 }
 
@@ -166,6 +156,29 @@ public class ParserScServiceImpl implements ParserService {
         return result;
     }
 
+    @Override
+    public String fetchOEmbedHtml(String url) {
+        String oEmbedUrl = UriComponentsBuilder
+                .fromHttpUrl(oEmbedBaseUrl)
+                .queryParam("format", "json")
+                .queryParam("url", url)
+                .toUriString();
+
+        SoundcloudOEmbedResponse response;
+        try {
+            response = restTemplate.getForObject(oEmbedUrl, SoundcloudOEmbedResponse.class);
+        } catch (RestClientException ex) {
+            throw new RuntimeException("Failed to call SoundCloud oEmbed API: " + oEmbedUrl, ex);
+        }
+
+        if (response == null) {
+            throw new RuntimeException("Empty response from SoundCloud oEmbed API for url: " + url);
+        }
+
+        log.info("ParserScServiceImpl embed ----->  "+ response.getHtml());
+
+        return response.getHtml();
+    }
 
 
     private Integer parseIsoDurationToSeconds(String iso) {
