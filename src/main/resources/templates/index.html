@@ -33,6 +33,9 @@
 
         <!-- Название трека -->
         <p id="track-title">Now playing: nothing right now.</p>
+        <p id="playlist-title" style="margin-top: 4px; color: #666;">
+            Playlist: none
+        </p>
 
         <!-- Кнопка старт радиостанции -->
         <button id="start-radio-btn" style="margin-top: 10px;">
@@ -71,13 +74,14 @@
 
 <script>
     // ----------- STATE -----------
-
+    let currentPlaylistId = null;
     let stompClient = null;
     let radioStarted = false;      // пользователь нажал Start radio?
     let currentPayload = null;     // NowPlayingResponse
     let scWidget = null;           // SC.Widget одного трека
     let userVolume = 70;
 
+    const playlistTitleEl = document.getElementById('playlist-title');
     const artworkEl = document.getElementById('artwork');
     const titleEl = document.getElementById('track-title');
     const volumeEl = document.getElementById('volume-range');
@@ -118,6 +122,8 @@
         if (!payload || !payload.playing) {
             artworkEl.style.display = 'none';
             titleEl.innerText = 'Now playing: nothing right now.';
+            playlistTitleEl.innerText = 'Playlist: none';
+            currentPlaylistId = null;
             return;
         }
 
@@ -129,7 +135,17 @@
         }
 
         titleEl.innerText = 'Now playing: ' + (payload.title || 'unknown track');
+
+        // PLAYLIST
+        currentPlaylistId = payload.playlistTitle ? 1 : null; // не важно, просто пример
+        if (payload.playlistTitle) {
+            playlistTitleEl.innerText = 'Playlist: ' + payload.playlistTitle;
+        } else {
+            playlistTitleEl.innerText = 'Playlist: none';
+        }
     }
+
+    // PLAYLIST
 
     // ----------- HELPERS -----------
 

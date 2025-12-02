@@ -22,6 +22,5 @@ public class ScheduleEntryDto {
     @NotNull
     private Instant endTime;
 
-    
     private Long playlistId;
 }

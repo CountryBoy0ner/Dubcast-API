@@ -19,11 +19,12 @@ public interface PlaylistService {
 
 
     List<PlaylistTrackDto> getTracks(Long playlistId);
-PlaylistTrackDto addTrack(Long playlistId, Long trackId);
 
-    void removeTrack(Long playlistId, Long playlistTrackId);
+    PlaylistTrackDto addTrack(Long playlistId, Long trackId);
 
-    void moveTrack(Long playlistId, Long playlistTrackId, int newPosition);
+//    void removeTrack(Long playlistId, Long playlistTrackId); // todo add
+//
+//    void moveTrack(Long playlistId, Long playlistTrackId, int newPosition);
 
     PlaylistDto importPlaylistFromUrl(String playlistUrl);
 

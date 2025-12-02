@@ -96,25 +96,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         return playlistTrackMapper.toDto(saved);
     }
 
-    @Override
-    public void removeTrack(Long playlistId, Long playlistTrackId) {
-        PlaylistTrack pt = playlistTrackRepository.findById(playlistTrackId)
-                .orElseThrow(() -> new NotFoundException("Playlist track not found: " + playlistTrackId)); //todo refactor .of
 
-        if (!pt.getPlaylist().getId().equals(playlistId)) {
-            throw new IllegalArgumentException("PlaylistTrack does not belong to this playlist"); //todo refactor .of
-        }
-
-        playlistTrackRepository.delete(pt);
-        // Пересортировку позиций можно сделать потом (опционально).
-    }
-
-    @Override
-    public void moveTrack(Long playlistId, Long playlistTrackId, int newPosition) {
-        // Простейший вариант – пока заглушка:
-        // можно реализовать позже, когда реально понадобится.
-        throw new UnsupportedOperationException("moveTrack not implemented yet"); //todo refactor .of
-    }
 
     @Override
     @Transactional

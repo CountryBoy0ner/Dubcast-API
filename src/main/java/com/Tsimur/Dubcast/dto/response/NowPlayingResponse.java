@@ -6,10 +6,14 @@ import java.time.Instant;
 @Builder
 @Data
 public class NowPlayingResponse {
+    // TRACK
     private boolean playing;
     private String title;
     private String artworkUrl;
     private Instant startedAt;
     private int durationSeconds;
     private String trackUrl;
+
+    // PLAYLIST
+    private String playlistTitle;
 }
