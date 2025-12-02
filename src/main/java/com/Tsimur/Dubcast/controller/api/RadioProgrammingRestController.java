@@ -2,10 +2,7 @@ package com.Tsimur.Dubcast.controller.api;
 
 
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
-import com.Tsimur.Dubcast.dto.request.TrackScheduleNowRequest;
-import com.Tsimur.Dubcast.dto.request.UrlRequest;
 import com.Tsimur.Dubcast.dto.response.PlaylistScheduleResponse;
-import com.Tsimur.Dubcast.radio.events.ScheduleUpdatedEvent;
 import com.Tsimur.Dubcast.service.RadioProgrammingService;
 import com.Tsimur.Dubcast.service.ScheduleEntryService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +19,6 @@ public class RadioProgrammingRestController {
 
     private final RadioProgrammingService radioProgrammingService;
     private final ScheduleEntryService scheduleEntryService;
-
-
-
 
 
     @GetMapping("/current")
@@ -50,7 +44,6 @@ public class RadioProgrammingRestController {
         PlaylistScheduleResponse response = radioProgrammingService.appendPlaylistToSchedule(playlistId);
         return ResponseEntity.ok(response);
     }
-
 
 
 }

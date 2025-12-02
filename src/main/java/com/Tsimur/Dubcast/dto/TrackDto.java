@@ -2,6 +2,7 @@ package com.Tsimur.Dubcast.dto;
 
 
 import lombok.*;
+
 import java.time.Instant;
 
 import jakarta.validation.constraints.*;
@@ -18,9 +19,6 @@ public class TrackDto {
     @NotBlank
     private String soundcloudUrl;
 
-    @Deprecated
-    @NotBlank
-    private String embedCode;
 
     @NotBlank
     private String title;

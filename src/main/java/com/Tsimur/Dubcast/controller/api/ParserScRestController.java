@@ -1,12 +1,10 @@
 package com.Tsimur.Dubcast.controller.api;
 
-import com.Tsimur.Dubcast.dto.PlaylistDto;
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.dto.request.UrlRequest;
 import com.Tsimur.Dubcast.dto.response.DurationOfTrackInSecondsResponse;
 import com.Tsimur.Dubcast.dto.response.OembedHtmlResponse;
 import com.Tsimur.Dubcast.service.ParserService;
-import io.micrometer.core.ipc.http.HttpSender;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +19,6 @@ public class ParserScRestController {
 
     private final ParserService parserService;
 
-    @PostMapping("/track")
-    public TrackDto parseTrack(@RequestBody @Valid UrlRequest request) {
-        return parserService.parseTracksByUrl(request.getUrl());
-    }
 
     @PostMapping("/duration")
     public DurationOfTrackInSecondsResponse getDuration(@RequestBody @Valid UrlRequest request) {
@@ -39,8 +33,8 @@ public class ParserScRestController {
         return ResponseEntity.ok(tracks);
     }
 
-@PostMapping("/embedHtml")
+    @PostMapping("/embedHtml")
     public OembedHtmlResponse embedHtml(@RequestBody @Valid UrlRequest request) {
-            return new OembedHtmlResponse(parserService.fetchOEmbedHtml(request.getUrl()));
+        return new OembedHtmlResponse(parserService.fetchOEmbedHtml(request.getUrl()));
     }
 }

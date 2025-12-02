@@ -15,11 +15,8 @@ public class NowPlayingResponseFactory {
 
     public NowPlayingResponse fromScheduleEntry(ScheduleEntryDto entry) {
         // На всякий случай защитимся от null
-        if (entry == null || entry.getTrack() == null) {
-            return NowPlayingResponse.builder()
-                    .playing(false)
-                    .build();
-        }
+        // todo за
+        
 
         TrackDto track = entry.getTrack();
 

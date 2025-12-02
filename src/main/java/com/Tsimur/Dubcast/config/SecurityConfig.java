@@ -19,7 +19,6 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    // -------- REST API (JWT, stateless) --------
     @Bean
     @Order(1)
     public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -36,7 +35,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/api/parser/**").permitAll()
 //                        .requestMatchers("/api/radio/**").permitAll()
 //                        .requestMatchers("/api/playlists/**").permitAll()
-//                        .requestMatchers("/api/programming/**").permitAll()
+//                        .requestMatchers("/api/programming/**").permitAll() //todo
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter,
@@ -46,7 +45,6 @@ public class SecurityConfig {
     }
 
 
-    // -------- WEB (Thymeleaf, session) --------
     @Bean
     @Order(2)
     public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {

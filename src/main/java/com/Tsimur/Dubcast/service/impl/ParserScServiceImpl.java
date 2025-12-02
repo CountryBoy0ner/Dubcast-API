@@ -57,7 +57,6 @@ public class ParserScServiceImpl implements ParserService {
         return TrackDto.builder()
                 .id(null)
                 .soundcloudUrl(url)
-                .embedCode(response.getHtml())
                 .title(response.getTitle())
                 .durationSeconds(extractDurationSecondsByScraping(url))
                 .artworkUrl(response.getThumbnail_url())
@@ -141,7 +140,6 @@ public class ParserScServiceImpl implements ParserService {
                         .title(title)
                         .durationSeconds(durationMs / 1000)
                         .artworkUrl(artwork)
-                        .embedCode(null)
                         .build();
 
                 result.add(dto);

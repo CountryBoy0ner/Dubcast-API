@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class PlaylistScheduleResponse {
+public class   PlaylistScheduleResponse {
     private PlaylistDto playlist;
     private List<ScheduleEntryDto> scheduleEntries;
 }

@@ -11,9 +11,5 @@ public class NowPlayingResponse {
     private String artworkUrl;
     private Instant startedAt;
     private int durationSeconds;
-
-    // НОВОЕ
-    private String trackUrl;      // track.getScUrl()
-
-    // можно оставить playlistEmbedCode / playlistIndex, но фронт их больше не будет трогать
+    private String trackUrl;
 }
