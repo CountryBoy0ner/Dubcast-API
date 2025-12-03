@@ -3,20 +3,21 @@ package com.Tsimur.Dubcast.service.impl;
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.dto.response.SoundcloudOEmbedResponse;
 import com.Tsimur.Dubcast.service.ParserService;
+import com.Tsimur.Dubcast.service.SoundcloudApiClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -29,10 +30,12 @@ public class ParserScServiceImpl implements ParserService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
-
+    private final SoundcloudApiClient soundcloudApiClient;
 
     @Value("${external.soundcloud.oembed-url:https://soundcloud.com/oembed}")
     private String oEmbedBaseUrl;
+
+    // --- одиночный трек -----------------------------------------------------
 
     @Override
     public TrackDto parseTracksByUrl(String url) {
@@ -43,32 +46,58 @@ public class ParserScServiceImpl implements ParserService {
                 .toUriString();
 
         SoundcloudOEmbedResponse response;
-
         try {
             response = restTemplate.getForObject(oEmbedUrl, SoundcloudOEmbedResponse.class);
         } catch (RestClientException ex) {
-            throw new RuntimeException("Failed to call SoundCloud oEmbed API: " + oEmbedUrl, ex); // todo custom Exception
+            throw new RuntimeException("Failed to call SoundCloud oEmbed API: " + oEmbedUrl, ex);
         }
 
         if (response == null) {
-            throw new RuntimeException("Empty response from SoundCloud oEmbed API for url: " + url); // todo custom Exception
+            throw new RuntimeException("Empty response from SoundCloud oEmbed API for url: " + url);
         }
+
+        Integer duration = getDurationSecondsByUrl(url);
 
         return TrackDto.builder()
                 .id(null)
                 .soundcloudUrl(url)
                 .title(response.getTitle())
-                .durationSeconds(extractDurationSecondsByScraping(url))
+                .durationSeconds(duration)
                 .artworkUrl(response.getThumbnail_url())
                 .build();
     }
 
     @Override
     public Integer getDurationSecondsByUrl(String url) {
-        return extractDurationSecondsByScraping(url);
+        String cleanUrl = url;
+        int qIdx = url.indexOf('?');
+        if (qIdx > 0) {
+            cleanUrl = url.substring(0, qIdx);
+        }
+
+        try {
+            JsonNode node = soundcloudApiClient.resolveByUrl(cleanUrl);
+
+            int durationMs = node.path("duration").asInt(0);
+            if (durationMs > 0) {
+                return durationMs / 1000;
+            }
+            log.warn("resolveByUrl ok, but duration is 0 or missing. url={}", cleanUrl);
+        } catch (Exception e) {
+            log.warn("resolveByUrl failed, fallback to HTML scraping. url={}", cleanUrl, e);
+        }
+
+        Integer scraped = extractDurationSecondsByScraping(cleanUrl);
+        if (scraped != null) {
+            return scraped;
+        }
+
+        throw new IllegalStateException("Cannot determine duration for url: " + url);
     }
 
-    @Override
+
+    // --- плейлист -----------------------------------------------------------
+
     public List<TrackDto> parsePlaylistByUrl(String playlistUrl) {
         List<TrackDto> result = new ArrayList<>();
 
@@ -82,7 +111,7 @@ public class ParserScServiceImpl implements ParserService {
                             "Chrome/120.0.0.0 Safari/537.36"));
 
             Page page = context.newPage();
-            page.setDefaultTimeout(15_000);
+            page.setDefaultTimeout(30_000);
 
             System.out.println("[SCRAPER] goto " + playlistUrl);
             page.navigate(playlistUrl);
@@ -118,41 +147,94 @@ public class ParserScServiceImpl implements ParserService {
                 return result;
             }
 
+            System.out.println("[SCRAPER] playlist.tracks size = " + tracks.size());
+
+            int index = 0;
             for (JsonNode t : tracks) {
-                String policy = t.path("policy").asText("ALLOW");
-                if (!"ALLOW".equals(policy)) {
-                    continue;
+                long id = t.path("id").asLong(0);
+                boolean hasUrl = t.hasNonNull("permalink_url");
+                boolean hasTitle = t.hasNonNull("title");
+                boolean hasDuration = t.has("duration") && t.get("duration").asInt(0) > 0;
+
+                System.out.printf(
+                        "[SCRAPER] track[%d] id=%d hasUrl=%s hasTitle=%s hasDuration=%s%n",
+                        index++, id, hasUrl, hasTitle, hasDuration
+                );
+
+                TrackDto dto = buildTrackFromNodeOrFetch(t);
+                if (dto != null) {
+                    System.out.println("[SCRAPER]   => OK: " + dto.getTitle());
+                    result.add(dto);
+                } else {
+                    System.out.println("[SCRAPER]   => SKIPPED");
                 }
-
-                String url = t.path("permalink_url").asText(null);
-                String title = t.path("title").asText(null);
-                int durationMs = t.path("duration").asInt(0);
-
-                if (url == null || title == null || durationMs <= 0) {
-                    continue;
-                }
-
-                String artwork = t.path("artwork_url").asText(null);
-
-                TrackDto dto = TrackDto.builder()
-                        .id(null)
-                        .soundcloudUrl(url)
-                        .title(title)
-                        .durationSeconds(durationMs / 1000)
-                        .artworkUrl(artwork)
-                        .build();
-
-                result.add(dto);
             }
 
             browser.close();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("Failed to parse playlist via Playwright", e);
         }
 
         System.out.println("[SCRAPER] parsed tracks: " + result.size());
         return result;
     }
+
+    private TrackDto buildTrackFromNodeOrFetch(JsonNode t) {
+        long id = t.path("id").asLong(0);
+
+        String url     = t.path("permalink_url").asText(null);
+        String title   = t.path("title").asText(null);
+        int durationMs = t.path("duration").asInt(0);
+        String artwork = t.path("artwork_url").asText(null);
+
+        boolean hasEnough = url != null && title != null && durationMs > 0;
+
+        if (!hasEnough && id != 0) {
+            System.out.println("[SCRAPER]   stub track id=" + id + " -> fetching full JSON via api-v2...");
+            try {
+                JsonNode full = soundcloudApiClient.getTrack(id);
+
+                if (url == null) {
+                    url = full.path("permalink_url").asText(null);
+                }
+                if (title == null) {
+                    title = full.path("title").asText(null);
+                }
+                if (durationMs <= 0) {
+                    durationMs = full.path("duration").asInt(0);
+                }
+                if (artwork == null || artwork.isBlank()) {
+                    artwork = full.path("artwork_url").asText(null);
+                }
+
+                hasEnough = url != null && title != null && durationMs > 0;
+                if (!hasEnough) {
+                    System.out.println("[SCRAPER]   still not enough data for id=" + id + " -> skip");
+                    return null;
+                }
+
+            } catch (Exception e) {
+                System.out.println("[SCRAPER]   exception while fetching track id=" + id + ": " + e.getMessage());
+                return null;
+            }
+        }
+
+        if (!hasEnough) {
+            System.out.println("[SCRAPER]   not enough data for id=" + id + " -> skip");
+            return null;
+        }
+
+        return TrackDto.builder()
+                .id(null)
+                .soundcloudUrl(url)
+                .title(title)
+                .durationSeconds(durationMs / 1000)
+                .artworkUrl(artwork)
+                .build();
+    }
+
+    // --- oEmbed html (для фронта) ------------------------------------------
 
     @Override
     public String fetchOEmbedHtml(String url) {
@@ -173,49 +255,32 @@ public class ParserScServiceImpl implements ParserService {
             throw new RuntimeException("Empty response from SoundCloud oEmbed API for url: " + url);
         }
 
-        log.info("ParserScServiceImpl embed ----->  "+ response.getHtml());
-
+        log.info("ParserScServiceImpl embed -----> {}", response.getHtml());
         return response.getHtml();
     }
 
-
-    private Integer parseIsoDurationToSeconds(String iso) {
-        if (iso == null || iso.isBlank()) {
-            return null;
-        }
-        try {
-            Duration d = Duration.parse(iso);
-            long seconds = d.getSeconds();
-            if (seconds > 0 && seconds < 8 * 60 * 60) {
-                return (int) seconds;
-            }
-        } catch (Exception ignored) {
-        }
-        return null;
-    }
-
+    // --- старый HTML-скрейпер длительности (fallback) ----------------------
+    @Deprecated
     private Integer extractDurationSecondsByScraping(String trackUrl) {
         try {
             Document doc = Jsoup.connect(trackUrl)
-                    .userAgent("Mozilla/5.0 DubcastBot")
-                    .timeout(10000)
+                    .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+                            "AppleWebKit/537.36 (KHTML, like Gecko) " +
+                            "Chrome/120.0.0.0 Safari/537.36")
+                    .referrer("https://soundcloud.com/")
+                    .timeout(15000)
                     .get();
 
+            // 1) meta itemprop=duration (ISO 8601)
             Element durationMeta = doc.selectFirst("noscript article meta[itemprop=duration]");
             if (durationMeta != null) {
-                String iso = durationMeta.attr("content");
-                if (iso != null && !iso.isBlank()) {
-                    try {
-                        Duration d = Duration.parse(iso);
-                        long seconds = d.getSeconds();
-                        if (seconds > 0 && seconds < 8 * 60 * 60) {
-                            return (int) seconds;
-                        }
-                    } catch (Exception ignored) {
-                    }
+                Integer seconds = parseIsoDurationToSeconds(durationMeta.attr("content"));
+                if (seconds != null) {
+                    return seconds;
                 }
             }
 
+            // 2) перебор <script> с поиском "duration": <millis>
             for (Element script : doc.select("script")) {
                 String data = script.data();
                 if (data == null || data.isEmpty()) {
@@ -245,7 +310,23 @@ public class ParserScServiceImpl implements ParserService {
             }
             return null;
         } catch (Exception e) {
+            log.warn("HTML duration scrape failed for url={}", trackUrl, e);
             return null;
         }
+    }
+
+    private Integer parseIsoDurationToSeconds(String iso) {
+        if (iso == null || iso.isBlank()) {
+            return null;
+        }
+        try {
+            Duration d = Duration.parse(iso);
+            long seconds = d.getSeconds();
+            if (seconds > 0 && seconds < 8 * 60 * 60) {
+                return (int) seconds;
+            }
+        } catch (Exception ignored) {
+        }
+        return null;
     }
 }
