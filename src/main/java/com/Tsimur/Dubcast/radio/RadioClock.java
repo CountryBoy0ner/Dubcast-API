@@ -15,7 +15,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
 import java.util.Optional;
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -28,17 +27,29 @@ public class RadioClock {
 
     @EventListener
     public void onScheduleUpdated(ScheduleUpdatedEvent event) {
-        log.debug("[RadioClock] Schedule updated from {}", event.effectiveFrom());
-        recalcAndPublish(event.effectiveFrom());
+        OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
+
+        // Если изменения только в будущем — текущий трек трогать не надо
+        if (event.effectiveFrom().isAfter(now)) {
+            log.debug("[RadioClock] Schedule updated in future ({}), ignore for now",
+                    event.effectiveFrom());
+            return;
+        }
+
+        log.debug("[RadioClock] Schedule updated from {} → recalc with now={}",
+                event.effectiveFrom(), now);
+
+        recalcAndPublish(now);
     }
 
     @Scheduled(fixedRate = 1000)
     public void tick() {
-        OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC); // важно: те же зоны, что в расписании
+        OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC); // та же зона
         recalcAndPublish(now);
     }
 
     private void recalcAndPublish(OffsetDateTime now) {
+        // если текущий трек ещё не закончился относительно РЕАЛЬНОГО now — ничего не делаем
         if (cachedCurrent != null && cachedCurrent.getEndTime().isAfter(now.toInstant())) {
             return;
         }
@@ -47,10 +58,12 @@ public class RadioClock {
         ScheduleEntryDto newCurrent = opt.orElse(null);
 
         if (newCurrent == null && cachedCurrent == null) {
+            // как было пусто, так и пусто — нечего публиковать
             return;
         }
 
         if (sameTrack(cachedCurrent, newCurrent)) {
+            // ID трека не поменялся — тоже не шлём событие
             return;
         }
 

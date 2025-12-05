@@ -1,9 +1,13 @@
 package com.Tsimur.Dubcast.service;
 
+import com.Tsimur.Dubcast.dto.AdminScheduleSlotDto;
 import com.Tsimur.Dubcast.dto.PlaylistDto;
 import com.Tsimur.Dubcast.dto.PlaylistTrackDto;
 import com.Tsimur.Dubcast.dto.TrackDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PlaylistService {
@@ -22,10 +26,10 @@ public interface PlaylistService {
 
     PlaylistTrackDto addTrack(Long playlistId, Long trackId);
 
-//    void removeTrack(Long playlistId, Long playlistTrackId); // todo add
 //
-//    void moveTrack(Long playlistId, Long playlistTrackId, int newPosition);
 
     PlaylistDto importPlaylistFromUrl(String playlistUrl);
+
+
 
 }

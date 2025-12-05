@@ -25,3 +25,9 @@ databaseChangeLog:
 
   - includeAll:
       path: db/changelog/V1.9
+
+  - includeAll:
+      path: db/changelog/V2.0
+
+  - includeAll:
+      path: db/changelog/V2.1

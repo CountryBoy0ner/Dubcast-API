@@ -1,7 +1,10 @@
 package com.Tsimur.Dubcast.service;
 
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -18,15 +21,22 @@ public interface ScheduleEntryService {
 
     void delete(Long id);
 
-    @Deprecated
-    ScheduleEntryDto scheduleAt(Long trackId, OffsetDateTime startTime);
-
-    @Deprecated
-    ScheduleEntryDto scheduleNow(Long trackId);
 
     Optional<ScheduleEntryDto> getCurrent(OffsetDateTime now);
 
     Optional<ScheduleEntryDto> getNext(OffsetDateTime now);
+
+    Optional<ScheduleEntryDto> getPrevious(OffsetDateTime now);
+
+
+    List<ScheduleEntryDto> getRange(OffsetDateTime from, OffsetDateTime to);
+
+    List<ScheduleEntryDto> getDay(LocalDate date);
+
+
+    Page<ScheduleEntryDto> getRangePage(OffsetDateTime from, OffsetDateTime to, Pageable pageable);
+
+    Page<ScheduleEntryDto> getDayPage(LocalDate date, Pageable pageable);
 
 
 }

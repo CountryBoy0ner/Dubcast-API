@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-05__drop-unused-columns
+      author: tsimur
+      changes:
+
+        - sql:
+            sql: |
+              DROP MATERIALIZED VIEW IF EXISTS mv_today_schedule;
+        - sql:
+            sql: |
+              DROP VIEW IF EXISTS v_now_playing;
+
+        - dropColumn:
+            columnName: embed_code
+            tableName: tracks
+
+        - dropColumn:
+            columnName: offset_seconds
+            tableName: playlist_tracks
+
+        - dropColumn:
+            columnName: custom_duration_seconds
+            tableName: playlist_tracks
+
+        - dropColumn:
+            columnName: scheduled_date
+            tableName: playlists
+
+        - sql: |
+            CREATE VIEW v_now_playing AS
+            SELECT
+                se.id          AS schedule_entry_id,
+                se.start_time,
+                se.end_time,
+                t.id           AS track_id,
+                t.title,
+                t.sc_url,
+                t.artwork_url
+            FROM schedule_entries se
+            JOIN tracks t ON t.id = se.track_id
+            WHERE now() BETWEEN se.start_time AND se.end_time;
+
+        - sql: |
+            CREATE MATERIALIZED VIEW mv_today_schedule AS
+            SELECT
+                se.id          AS schedule_entry_id,
+                se.start_time,
+                se.end_time,
+                t.id           AS track_id,
+                t.title,
+                t.sc_url
+            FROM schedule_entries se
+            JOIN tracks t ON t.id = se.track_id
+            WHERE se.start_time::date = current_date
+            ORDER BY se.start_time;
+
+        - sql: |
+            CREATE INDEX IF NOT EXISTS idx_mv_today_schedule_time
+              ON mv_today_schedule (start_time, end_time);

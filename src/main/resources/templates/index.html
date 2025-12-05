@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Dubcast Radio</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-
 </head>
 <body>
 <header>
@@ -56,14 +55,12 @@
             </label>
         </div>
 
-        <!-- Контейнер, куда будет вставляться embed-код плейлиста -->
+        <!-- Контейнер, куда будет вставляться embed-код -->
         <div id="sc-player-wrapper" style="margin-top: 10px;">
-            <!-- сюда js подставит playlistEmbedCode -->
+            <!-- сюда js подставит iframe -->
         </div>
     </section>
 </main>
-
-
 
 <!-- SockJS + STOMP -->
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
@@ -78,7 +75,7 @@
     let stompClient = null;
     let radioStarted = false;      // пользователь нажал Start radio?
     let currentPayload = null;     // NowPlayingResponse
-    let scWidget = null;           // SC.Widget одного трека
+    let scWidget = null;           // SC.Widget
     let userVolume = 70;
 
     const playlistTitleEl = document.getElementById('playlist-title');
@@ -112,6 +109,7 @@
 
     showPlayerCheckbox.addEventListener('change', function () {
         playerWrapper.style.display = this.checked ? 'block' : 'none';
+        console.log('[UI] toggle iframe visible =', this.checked);
     });
 
     // ----------- UI UPDATE -----------
@@ -136,16 +134,13 @@
 
         titleEl.innerText = 'Now playing: ' + (payload.title || 'unknown track');
 
-        // PLAYLIST
-        currentPlaylistId = payload.playlistTitle ? 1 : null; // не важно, просто пример
+        currentPlaylistId = payload.playlistTitle ? 1 : null; // просто пример
         if (payload.playlistTitle) {
             playlistTitleEl.innerText = 'Playlist: ' + payload.playlistTitle;
         } else {
             playlistTitleEl.innerText = 'Playlist: none';
         }
     }
-
-    // PLAYLIST
 
     // ----------- HELPERS -----------
 
@@ -174,8 +169,6 @@
             return;
         }
 
-        // Заглушка: любой публичный трек, чтобы инициализировать iframe.
-        // Потом мы всегда будем делать widget.load(payload.trackUrl)
         const placeholderTrack = 'https://soundcloud.com/ppjrecordings/ontology-maximum-ruffness-krave-remix';
 
         const src = 'https://w.soundcloud.com/player'
@@ -197,18 +190,48 @@
 
         const iframe = document.getElementById('sc-widget');
         scWidget = SC.Widget(iframe);
+
         console.log('[SC] widget created with placeholder');
 
         scWidget.bind(SC.Widget.Events.READY, function () {
-            console.log('[SC] READY event');
+            console.log('[SC] READY');
+            // на всякий случай сразу выставим громкость
+            scWidget.setVolume(userVolume);
         });
 
         scWidget.bind(SC.Widget.Events.ERROR, function (e) {
-            console.error('[SC] ERROR event', e);
+            console.error('[SC] ERROR', e);
+        });
+
+        // когда трек закончился, сами узнаём, что сейчас по расписанию
+        scWidget.bind(SC.Widget.Events.FINISH, function () {
+            console.log('[SC] FINISH');
+            if (!radioStarted) {
+                console.log('[SC FINISH] radio not started, ignore');
+                return;
+            }
+
+            fetch('/api/radio/now')
+                .then(r => {
+                    console.log('[SC FINISH] /api/radio/now status =', r.status);
+                    return r.ok ? r.json() : null;
+                })
+                .then(payload => {
+                    console.log('[SC FINISH] payload =', payload);
+                    if (!payload || !payload.playing) {
+                        console.log('[SC FINISH] nothing playing');
+                        return;
+                    }
+                    currentPayload = payload;
+                    updateUiFromPayload(payload);
+                    loadAndPlayFromPayload(payload);
+                })
+                .catch(err => console.error('[SC FINISH] error', err));
         });
     }
 
-    // Загрузить конкретный трек по URL и перейти на нужную позицию
+    // ----------- LOAD & PLAY (фикс громкости) -----------
+
     function loadAndPlayFromPayload(payload) {
         if (!payload || !payload.playing) {
             console.log('[Radio] loadAndPlay: nothing playing in payload');
@@ -228,13 +251,14 @@
         const url = payload.trackUrl;
         const posMs = computeTrackPositionMs(payload);
 
-        console.log('[Radio] widget.load(url, auto_play=true) url =', url, 'posMs =', posMs);
+        console.log('[Radio] widget.load url =', url, 'posMs =', posMs, 'userVolume =', userVolume);
 
+        // КЛЮЧ: выставляем громкость в callback-е load → для каждого трека
         scWidget.load(url, {
             auto_play: true,
             visual: true,
             callback: function () {
-                console.log('[SC] load() callback, seekTo', posMs, 'ms, setVolume', userVolume);
+                console.log('[SC] load callback, setVolume', userVolume, 'seekTo', posMs);
                 scWidget.setVolume(userVolume);
                 if (posMs > 0) {
                     scWidget.seekTo(posMs);
@@ -249,6 +273,7 @@
         try {
             console.log('[REST] GET /api/radio/now for UI');
             const resp = await fetch('/api/radio/now');
+            console.log('[REST] /api/radio/now status =', resp.status);
             if (resp.status === 204) {
                 console.log('[REST] 204 No Content');
                 currentPayload = null;
@@ -262,7 +287,7 @@
             const payload = await resp.json();
             console.log('[REST] initial payload', payload);
             currentPayload = payload;
-            updateUiFromPayload(payload);   // только UI, звук не трогаем
+            updateUiFromPayload(payload);   // только UI
         } catch (e) {
             console.error('[REST] current-for-ui error', e);
         }
@@ -283,15 +308,16 @@
             if (!currentPayload) {
                 console.log('[Radio] no currentPayload, fetch now');
                 const resp = await fetch('/api/radio/now');
+                console.log('[Radio] /api/radio/now (start) status =', resp.status);
                 if (resp.status === 204 || !resp.ok) {
-                    console.log('[REST] no current track on start, status =', resp.status);
+                    console.log('[REST] no current track on start');
                     return;
                 }
                 currentPayload = await resp.json();
             }
 
             updateUiFromPayload(currentPayload);
-            loadAndPlayFromPayload(currentPayload); // ВАЖНО: это внутри клика, браузер это считает жестом пользователя
+            loadAndPlayFromPayload(currentPayload);
         } catch (e) {
             console.error('[Radio] start-radio exception', e);
         }
@@ -332,7 +358,6 @@
             return;
         }
 
-        // Новый трек по расписанию → грузим его
         loadAndPlayFromPayload(payload);
     }
 
@@ -344,7 +369,6 @@
         fetchCurrentForUiOnly();
     });
 </script>
-
 
 </body>
 </html>

@@ -1,20 +1,23 @@
 package com.Tsimur.Dubcast.service.impl;
 
+import com.Tsimur.Dubcast.config.RadioTimeConfig;
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
-import com.Tsimur.Dubcast.exception.type.ScheduleOverlapException;
 import com.Tsimur.Dubcast.mapper.ScheduleEntryMapper;
 import com.Tsimur.Dubcast.model.ScheduleEntry;
-import com.Tsimur.Dubcast.model.Track;
 import com.Tsimur.Dubcast.repository.ScheduleEntryRepository;
 import com.Tsimur.Dubcast.repository.TrackRepository;
 import com.Tsimur.Dubcast.service.ScheduleEntryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +29,8 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     private final ScheduleEntryRepository scheduleEntryRepository;
     private final ScheduleEntryMapper scheduleEntryMapper;
     private final TrackRepository trackRepository;
+    private final RadioTimeConfig radioTimeConfig;
+
 
     @Override
     public ScheduleEntryDto create(ScheduleEntryDto dto) {
@@ -55,9 +60,7 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     public ScheduleEntryDto update(Long id, ScheduleEntryDto dto) {
         ScheduleEntry existing = scheduleEntryRepository.findById(id)
                 .orElseThrow(() -> NotFoundException.of("Schedule", "id", id));
-
         scheduleEntryMapper.updateEntityFromDto(dto, existing);
-
         ScheduleEntry saved = scheduleEntryRepository.save(existing);
         return scheduleEntryMapper.toDto(saved);
     }
@@ -65,47 +68,14 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     @Override
     public void delete(Long id) {
         if (!scheduleEntryRepository.existsById(id)) {
-            throw  NotFoundException.of("Schedule", "id", id);
+            throw NotFoundException.of("Schedule", "id", id);
         }
         scheduleEntryRepository.deleteById(id);
     }
 
-    @Override
-    public ScheduleEntryDto scheduleAt(Long trackId, OffsetDateTime startTime) {
-        Track track = trackRepository.findById(trackId)
-                .orElseThrow(() -> new NotFoundException("Track not found"));
-
-        OffsetDateTime endTime = startTime.plusSeconds(track.getDurationSeconds());
-
-        boolean overlaps = scheduleEntryRepository.existsOverlap(startTime, endTime);
-        if (overlaps) {
-            throw new ScheduleOverlapException("Time slot is already taken"); //todo
-        }
-
-        ScheduleEntry entry = ScheduleEntry.builder()
-                .track(track)
-                .startTime(startTime)
-                .endTime(endTime)
-                .createdAt(OffsetDateTime.now())
-                .build();
-
-        return scheduleEntryMapper.toDto(scheduleEntryRepository.save(entry));
-    }
-
 
     @Override
-    public ScheduleEntryDto scheduleNow(Long trackId) {
-        OffsetDateTime now = OffsetDateTime.now();
-
-        OffsetDateTime startTime = scheduleEntryRepository.findLastEndTimeAfter(now)
-                .orElse(now);
-
-        return scheduleAt(trackId, startTime);
-    }
-
-
-    @Override
-    public Optional<ScheduleEntryDto> getCurrent(OffsetDateTime now) {
+    public Optional<ScheduleEntryDto> getCurrent(OffsetDateTime now) { //todo добавить exception if null(подумать надо ли добавлять вообщзе)
         return scheduleEntryRepository.findCurrent(now).map(scheduleEntryMapper::toDto);
     }
 
@@ -117,4 +87,47 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
                 .map(scheduleEntryMapper::toDto);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<ScheduleEntryDto> getPrevious(OffsetDateTime now) {
+        return scheduleEntryRepository.findPrevious(now, PageRequest.of(0, 1))
+                .stream()
+                .findFirst()
+                .map(scheduleEntryMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScheduleEntryDto> getRange(OffsetDateTime from, OffsetDateTime to) {
+        List<ScheduleEntry> entries =
+                scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(from, to);
+        return scheduleEntryMapper.toDtoList(entries);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScheduleEntryDto> getDay(LocalDate date) {
+        ZoneId zone = radioTimeConfig.getRadioZoneId();
+        OffsetDateTime from = date.atStartOfDay(zone).toOffsetDateTime();
+        OffsetDateTime to   = from.plusDays(1);
+        return getRange(from, to);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ScheduleEntryDto> getRangePage(OffsetDateTime from, OffsetDateTime to, Pageable pageable) {
+        Page<ScheduleEntry> page =
+                scheduleEntryRepository.findPageByStartTimeBetweenOrderByStartTime(from, to, pageable);
+        return page.map(scheduleEntryMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ScheduleEntryDto> getDayPage(LocalDate date, Pageable pageable) {
+        ZoneId zone = radioTimeConfig.getRadioZoneId();
+        OffsetDateTime from = date.atStartOfDay(zone).toOffsetDateTime();
+        OffsetDateTime to   = from.plusDays(1);
+        return getRangePage(from, to, pageable);
+    }
 }

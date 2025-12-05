@@ -28,8 +28,6 @@ public class Playlist {
     @Column(name = "sc_playlist_url", length = 500)
     private String scPlaylistUrl;
 
-    @Column(name = "scheduled_date")
-    private LocalDate scheduledDate;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

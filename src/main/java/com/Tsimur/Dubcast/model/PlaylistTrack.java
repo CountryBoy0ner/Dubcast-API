@@ -38,9 +38,4 @@ public class PlaylistTrack {
     @Column(nullable = false)
     private Integer position;
 
-    @Column(name = "offset_seconds")
-    private Integer offsetSeconds;
-
-    @Column(name = "custom_duration_seconds")
-    private Integer customDurationSeconds;
 }

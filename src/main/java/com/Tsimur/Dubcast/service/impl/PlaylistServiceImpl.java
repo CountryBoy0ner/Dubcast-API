@@ -1,25 +1,32 @@
 package com.Tsimur.Dubcast.service.impl;
 
-import com.Tsimur.Dubcast.dto.PlaylistDto;
-import com.Tsimur.Dubcast.dto.PlaylistTrackDto;
-import com.Tsimur.Dubcast.dto.TrackDto;
+import com.Tsimur.Dubcast.dto.*;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import com.Tsimur.Dubcast.mapper.PlaylistMapper;
 import com.Tsimur.Dubcast.mapper.PlaylistTrackMapper;
+import com.Tsimur.Dubcast.mapper.TrackMapper;
 import com.Tsimur.Dubcast.model.Playlist;
 import com.Tsimur.Dubcast.model.PlaylistTrack;
+import com.Tsimur.Dubcast.model.ScheduleEntry;
 import com.Tsimur.Dubcast.model.Track;
 import com.Tsimur.Dubcast.repository.PlaylistRepository;
 import com.Tsimur.Dubcast.repository.PlaylistTrackRepository;
+import com.Tsimur.Dubcast.repository.ScheduleEntryRepository;
 import com.Tsimur.Dubcast.repository.TrackRepository;
 import com.Tsimur.Dubcast.service.ParserService;
 import com.Tsimur.Dubcast.service.PlaylistService;
+import com.Tsimur.Dubcast.service.ScheduleEntryService;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Javadoc;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,13 +39,12 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     private final PlaylistMapper playlistMapper;
     private final PlaylistTrackMapper playlistTrackMapper;
-    private final ParserService parserService;   // НОВОЕ
-
-
+    private final ParserService parserService;
+    private final ScheduleEntryRepository scheduleEntryRepository;
 
     @Override
     public PlaylistDto create(PlaylistDto dto) {
-      return playlistMapper.toDto(playlistRepository.save(playlistMapper.toEntity(dto)));
+        return playlistMapper.toDto(playlistRepository.save(playlistMapper.toEntity(dto)));
     }
 
     @Override
@@ -57,10 +63,13 @@ public class PlaylistServiceImpl implements PlaylistService {
                 .toList();
     }
 
-    @Override
-    public void delete(Long id) {
-        Playlist playlist = getPlaylistOrThrow(id);
-        playlistTrackRepository.deleteAll(playlistTrackRepository.findByPlaylistIdOrderByPositionAsc(id)); // todo
+    @Transactional
+    public void delete(Long playlistId) {
+        Playlist playlist = getPlaylistOrThrow(playlistId);
+
+        scheduleEntryRepository.deleteByPlaylistIdAndStartTimeAfter(
+                playlistId, OffsetDateTime.now()
+        );
 
         playlistRepository.delete(playlist);
     }
@@ -97,10 +106,13 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
 
-
     @Override
     @Transactional
     public PlaylistDto importPlaylistFromUrl(String playlistUrl) {
+        if (playlistRepository.findByScPlaylistUrl(playlistUrl).isPresent()) {
+            throw new IllegalArgumentException("Playlist already exists: " + playlistUrl);
+        }
+
         List<TrackDto> parsedTracks = parserService.parsePlaylistByUrl(playlistUrl);
         if (parsedTracks == null || parsedTracks.isEmpty()) {
             throw new IllegalArgumentException("Playlist is empty or cannot be parsed: " + playlistUrl);
@@ -111,9 +123,7 @@ public class PlaylistServiceImpl implements PlaylistService {
                 .name(playlistName)
                 .scPlaylistUrl(playlistUrl)
                 .build();
-        if (playlistRepository.findByScPlaylistUrl(playlistUrl).isPresent()){
-            throw new IllegalArgumentException("Playlist already exists: " + playlistUrl);
-        }
+
 
         playlist = playlistRepository.save(playlist);
 
@@ -161,7 +171,6 @@ public class PlaylistServiceImpl implements PlaylistService {
             return url;
         }
     }
-
 
 
     private Playlist getPlaylistOrThrow(Long id) {
