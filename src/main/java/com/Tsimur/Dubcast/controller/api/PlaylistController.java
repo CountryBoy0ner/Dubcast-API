@@ -23,13 +23,11 @@ public class PlaylistController {
         return ResponseEntity.ok(playlistService.getAll());
     }
 
-    // один плейлист по id
     @GetMapping("/{id}")
     public ResponseEntity<PlaylistDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(playlistService.getById(id));
     }
 
-    // удалить плейлист + все его PlaylistTrack (через каскад)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         playlistService.delete(id);

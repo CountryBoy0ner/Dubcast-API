@@ -9,10 +9,14 @@ import com.Tsimur.Dubcast.model.Track;
 import com.Tsimur.Dubcast.repository.TrackRepository;
 import com.Tsimur.Dubcast.service.TrackService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +68,23 @@ public class TrackServiceImpl implements TrackService {
             throw NotFoundException.of("Track", "id", id);
         }
         trackRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<TrackDto> getRandomTrack() {
+        long total = trackRepository.count();
+        if (total == 0) {
+            return Optional.empty();
+        }
+
+        int index = ThreadLocalRandom.current().nextInt((int) total);
+
+        Page<Track> page = trackRepository.findAll(PageRequest.of(index, 1));
+
+        return page.stream()
+                .findFirst()
+                .map(trackMapper::toDto);
     }
 
 

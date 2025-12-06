@@ -3,6 +3,7 @@ package com.Tsimur.Dubcast.service;
 import com.Tsimur.Dubcast.dto.TrackDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TrackService {
 
@@ -15,6 +16,8 @@ public interface TrackService {
     TrackDto update(Long id, TrackDto dto);
 
     void delete(Long id);
+
+    Optional<TrackDto> getRandomTrack();
 
 
 

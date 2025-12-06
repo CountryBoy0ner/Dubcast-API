@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-06-user-profile-fields
+      author: tsimur
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: bio
+                  type: varchar(512)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: username
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: username
+            constraintName: uq_users_username

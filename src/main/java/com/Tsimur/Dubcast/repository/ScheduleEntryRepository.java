@@ -92,4 +92,6 @@ public interface ScheduleEntryRepository extends JpaRepository<ScheduleEntry, Lo
             Pageable pageable
     );
 
+
+
 }

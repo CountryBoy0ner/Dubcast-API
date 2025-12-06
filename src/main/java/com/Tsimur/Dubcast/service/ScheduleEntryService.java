@@ -39,4 +39,21 @@ public interface ScheduleEntryService {
     Page<ScheduleEntryDto> getDayPage(LocalDate date, Pageable pageable);
 
 
+    ScheduleEntryDto appendTrackToTail(Long id);
+
+
+    void deleteSlotAndRebuildDay(Long slotId);
+
+    ScheduleEntryDto insertTrackIntoDay(LocalDate date, Long trackId, int position);
+
+    ScheduleEntryDto changeTrackInSlot(Long slotId, Long newTrackId);
+
+    void reorderDay(LocalDate date, List<Long> orderedIds);
+
+    List<ScheduleEntryDto> appendPlaylistToTail(Long playlistId);
+
+
+
+
+
 }

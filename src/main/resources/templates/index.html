@@ -1,62 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Dubcast Radio</title>
+
+    <!-- основной стиль -->
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
-<body>
-<header>
-    <a href="/">Dubcast</a>
+<body class="page">
 
-    <div>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
-        <a href="/profile">Profile</a>
+<header class="header">
+    <div class="header__inner">
+        <a href="/" class="logo">Dubcast</a>
+
+        <nav class="nav">
+            <a href="/login" class="nav__link">Login</a>
+            <a href="/register" class="nav__link">Register</a>
+            <a href="/profile" class="nav__link">Profile</a>
+        </nav>
     </div>
 </header>
 
-<main>
-    <h1>Online radio</h1>
+<main class="main">
+    <section class="now-playing">
+        <h2 class="now-playing__title">Now playing</h2>
 
-    <section style="margin-top: 20px;">
-        <h2>Now playing</h2>
+        <div class="now-playing__content">
+            <!-- Обложка -->
+            <div class="now-playing__artwork-wrapper">
+                <img
+                        id="artwork"
+                        class="now-playing__artwork"
+                        src=""
+                        alt="Artwork"
+                        style="display: none;">
+            </div>
 
-        <!-- Обложка -->
-        <div>
-            <img id="artwork"
-                 src=""
-                 alt="Artwork"
-                 style="max-width: 200px; display: none;">
+            <!-- Информация о треке -->
+            <div class="now-playing__info">
+                <p id="track-title" class="now-playing__track">
+                    Now playing: nothing right now.
+                </p>
+                <p id="playlist-title" class="now-playing__playlist">
+                    Playlist: none
+                </p>
+            </div>
         </div>
 
-        <!-- Название трека -->
-        <p id="track-title">Now playing: nothing right now.</p>
-        <p id="playlist-title" style="margin-top: 4px; color: #666;">
-            Playlist: none
-        </p>
-
-        <!-- Кнопка старт радиостанции -->
-        <button id="start-radio-btn" style="margin-top: 10px;">
-            Start radio
-        </button>
+        <!--
+            Кнопка "плей/пауза" — должна быть круглой, как в аудиоплеерах.
+            Дизайн и круглую форму потом задавать через CSS по классам .btn / .btn--round / .btn--active
+        -->
+        <div class="now-playing__controls">
+            <button id="start-radio-btn" class="btn btn--primary btn--round">
+                Start radio
+            </button>
+        </div>
 
         <!-- Громкость -->
-        <div style="margin-top: 10px;">
-            <label for="volume-range">Volume:</label>
-            <input type="range" id="volume-range" min="0" max="100" step="1">
+        <div class="now-playing__volume">
+            <label for="volume-range" class="now-playing__volume-label">Volume:</label>
+            <input
+                    type="range"
+                    id="volume-range"
+                    class="now-playing__volume-range"
+                    min="0"
+                    max="100"
+                    step="1">
         </div>
 
         <!-- Debug: показывать / скрывать реальный плеер -->
-        <div style="margin-top: 10px;">
-            <label>
+        <div class="now-playing__debug">
+            <label class="now-playing__debug-label">
                 <input type="checkbox" id="show-player-checkbox" checked>
                 Show SoundCloud player (debug)
             </label>
         </div>
 
         <!-- Контейнер, куда будет вставляться embed-код -->
-        <div id="sc-player-wrapper" style="margin-top: 10px;">
+        <div id="sc-player-wrapper" class="now-playing__player-wrapper">
             <!-- сюда js подставит iframe -->
         </div>
     </section>
@@ -71,9 +93,9 @@
 
 <script>
     // ----------- STATE -----------
+    let radioEnabled = false;      // радио включено пользователем или нет (тоггл)
     let currentPlaylistId = null;
     let stompClient = null;
-    let radioStarted = false;      // пользователь нажал Start radio?
     let currentPayload = null;     // NowPlayingResponse
     let scWidget = null;           // SC.Widget
     let userVolume = 70;
@@ -193,9 +215,8 @@
 
         console.log('[SC] widget created with placeholder');
 
-        scWidget.bind(SC.Widget.Events.READY, function () {
+        scWidget.bind(SC.Widget.Events.ready, function () {
             console.log('[SC] READY');
-            // на всякий случай сразу выставим громкость
             scWidget.setVolume(userVolume);
         });
 
@@ -206,8 +227,8 @@
         // когда трек закончился, сами узнаём, что сейчас по расписанию
         scWidget.bind(SC.Widget.Events.FINISH, function () {
             console.log('[SC] FINISH');
-            if (!radioStarted) {
-                console.log('[SC FINISH] radio not started, ignore');
+            if (!radioEnabled) {
+                console.log('[SC FINISH] radio OFF, ignore');
                 return;
             }
 
@@ -253,7 +274,6 @@
 
         console.log('[Radio] widget.load url =', url, 'posMs =', posMs, 'userVolume =', userVolume);
 
-        // КЛЮЧ: выставляем громкость в callback-е load → для каждого трека
         scWidget.load(url, {
             auto_play: true,
             visual: true,
@@ -293,16 +313,27 @@
         }
     }
 
-    // ----------- START RADIO BUTTON -----------
+    // ----------- START RADIO BUTTON (TOGGLE) -----------
 
     startBtn.addEventListener('click', async function () {
-        if (radioStarted) return;
+        // переключаем состояние
+        radioEnabled = !radioEnabled;
 
-        radioStarted = true;
-        startBtn.disabled = true;
+        if (!radioEnabled) {
+            // ВЫКЛЮЧЕНИЕ РАДИО
+            console.log('[Radio] turned OFF by user');
+            startBtn.innerText = 'Start radio';
+            startBtn.classList.remove('btn--active'); // визуальное состояние "не играет"
+            if (scWidget) {
+                scWidget.pause();
+            }
+            return;
+        }
+
+        // ВКЛЮЧЕНИЕ РАДИО
+        console.log('[Radio] turned ON by user');
         startBtn.innerText = 'Radio is playing';
-
-        console.log('[Radio] Start button clicked');
+        startBtn.classList.add('btn--active'); // визуальное состояние "играет"
 
         try {
             if (!currentPayload) {
@@ -311,15 +342,24 @@
                 console.log('[Radio] /api/radio/now (start) status =', resp.status);
                 if (resp.status === 204 || !resp.ok) {
                     console.log('[REST] no current track on start');
+                    // откатываем состояние, т.к. по факту ничего не играет
+                    radioEnabled = false;
+                    startBtn.innerText = 'Start radio';
+                    startBtn.classList.remove('btn--active');
                     return;
                 }
                 currentPayload = await resp.json();
             }
 
             updateUiFromPayload(currentPayload);
+            // ВАЖНО: при каждом включении пересчитываем позицию по startedAt
             loadAndPlayFromPayload(currentPayload);
         } catch (e) {
             console.error('[Radio] start-radio exception', e);
+            // на всякий случай откат кнопки
+            radioEnabled = false;
+            startBtn.innerText = 'Start radio';
+            startBtn.classList.remove('btn--active');
         }
     });
 
@@ -349,8 +389,8 @@
         currentPayload = payload;
         updateUiFromPayload(payload);
 
-        if (!radioStarted) {
-            console.log('[Radio] not started yet, just update UI');
+        if (!radioEnabled) {
+            console.log('[Radio] OFF, just update UI (no sound)');
             return;
         }
         if (!payload.playing) {

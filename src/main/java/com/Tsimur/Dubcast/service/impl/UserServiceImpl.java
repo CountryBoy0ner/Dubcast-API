@@ -2,12 +2,14 @@ package com.Tsimur.Dubcast.service.impl;
 
 
 import com.Tsimur.Dubcast.dto.UserDto;
+import com.Tsimur.Dubcast.dto.response.UserProfileResponse;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import com.Tsimur.Dubcast.mapper.UserMapper;
 import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.repository.UserRepository;
 import com.Tsimur.Dubcast.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,5 +89,43 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(rawPassword));
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserProfileResponse getCurrentUserProfile() {
+        User user = getCurrentUserOrThrow();
+
+        return UserProfileResponse.builder()
+                .username(user.getUsername())
+                .bio(user.getBio())
+                .build();
+    }
+
+    @Override
+    public void updateCurrentUserBio(String bio) {
+        User user = getCurrentUserOrThrow();
+        user.setBio(bio);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateCurrentUserUsername(String username) {
+        if (username != null && userRepository.existsByUsername(username)) {
+            throw new IllegalArgumentException("Username is already taken");
+        }
+
+        User user = getCurrentUserOrThrow();
+        user.setUsername(username);
+        userRepository.save(user);
+    }
+
+    private User getCurrentUserOrThrow() {
+        String principal = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        return userRepository.findByEmail(principal)
+                .orElseThrow(() -> new IllegalStateException("Current user not found"));
     }
 }

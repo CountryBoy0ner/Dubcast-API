@@ -1,6 +1,7 @@
 package com.Tsimur.Dubcast.dto;
 
 
+import jakarta.persistence.Column;
 import lombok.*;
 
 import java.time.Instant;
@@ -20,7 +21,13 @@ public class UserDto {
     @Email
     @NotBlank
     private String email;
+
     @NotBlank
     private String role;
+
+    @NotBlank
+    private String username;
+
+    private String bio;
 
 }

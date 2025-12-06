@@ -35,7 +35,6 @@ public class ParserScServiceImpl implements ParserService {
     @Value("${external.soundcloud.oembed-url:https://soundcloud.com/oembed}")
     private String oEmbedBaseUrl;
 
-    // --- одиночный трек -----------------------------------------------------
 
     @Override
     public TrackDto parseTracksByUrl(String url) {

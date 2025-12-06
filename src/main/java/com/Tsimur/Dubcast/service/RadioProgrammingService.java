@@ -19,13 +19,24 @@ public interface RadioProgrammingService { //orchestrator
 
     Optional<ScheduleEntryDto> getPreviousSlot(OffsetDateTime now);
 
-    //List<ScheduleEntryDto> deliteLastSchedules(int quantity);//удаляет из запланированного расписания n последних слотов
-
-    //PlaylistScheduleResponse deliteLastPlayingPlaylist(int quantity);//удаляет из запланированного расписания последний дбавленный плейлист (группу треков с одинаковым playlist id)
 
     PlaylistScheduleResponse appendPlaylistToSchedule(Long playlistId);
 
     ScheduleEntryDto appendTrackToSchedule(Long trackId);
 
-    public Page<AdminScheduleSlotDto> getDaySchedule(LocalDate date, Pageable pageable);
+    Page<AdminScheduleSlotDto> getDaySchedule(LocalDate date, Pageable pageable);
+
+
+    void deleteSlotAndRebuildDay(Long slotId);
+
+    AdminScheduleSlotDto insertTrackIntoDay(LocalDate date,
+                                            Long trackId,
+                                            int position);
+
+
+    AdminScheduleSlotDto changeTrackInSlot(Long slotId, Long newTrackId);
+
+    void reorderDay(LocalDate date, List<Long> orderedIds);
+
+    boolean ensureAutofillIfNeeded(OffsetDateTime now);
 }

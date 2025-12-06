@@ -31,6 +31,12 @@ public class User {
     private Role role;
 
 
+    @Column(name = "bio", length = 512)
+    private String bio;
+
+    @Column(name = "username", length = 50, unique = true)
+    private String username;
+
     @CreationTimestamp
     @Setter(AccessLevel.NONE)
     @Column(nullable = false)

@@ -4,10 +4,8 @@ import com.Tsimur.Dubcast.dto.*;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import com.Tsimur.Dubcast.mapper.PlaylistMapper;
 import com.Tsimur.Dubcast.mapper.PlaylistTrackMapper;
-import com.Tsimur.Dubcast.mapper.TrackMapper;
 import com.Tsimur.Dubcast.model.Playlist;
 import com.Tsimur.Dubcast.model.PlaylistTrack;
-import com.Tsimur.Dubcast.model.ScheduleEntry;
 import com.Tsimur.Dubcast.model.Track;
 import com.Tsimur.Dubcast.repository.PlaylistRepository;
 import com.Tsimur.Dubcast.repository.PlaylistTrackRepository;
@@ -15,18 +13,12 @@ import com.Tsimur.Dubcast.repository.ScheduleEntryRepository;
 import com.Tsimur.Dubcast.repository.TrackRepository;
 import com.Tsimur.Dubcast.service.ParserService;
 import com.Tsimur.Dubcast.service.PlaylistService;
-import com.Tsimur.Dubcast.service.ScheduleEntryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
