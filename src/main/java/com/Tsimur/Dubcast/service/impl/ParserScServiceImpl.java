@@ -271,7 +271,6 @@ public class ParserScServiceImpl implements ParserService {
                     .timeout(15000)
                     .get();
 
-            // 1) meta itemprop=duration (ISO 8601)
             Element durationMeta = doc.selectFirst("noscript article meta[itemprop=duration]");
             if (durationMeta != null) {
                 Integer seconds = parseIsoDurationToSeconds(durationMeta.attr("content"));

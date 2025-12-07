@@ -6,7 +6,6 @@ public interface SoundcloudApiClient {
     JsonNode getTrack(long trackId);
 
 
-    /** /resolve?url=... */
     JsonNode resolveByUrl(String url);
 
 }

@@ -19,6 +19,8 @@ import com.Tsimur.Dubcast.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+
 
 @Transactional
 @Service
@@ -71,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         User user = new User();
-        user.setEmail(request.getEmail());
+        user.setEmail(request.getEmail());//todo
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(Role.ROLE_USER);
 
