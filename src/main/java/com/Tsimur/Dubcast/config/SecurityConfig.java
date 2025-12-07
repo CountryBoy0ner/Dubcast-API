@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,14 +30,17 @@ public class SecurityConfig {
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/api/profile").authenticated()
-//
-//                        .requestMatchers("/api/auth/**").permitAll()
-//                        .requestMatchers("/api/parser/**").permitAll()
-//                        .requestMatchers("/api/radio/**").permitAll()
-//                        .requestMatchers("/api/playlists/**").permitAll()
-//                        .requestMatchers("/api/programming/**").permitAll() //todo
+                        // ---- PUBLIC API (без токена) ----
+                        .requestMatchers("/api/auth/**").permitAll()      // login/refresh и т.п.
+                        .requestMatchers("/api/radio/**").permitAll()     // слушать радио
+                        .requestMatchers(HttpMethod.GET, "/api/chat/**").permitAll() // читать чат
+
+                        // ---- ADMIN ONLY ----
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // ---- USER + ADMIN ----
+                        .requestMatchers("/api/profile/**").hasAnyRole("USER", "ADMIN")
+                        // ---- всё остальное под /api/** требует авторизации (любая роль) ----
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter,
@@ -51,21 +55,34 @@ public class SecurityConfig {
     public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .securityMatcher("/**")
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/radio-ws/**")
+                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
                                 "/login",
                                 "/register",
-                                "404",
+                                "/users/**",
+                                "/error",
+                                "/404",
                                 "/500",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**",
-                                "/profile",
                                 "/radio-ws/**",
-                                "/reel-radio-poc"
-
+                                "/reel-radio-poc",
+                                // swagger, если будешь открывать UI без авторизации
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
                         ).permitAll()
+
+                        // web-админка, если есть (/admin/**) — только админ
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // страница /profile (html) — только залогиненный пользователь/админ
+                        .requestMatchers("/profile/**").hasAnyRole("USER", "ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

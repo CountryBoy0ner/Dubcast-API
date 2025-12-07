@@ -87,6 +87,8 @@ public class ParserScServiceImpl implements ParserService {
         }
 
         Integer scraped = extractDurationSecondsByScraping(cleanUrl);
+        log.warn("Using Depricated scraping: {}", scraped);
+
         if (scraped != null) {
             return scraped;
         }
@@ -134,19 +136,19 @@ public class ParserScServiceImpl implements ParserService {
             }
 
             if (playlistData == null) {
-                System.out.println("[SCRAPER] playlist data not found in __sc_hydration");
+                log.error("[SCRAPER] playlist data not found in __sc_hydration");
                 browser.close();
                 return result;
             }
 
             JsonNode tracks = playlistData.path("tracks");
             if (!tracks.isArray()) {
-                System.out.println("[SCRAPER] playlist tracks is not array");
+                log.info("[SCRAPER] playlist tracks is not array");
                 browser.close();
                 return result;
             }
 
-            System.out.println("[SCRAPER] playlist.tracks size = " + tracks.size());
+            log.info("[SCRAPER] playlist.tracks size = {}", tracks.size());
 
             int index = 0;
             for (JsonNode t : tracks) {
@@ -155,17 +157,16 @@ public class ParserScServiceImpl implements ParserService {
                 boolean hasTitle = t.hasNonNull("title");
                 boolean hasDuration = t.has("duration") && t.get("duration").asInt(0) > 0;
 
-                System.out.printf(
+                log.info(
                         "[SCRAPER] track[%d] id=%d hasUrl=%s hasTitle=%s hasDuration=%s%n",
-                        index++, id, hasUrl, hasTitle, hasDuration
-                );
+                        new Object[]{index++, id, hasUrl, hasTitle, hasDuration});
 
                 TrackDto dto = buildTrackFromNodeOrFetch(t);
                 if (dto != null) {
-                    System.out.println("[SCRAPER]   => OK: " + dto.getTitle());
+                    log.info("[SCRAPER]   => OK: {}", dto.getTitle());
                     result.add(dto);
                 } else {
-                    System.out.println("[SCRAPER]   => SKIPPED");
+                    log.warn("[SCRAPER]   => SKIPPED");
                 }
             }
 
@@ -175,7 +176,7 @@ public class ParserScServiceImpl implements ParserService {
             throw new RuntimeException("Failed to parse playlist via Playwright", e);
         }
 
-        System.out.println("[SCRAPER] parsed tracks: " + result.size());
+        log.info("[SCRAPER] parsed tracks: {}", result.size());
         return result;
     }
 
@@ -190,7 +191,7 @@ public class ParserScServiceImpl implements ParserService {
         boolean hasEnough = url != null && title != null && durationMs > 0;
 
         if (!hasEnough && id != 0) {
-            System.out.println("[SCRAPER]   stub track id=" + id + " -> fetching full JSON via api-v2...");
+            log.info("[SCRAPER]   stub track id={} -> fetching full JSON via api-v2...", id);
             try {
                 JsonNode full = soundcloudApiClient.getTrack(id);
 
@@ -209,18 +210,18 @@ public class ParserScServiceImpl implements ParserService {
 
                 hasEnough = url != null && title != null && durationMs > 0;
                 if (!hasEnough) {
-                    System.out.println("[SCRAPER]   still not enough data for id=" + id + " -> skip");
+                    log.error("[SCRAPER]   still not enough data for id={} -> skip", id);
                     return null;
                 }
 
             } catch (Exception e) {
-                System.out.println("[SCRAPER]   exception while fetching track id=" + id + ": " + e.getMessage());
+                log.error("[SCRAPER]   exception while fetching track id={}: {}", id, e.getMessage());
                 return null;
             }
         }
 
         if (!hasEnough) {
-            System.out.println("[SCRAPER]   not enough data for id=" + id + " -> skip");
+            log.error("[SCRAPER]   not enough data for id={} -> skip", id);
             return null;
         }
 

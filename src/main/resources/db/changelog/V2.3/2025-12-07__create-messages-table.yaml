@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-08-create-messages-table
+      author: tsimur
+      changes:
+        - createTable:
+            tableName: messages
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: text
+                  type: VARCHAR(1000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_messages_user
+            onDelete: CASCADE
+
+        - createIndex:
+            tableName: messages
+            indexName: idx_messages_created_at
+            columns:
+              - column:
+                  name: created_at
