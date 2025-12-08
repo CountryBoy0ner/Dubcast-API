@@ -28,10 +28,6 @@ public class RadioClock {
 
     private ScheduleEntryDto cachedCurrent = null;
 
-    /**
-     * Флаг: мы уже пытались автофиллить текущую "дырку" в расписании
-     * (чтобы не вызывать автофилл каждую секунду, если всё равно пусто).
-     */
     private boolean autofillTriedForCurrentGap = false;
 
     @EventListener

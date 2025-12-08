@@ -3,6 +3,7 @@ package com.Tsimur.Dubcast.service.impl;
 import com.Tsimur.Dubcast.config.RadioTimeConfig;
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
+import com.Tsimur.Dubcast.exception.type.SlotCurrentlyPlayingException;
 import com.Tsimur.Dubcast.mapper.ScheduleEntryMapper;
 import com.Tsimur.Dubcast.model.Playlist;
 import com.Tsimur.Dubcast.model.PlaylistTrack;
@@ -197,18 +198,17 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     @Transactional
     public void deleteSlotAndRebuildDay(Long slotId) {
         ScheduleEntry entry = scheduleEntryRepository.findById(slotId)
-                .orElseThrow(() -> new NotFoundException("Schedule entry not found: " + slotId));
+                .orElseThrow(() ->  NotFoundException.of("Schedule", "id" , slotId));
 
         var zone = radioTimeConfig.getRadioZoneId();
         OffsetDateTime now = OffsetDateTime.now(zone);
 
-        // Проверяем: старт уже был, но конец ещё не наступил → слот сейчас играет
         boolean started = !now.isBefore(entry.getStartTime()); // now >= start
         boolean notFinished = now.isBefore(entry.getEndTime()); // now < end
 
+
         if (started && notFinished) {
-            // можно сделать свой кастомный Exception, но пока хватит и такого
-            throw new IllegalStateException("Cannot delete currently playing slot: " + slotId);
+            throw new SlotCurrentlyPlayingException(slotId);
         }
 
         // если слот не текущий – дальше логика как была

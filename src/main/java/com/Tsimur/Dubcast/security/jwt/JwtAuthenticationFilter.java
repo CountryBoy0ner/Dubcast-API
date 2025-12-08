@@ -27,7 +27,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        // /api/auth/** вообще не фильтруем JWT
         return path.startsWith("/api/auth/");
     }
 
@@ -41,41 +40,52 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         String path = request.getServletPath();
 
-
+        // login / register и т.п. не фильтруем
         if (path.startsWith("/api/auth/")) {
             filterChain.doFilter(request, response);
             return;
         }
 
+        // нет заголовка или не Bearer -> просто дальше
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         String jwt = authHeader.substring(7);
-        String userEmail = jwtService.extractEmail(jwt);
 
-        if (userEmail != null &&
-                SecurityContextHolder.getContext().getAuthentication() == null) {
+        try {
+            String userEmail = jwtService.extractEmail(jwt);
 
-            User user = userRepository.findByEmail(userEmail)
-                    .orElseThrow();
+            if (userEmail != null &&
+                    SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            if (jwtService.isValid(jwt, user)) {
-                UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(
-                                userEmail,
-                                null,
-                                List.of(new SimpleGrantedAuthority(user.getRole().name()))
-                        );
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                User user = userRepository.findByEmail(userEmail)
+                        .orElseThrow(); // если нет юзера – тоже пусть полетит 401/403 потом
+
+                if (jwtService.isValid(jwt, user)) {
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    userEmail,
+                                    null,
+                                    List.of(new SimpleGrantedAuthority(user.getRole().name()))
+                            );
+                    authToken.setDetails(
+                            new WebAuthenticationDetailsSource().buildDetails(request)
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             }
-        }
 
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+
+        } catch (io.jsonwebtoken.JwtException | IllegalArgumentException ex) {
+            // любой битый / слишком короткий / с плохой подписью токен
+            // -> просто не аутентифицируем пользователя и идём дальше
+            // (потом сработает стандартный 401/403, но НЕ 500)
+            filterChain.doFilter(request, response);
+        }
     }
+
 }
 

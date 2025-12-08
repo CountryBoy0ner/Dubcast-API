@@ -42,26 +42,37 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Invalid credentials");
         }
 
+
         String token = jwtService.generateToken(user);
         return new AuthResponse(token);
     }
-
     @Transactional
     @Override
     public ValidateTokenResponse validateToken(ValidateTokenRequest request) {
         String token = request.getToken();
 
-        boolean expired = jwtService.isExpired(token);
+        boolean valid = false;
         String email = null;
         String role = null;
 
-        if (!expired) {
-            email = jwtService.extractEmail(token);
-            role = jwtService.extractRole(token);
+        try {
+            boolean expired = jwtService.isExpired(token);
+
+            if (!expired) {
+                email = jwtService.extractEmail(token);
+                role = jwtService.extractRole(token);
+                valid = true;
+            }
+        } catch (io.jsonwebtoken.ExpiredJwtException ex) {
+            // токен просто протух — считаем invalid, но без 500
+            valid = false;
+        } catch (io.jsonwebtoken.JwtException ex) {
+            // любой другой косяк с токеном (подпись, формат и т.п.) — тоже invalid
+            valid = false;
         }
 
         return ValidateTokenResponse.builder()
-                .valid(!expired)
+                .valid(valid)
                 .email(email)
                 .role(role)
                 .build();
@@ -71,7 +82,6 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public AuthResponse register(RegisterRequest request) {
         String email = normalizeEmail(request.getEmail());
-
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyUsedException("Email already used");
         }
@@ -93,6 +103,4 @@ public class AuthServiceImpl implements AuthService {
         }
         return email.trim().toLowerCase(Locale.ROOT);
     }
-
-
 }

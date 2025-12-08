@@ -55,6 +55,11 @@ public class AdminProgrammingRestController {
                             responseCode = "404",
                             description = "Slot not found",
                             content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "Slot is currently playing and cannot be deleted",
+                            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
                     )
             }
     )

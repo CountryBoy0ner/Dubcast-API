@@ -3,6 +3,7 @@ package com.Tsimur.Dubcast.exception.handler;
 import com.Tsimur.Dubcast.exception.ErrorResponse;
 import com.Tsimur.Dubcast.exception.type.EmailAlreadyUsedException;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
+import com.Tsimur.Dubcast.exception.type.SlotCurrentlyPlayingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +17,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import java.time.OffsetDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice(basePackages = "com.Tsimur.Dubcast.controller.api")
 public class RestExceptionHandler {
+
+    @ExceptionHandler(SlotCurrentlyPlayingException.class)
+    public ResponseEntity<ErrorResponse> handleSlotCurrentlyPlaying(
+            SlotCurrentlyPlayingException ex,
+            HttpServletRequest request
+    ) {
+        return build(HttpStatus.CONFLICT, ex.getMessage(), request);
+    }
+
 
     // ======= ВАЛИДАЦИЯ =======
     @ExceptionHandler(MethodArgumentNotValidException.class)
