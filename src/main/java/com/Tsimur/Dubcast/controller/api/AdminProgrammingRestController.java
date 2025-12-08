@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/programming")
+@RequestMapping(ApiPaths.ADMIN_PROGRAMMING)
 @RequiredArgsConstructor
 @Tag(
         name = "Admin Programming",

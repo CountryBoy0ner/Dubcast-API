@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/tracks")
+@RequestMapping(ApiPaths.TRACK)
 @Tag(
         name = "Tracks (Admin)",
         description = "CRUD endpoints for managing tracks in the system. Intended for admin/back-office usage."

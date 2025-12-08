@@ -7,6 +7,7 @@ import com.Tsimur.Dubcast.dto.request.ValidateTokenRequest;
 import com.Tsimur.Dubcast.dto.response.AuthResponse;
 import com.Tsimur.Dubcast.dto.response.ValidateTokenResponse;
 import com.Tsimur.Dubcast.exception.type.EmailAlreadyUsedException;
+import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import com.Tsimur.Dubcast.model.Role;
 import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.security.jwt.JwtService;
@@ -36,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
         String email = normalizeEmail(request.getEmail());
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
@@ -64,10 +65,8 @@ public class AuthServiceImpl implements AuthService {
                 valid = true;
             }
         } catch (io.jsonwebtoken.ExpiredJwtException ex) {
-            // токен просто протух — считаем invalid, но без 500
             valid = false;
         } catch (io.jsonwebtoken.JwtException ex) {
-            // любой другой косяк с токеном (подпись, формат и т.п.) — тоже invalid
             valid = false;
         }
 

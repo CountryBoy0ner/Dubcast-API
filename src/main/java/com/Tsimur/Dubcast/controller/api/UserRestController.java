@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping(ApiPaths.USERS)
 @Tag(
         name = "Users (Admin)",
         description = "Admin endpoints for managing users: create, read, update, delete and change password."

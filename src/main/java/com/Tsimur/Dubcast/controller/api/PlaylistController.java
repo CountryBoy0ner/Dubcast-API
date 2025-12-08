@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/api/playlists")
+@RequestMapping(ApiPaths.PROFILE)
 @RequiredArgsConstructor
 @Tag(
         name = "Playlists",

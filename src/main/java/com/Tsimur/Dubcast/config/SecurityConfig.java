@@ -1,5 +1,7 @@
 package com.Tsimur.Dubcast.config;
 
+import com.Tsimur.Dubcast.controller.api.ApiPaths;
+import com.Tsimur.Dubcast.model.Role;
 import com.Tsimur.Dubcast.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -30,17 +32,17 @@ public class SecurityConfig {
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        // ---- PUBLIC API (без токена) ----
-                        .requestMatchers("/api/auth/**").permitAll()      // login/refresh и т.п.
-                        .requestMatchers("/api/radio/**").permitAll()     // слушать радио
-                        .requestMatchers(HttpMethod.GET, "/api/chat/**").permitAll() // читать чат
 
-                        // ---- ADMIN ONLY ----
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(ApiPaths.AUTH + "/**").permitAll()
+                        .requestMatchers(ApiPaths.RADIO + "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, ApiPaths.CHAT + "/**").permitAll()
+                        .requestMatchers(ApiPaths.ADMIN + "/**").hasAuthority(Role.ROLE_ADMIN.name())
 
-                        // ---- USER + ADMIN ----
-                        .requestMatchers("/api/profile/**").hasAnyRole("USER", "ADMIN")
-                        // ---- всё остальное под /api/** требует авторизации (любая роль) ----
+                        .requestMatchers(ApiPaths.PROFILE + "/**").hasAnyAuthority(
+                                Role.ROLE_USER.name(),
+                                Role.ROLE_ADMIN.name()
+                        )
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter,

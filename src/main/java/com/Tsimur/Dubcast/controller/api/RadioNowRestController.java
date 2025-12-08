@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/radio")
+@RequestMapping(ApiPaths.RADIO)
 @RequiredArgsConstructor
 @Tag(
         name = "Radio",

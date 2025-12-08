@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/schedule")
+@RequestMapping(ApiPaths.SCHEDULE)
 @Tag(
         name = "Schedule entries (Admin)",
         description = "CRUD endpoints for managing radio schedule entries. Typically used from admin tools."

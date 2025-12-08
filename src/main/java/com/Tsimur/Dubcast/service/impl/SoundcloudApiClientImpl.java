@@ -21,12 +21,13 @@ public class SoundcloudApiClientImpl implements SoundcloudApiClient {
     @Value("${soundcloud.client-id}")
     private String clientId;
 
-    private static final String API_V2_BASE = "https://api-v2.soundcloud.com";
+    @Value("${soundcloud.api-base-url}")
+    private String apiBaseUrl;
 
     @Override
     public JsonNode getTrack(long id) {
         String url = UriComponentsBuilder
-                .fromHttpUrl(API_V2_BASE + "/tracks/" + id)
+                .fromHttpUrl(apiBaseUrl + "/tracks/" + id)
                 .queryParam("client_id", clientId)
                 .toUriString();
 
@@ -42,7 +43,7 @@ public class SoundcloudApiClientImpl implements SoundcloudApiClient {
     @Override
     public JsonNode resolveByUrl(String trackUrl) {
         String url = UriComponentsBuilder
-                .fromHttpUrl(API_V2_BASE + "/resolve")
+                .fromHttpUrl(apiBaseUrl + "/resolve")
                 .queryParam("url", trackUrl)
                 .queryParam("client_id", clientId)
                 .toUriString();

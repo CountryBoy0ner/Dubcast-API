@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/chat")
+@RequestMapping(ApiPaths.CHAT)
 @Tag(
         name = "Chat",
         description = "Public chat history endpoints. " +

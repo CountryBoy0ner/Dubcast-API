@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.OffsetDateTime;
 
 @RestController
-@RequestMapping("/api/programming")
+@RequestMapping(ApiPaths.PROGRAMMING)
 @RequiredArgsConstructor
 @Tag(
         name = "Radio Programming (Public)",

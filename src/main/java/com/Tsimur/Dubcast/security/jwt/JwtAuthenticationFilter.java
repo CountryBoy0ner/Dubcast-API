@@ -1,5 +1,6 @@
 package com.Tsimur.Dubcast.security.jwt;
 
+import com.Tsimur.Dubcast.controller.api.ApiPaths;
 import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.repository.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -21,13 +22,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private static final String AUTH_HEADER = "Authorization";
+    private static final String BEARER_PREFIX = "Bearer ";
+
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.startsWith("/api/auth/");
+        return path.startsWith(ApiPaths.AUTH); // вместо "/api/auth/"
     }
 
     @Override
@@ -37,55 +41,47 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String authHeader = request.getHeader("Authorization");
-        String path = request.getServletPath();
+        String authHeader = request.getHeader(AUTH_HEADER);
 
-        // login / register и т.п. не фильтруем
-        if (path.startsWith("/api/auth/")) {
+        if (authHeader == null || !authHeader.startsWith(BEARER_PREFIX)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // нет заголовка или не Bearer -> просто дальше
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        String jwt = authHeader.substring(BEARER_PREFIX.length());
 
-        String jwt = authHeader.substring(7);
-
+        String userEmail;
         try {
-            String userEmail = jwtService.extractEmail(jwt);
-
-            if (userEmail != null &&
-                    SecurityContextHolder.getContext().getAuthentication() == null) {
-
-                User user = userRepository.findByEmail(userEmail)
-                        .orElseThrow(); // если нет юзера – тоже пусть полетит 401/403 потом
-
-                if (jwtService.isValid(jwt, user)) {
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(
-                                    userEmail,
-                                    null,
-                                    List.of(new SimpleGrantedAuthority(user.getRole().name()))
-                            );
-                    authToken.setDetails(
-                            new WebAuthenticationDetailsSource().buildDetails(request)
-                    );
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
-            }
-
+            userEmail = jwtService.extractEmail(jwt);
+        } catch (Exception e) { // ExpiredJwtException, MalformedJwtException и т.п.
+            // логируем и пропускаем запрос без аутентификации, а не 500
+            // log.warn("Invalid JWT: {}", e.getMessage());
             filterChain.doFilter(request, response);
-
-        } catch (io.jsonwebtoken.JwtException | IllegalArgumentException ex) {
-            // любой битый / слишком короткий / с плохой подписью токен
-            // -> просто не аутентифицируем пользователя и идём дальше
-            // (потом сработает стандартный 401/403, но НЕ 500)
-            filterChain.doFilter(request, response);
+            return;
         }
-    }
 
+        if (userEmail != null &&
+                SecurityContextHolder.getContext().getAuthentication() == null) {
+
+            User user = userRepository.findByEmail(userEmail)
+                    .orElse(null);
+
+            if (user != null && jwtService.isValid(jwt, user)) {
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(
+                                userEmail,
+                                null,
+                                List.of(new SimpleGrantedAuthority(user.getRole().name()))
+                        );
+                authToken.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+
+        filterChain.doFilter(request, response);
+    }
 }
+
 
