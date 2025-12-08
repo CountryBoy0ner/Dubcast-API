@@ -3195,3 +3195,624 @@ java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEn
 2025-12-08 21:13:11.480 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-12-08 21:13:11.482 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-12-08 21:13:11.484 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-08 21:42:31.430 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-08 21:42:31.487 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 25032 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-08 21:42:31.488 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-08 21:42:31.488 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-08 21:42:32.762 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-08 21:42:32.950 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 179 ms. Found 6 JPA repository interfaces.
+2025-12-08 21:42:33.530 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-12-08 21:42:33.543 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
+2025-12-08 21:42:33.545 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-08 21:42:33.545 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-08 21:42:33.615 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-08 21:42:33.615 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2084 ms
+2025-12-08 21:42:33.837 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-08 21:42:33.897 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-12-08 21:42:33.932 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-08 21:42:34.210 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-08 21:42:34.238 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-08 21:42:34.433 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3bf4644c
+2025-12-08 21:42:34.435 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-08 21:42:34.501 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-08 21:42:35.578 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-08 21:42:35.580 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-08 21:42:35.941 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-12-08 21:42:36.108 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-08 21:42:37.202 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-08 21:42:37.251 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-12-08 21:42:37.378 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2025-12-08 21:42:37.641 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-08 21:42:38.356 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-12-08 21:42:38.357 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@74e37ad3]]
+2025-12-08 21:42:38.357 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-12-08 21:42:38.425 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
+2025-12-08 21:42:38.450 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-12-08 21:42:38.467 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 7.515 seconds (process running for 8.225)
+2025-12-08 21:42:38.569 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 21:42:38.672 DEBUG [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T21:42:38.631923300+02:00 → recalc with now=2025-12-08T19:42:38.672922200Z
+2025-12-08 21:42:38.676 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Всё совсем не то
+2025-12-08 21:42:38.677 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Всё совсем не то
+2025-12-08 21:42:38.683 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 21:42:38.684 ERROR [MessageBroker-1] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 21:42:38.999 INFO  [RMI TCP Connection(2)-25.63.110.158] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-08 21:42:39.000 INFO  [RMI TCP Connection(2)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-08 21:42:39.003 INFO  [RMI TCP Connection(2)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-12-08 21:42:39.473 INFO  [MessageBroker-3] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Всё совсем не то
+2025-12-08 21:42:39.474 INFO  [MessageBroker-3] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Всё совсем не то
+2025-12-08 21:42:51.186 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-08 21:42:51.190 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-12-08 21:42:51.192 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-12-08 21:42:51.192 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@74e37ad3]]
+2025-12-08 21:42:51.192 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-12-08 21:42:51.223 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-08 21:42:51.224 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-08 21:42:51.226 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-08 21:43:29.178 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-08 21:43:29.228 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 18992 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-08 21:43:29.228 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-08 21:43:29.229 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-08 21:43:30.631 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-08 21:43:30.792 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 152 ms. Found 6 JPA repository interfaces.
+2025-12-08 21:43:31.432 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-12-08 21:43:31.447 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
+2025-12-08 21:43:31.449 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-08 21:43:31.450 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-08 21:43:31.521 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-08 21:43:31.522 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2244 ms
+2025-12-08 21:43:31.741 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-08 21:43:31.803 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-12-08 21:43:31.842 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-08 21:43:32.089 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-08 21:43:32.114 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-08 21:43:32.263 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@43094e0c
+2025-12-08 21:43:32.265 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-08 21:43:32.326 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-08 21:43:33.333 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-08 21:43:33.336 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-08 21:43:33.578 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-12-08 21:43:33.717 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-08 21:43:34.754 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-08 21:43:34.796 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-12-08 21:43:34.899 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2025-12-08 21:43:35.107 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-08 21:43:35.714 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-12-08 21:43:35.714 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@f3dfca7]]
+2025-12-08 21:43:35.715 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-12-08 21:43:35.750 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
+2025-12-08 21:43:35.765 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-12-08 21:43:35.777 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 7.173 seconds (process running for 7.901)
+2025-12-08 21:43:35.880 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Всё совсем не то
+2025-12-08 21:43:35.882 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Всё совсем не то
+2025-12-08 21:43:36.226 INFO  [RMI TCP Connection(3)-25.63.110.158] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-08 21:43:36.227 INFO  [RMI TCP Connection(3)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-08 21:43:36.229 INFO  [RMI TCP Connection(3)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-12-08 21:44:29.787 INFO  [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 21:44:29.855 DEBUG [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T21:44:29.823114500+02:00 → recalc with now=2025-12-08T19:44:29.855116200Z
+2025-12-08 21:44:29.857 INFO  [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гр.Об-Финал
+2025-12-08 21:44:29.857 INFO  [MessageBroker-2] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гр.Об-Финал
+2025-12-08 21:44:29.862 INFO  [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 21:44:29.864 ERROR [MessageBroker-2] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 21:44:30.782 INFO  [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гр.Об-Финал
+2025-12-08 21:44:30.782 INFO  [MessageBroker-2] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гр.Об-Финал
+2025-12-08 21:44:35.682 INFO  [MessageBroker-9] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 1 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(1)-CONNECTED(1)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 9, active threads = 0, queued tasks = 0, completed tasks = 9], outboundChannel[pool size = 3, active threads = 0, queued tasks = 0, completed tasks = 3], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 4, completed tasks = 86]
+2025-12-08 21:45:41.781 INFO  [MessageBroker-9] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 21:45:41.788 DEBUG [MessageBroker-9] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T21:45:41.786681700+02:00 → recalc with now=2025-12-08T19:45:41.788680Z
+2025-12-08 21:45:41.789 INFO  [MessageBroker-9] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR013
+2025-12-08 21:45:41.790 INFO  [MessageBroker-9] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR013
+2025-12-08 21:45:41.793 INFO  [MessageBroker-9] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 21:45:41.794 ERROR [MessageBroker-9] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 21:45:42.786 INFO  [MessageBroker-9] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR013
+2025-12-08 21:45:42.786 INFO  [MessageBroker-9] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR013
+2025-12-08 21:49:10.836 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-08 21:49:10.841 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-12-08 21:49:10.845 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-12-08 21:49:10.845 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@f3dfca7]]
+2025-12-08 21:49:10.845 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-12-08 21:49:10.869 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-08 21:49:10.871 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-08 21:49:10.873 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-08 21:49:15.567 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-08 21:49:15.605 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 5532 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-08 21:49:15.605 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-08 21:49:15.606 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-08 21:49:16.993 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-08 21:49:17.168 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 164 ms. Found 6 JPA repository interfaces.
+2025-12-08 21:49:17.806 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-12-08 21:49:17.822 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
+2025-12-08 21:49:17.824 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-08 21:49:17.824 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-08 21:49:17.895 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-08 21:49:17.895 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2249 ms
+2025-12-08 21:49:18.153 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-08 21:49:18.205 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-12-08 21:49:18.241 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-08 21:49:18.563 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-08 21:49:18.596 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-08 21:49:18.792 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3c5044fa
+2025-12-08 21:49:18.794 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-08 21:49:18.861 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-08 21:49:19.973 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-08 21:49:19.976 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-08 21:49:20.291 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-12-08 21:49:20.502 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-08 21:49:21.704 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-08 21:49:21.762 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-12-08 21:49:21.881 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2025-12-08 21:49:22.171 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-08 21:49:22.986 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-12-08 21:49:22.987 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@321d3e08]]
+2025-12-08 21:49:22.987 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-12-08 21:49:23.031 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
+2025-12-08 21:49:23.052 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-12-08 21:49:23.070 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 7.966 seconds (process running for 8.631)
+2025-12-08 21:49:23.228 INFO  [http-nio-8089-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-08 21:49:23.228 INFO  [http-nio-8089-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-08 21:49:23.236 INFO  [http-nio-8089-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 8 ms
+2025-12-08 21:49:23.248 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR013
+2025-12-08 21:49:23.250 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR013
+2025-12-08 21:50:22.937 INFO  [MessageBroker-6] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 1 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(1)-CONNECTED(1)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 12, active threads = 0, queued tasks = 0, completed tasks = 12], outboundChannel[pool size = 2, active threads = 0, queued tasks = 0, completed tasks = 2], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 3, completed tasks = 83]
+2025-12-08 21:53:18.076 INFO  [MessageBroker-13] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 21:53:18.142 DEBUG [MessageBroker-13] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T21:53:18.110000300+02:00 → recalc with now=2025-12-08T19:53:18.142000200Z
+2025-12-08 21:53:18.145 INFO  [MessageBroker-13] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Кто сильнее — тот и прав
+2025-12-08 21:53:18.145 INFO  [MessageBroker-13] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Кто сильнее — тот и прав
+2025-12-08 21:53:18.149 INFO  [MessageBroker-13] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 21:53:18.151 ERROR [MessageBroker-13] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 21:53:19.081 INFO  [MessageBroker-15] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Кто сильнее — тот и прав
+2025-12-08 21:53:19.081 INFO  [MessageBroker-15] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Кто сильнее — тот и прав
+2025-12-08 21:55:04.072 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 21:55:04.079 DEBUG [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T21:55:04.077195800+02:00 → recalc with now=2025-12-08T19:55:04.079198200Z
+2025-12-08 21:55:04.081 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Предисловие
+2025-12-08 21:55:04.081 INFO  [MessageBroker-12] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Предисловие
+2025-12-08 21:55:04.083 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 21:55:04.083 ERROR [MessageBroker-12] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 21:55:05.083 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Предисловие
+2025-12-08 21:55:05.084 INFO  [MessageBroker-12] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Предисловие
+2025-12-08 21:58:37.084 INFO  [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 21:58:37.093 DEBUG [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T21:58:37.091085500+02:00 → recalc with now=2025-12-08T19:58:37.093084300Z
+2025-12-08 21:58:37.095 INFO  [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Коммунизм - Солдатский сон
+2025-12-08 21:58:37.095 INFO  [MessageBroker-11] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Коммунизм - Солдатский сон
+2025-12-08 21:58:37.098 INFO  [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 21:58:37.099 ERROR [MessageBroker-11] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 21:58:38.073 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Коммунизм - Солдатский сон
+2025-12-08 21:58:38.074 INFO  [MessageBroker-12] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Коммунизм - Солдатский сон
+2025-12-08 22:00:17.082 INFO  [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 22:00:17.089 DEBUG [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T22:00:17.087341600+02:00 → recalc with now=2025-12-08T20:00:17.089340800Z
+2025-12-08 22:00:17.090 INFO  [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 21 C418 - Danny
+2025-12-08 22:00:17.090 INFO  [MessageBroker-16] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 21 C418 - Danny
+2025-12-08 22:00:17.092 INFO  [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 22:00:17.092 ERROR [MessageBroker-16] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 22:00:18.083 INFO  [MessageBroker-9] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 21 C418 - Danny
+2025-12-08 22:00:18.084 INFO  [MessageBroker-9] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 21 C418 - Danny
+2025-12-08 22:04:32.074 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 22:04:32.082 DEBUG [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T22:04:32.080638+02:00 → recalc with now=2025-12-08T20:04:32.082638Z
+2025-12-08 22:04:32.083 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Непонятная песенка
+2025-12-08 22:04:32.083 INFO  [MessageBroker-12] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Непонятная песенка
+2025-12-08 22:04:32.086 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 22:04:32.086 ERROR [MessageBroker-12] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 22:04:33.082 INFO  [MessageBroker-10] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Непонятная песенка
+2025-12-08 22:04:33.082 INFO  [MessageBroker-10] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Непонятная песенка
+2025-12-08 22:07:40.079 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 22:07:40.085 DEBUG [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T22:07:40.084850700+02:00 → recalc with now=2025-12-08T20:07:40.085850600Z
+2025-12-08 22:07:40.087 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: UHFR001
+2025-12-08 22:07:40.087 INFO  [MessageBroker-5] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: UHFR001
+2025-12-08 22:07:40.090 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 22:07:40.090 ERROR [MessageBroker-5] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 22:07:41.071 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: UHFR001
+2025-12-08 22:07:41.071 INFO  [MessageBroker-5] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: UHFR001
+2025-12-08 22:09:42.380 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-08 22:09:42.410 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-12-08 22:09:42.436 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-12-08 22:09:42.437 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@321d3e08]]
+2025-12-08 22:09:42.437 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-12-08 22:09:44.991 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-08 22:09:45.033 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 11708 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-08 22:09:45.033 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-08 22:09:45.034 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-08 22:09:46.296 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-08 22:09:46.527 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 217 ms. Found 6 JPA repository interfaces.
+2025-12-08 22:09:47.078 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-12-08 22:09:47.091 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
+2025-12-08 22:09:47.092 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-08 22:09:47.093 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-08 22:09:47.157 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-08 22:09:47.158 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2092 ms
+2025-12-08 22:09:47.380 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-08 22:09:47.439 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-12-08 22:09:47.472 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-08 22:09:47.738 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-08 22:09:47.773 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-08 22:09:47.950 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@21bd6fd1
+2025-12-08 22:09:47.952 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-08 22:09:48.028 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-08 22:09:49.129 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-08 22:09:49.133 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-08 22:09:49.441 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-12-08 22:09:49.587 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-08 22:09:50.634 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-08 22:09:50.671 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-12-08 22:09:50.773 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2025-12-08 22:09:50.999 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-08 22:09:51.568 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-12-08 22:09:51.568 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4707686e]]
+2025-12-08 22:09:51.569 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-12-08 22:09:51.602 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
+2025-12-08 22:09:51.619 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-12-08 22:09:51.632 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 7.092 seconds (process running for 7.771)
+2025-12-08 22:09:51.735 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: UHFR001
+2025-12-08 22:09:51.736 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: UHFR001
+2025-12-08 22:09:52.193 INFO  [RMI TCP Connection(1)-25.63.110.158] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-08 22:09:52.194 INFO  [RMI TCP Connection(1)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-08 22:09:52.197 INFO  [RMI TCP Connection(1)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-12-08 22:10:51.537 INFO  [MessageBroker-12] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 1 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(1)-CONNECTED(1)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 32, active threads = 0, queued tasks = 0, completed tasks = 45], outboundChannel[pool size = 11, active threads = 0, queued tasks = 0, completed tasks = 11], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 4, completed tasks = 83]
+2025-12-08 22:15:16.646 INFO  [MessageBroker-13] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 22:15:16.718 DEBUG [MessageBroker-13] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T22:15:16.683520400+02:00 → recalc with now=2025-12-08T20:15:16.718519100Z
+2025-12-08 22:15:16.720 INFO  [MessageBroker-13] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская Оборона - Пошли вы все на хуй
+2025-12-08 22:15:16.720 INFO  [MessageBroker-13] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская Оборона - Пошли вы все на хуй
+2025-12-08 22:15:16.724 INFO  [MessageBroker-13] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 22:15:16.725 ERROR [MessageBroker-13] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 22:15:17.648 INFO  [MessageBroker-9] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская Оборона - Пошли вы все на хуй
+2025-12-08 22:15:17.648 INFO  [MessageBroker-9] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская Оборона - Пошли вы все на хуй
+2025-12-08 22:17:58.636 INFO  [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-08 22:17:58.645 DEBUG [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-08T22:17:58.642673+02:00 → recalc with now=2025-12-08T20:17:58.645674500Z
+2025-12-08 22:17:58.646 INFO  [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 12.  Khandagaity
+2025-12-08 22:17:58.646 INFO  [MessageBroker-16] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 12.  Khandagaity
+2025-12-08 22:17:58.649 INFO  [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-08 22:17:58.650 ERROR [MessageBroker-16] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-08 22:17:59.638 INFO  [MessageBroker-16] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 12.  Khandagaity
+2025-12-08 22:17:59.639 INFO  [MessageBroker-16] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 12.  Khandagaity
+2025-12-08 22:19:22.488 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-08 22:19:22.493 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-12-08 22:19:22.497 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-12-08 22:19:22.497 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4707686e]]
+2025-12-08 22:19:22.497 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-12-08 22:19:22.524 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-08 22:19:22.525 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-08 22:19:22.527 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

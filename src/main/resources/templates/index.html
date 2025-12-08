@@ -42,7 +42,6 @@
 </header>
 
 
-
 <main class="main">
     <section class="now-playing">
         <h2 class="now-playing__title">Now playing</h2>
@@ -89,6 +88,11 @@
                     min="0"
                     max="100"
                     step="1">
+        </div>
+
+        <div class="now-playing__stats">
+            Now listening:&nbsp;
+            <span id="now-listening-count">0</span>
         </div>
 
         <!-- Debug: показывать / скрывать реальный плеер -->
@@ -154,6 +158,11 @@
     let currentPayload = null;     // NowPlayingResponse
     let scWidget = null;           // SC.Widget
     let userVolume = 70;
+
+    // === online analytics ===
+    const HEARTBEAT_INTERVAL_MS = 5000;  // раз в 5 секунд
+    let analyticsHeartbeatTimer = null;
+    const nowListeningCountEl = document.getElementById('now-listening-count');
 
     const playlistTitleEl = document.getElementById('playlist-title');
     const artworkEl = document.getElementById('artwork');
@@ -399,6 +408,8 @@
             if (scWidget) {
                 scWidget.pause();
             }
+            stopAnalyticsHeartbeatLoop(true);
+
             return;
         }
 
@@ -406,6 +417,9 @@
         console.log('[Radio] turned ON by user');
         startBtn.innerText = 'Radio is playing';
         startBtn.classList.add('btn--active'); // визуальное состояние "играет"
+        startAnalyticsHeartbeatLoop();
+
+
 
         try {
             if (!currentPayload) {
@@ -432,6 +446,10 @@
             radioEnabled = false;
             startBtn.innerText = 'Start radio';
             startBtn.classList.remove('btn--active');
+
+            // стопаем heartbeats
+            stopAnalyticsHeartbeatLoop(true);
+
         }
     });
 
@@ -485,7 +503,7 @@
             return;
         }
 
-        const payload = { text: text };
+        const payload = {text: text};
         stompClient.send('/app/chat.send', {}, JSON.stringify(payload));
         chatInputEl.value = '';
     }
@@ -597,6 +615,18 @@
                 console.log('[WS][CHAT] message', payload);
                 appendChatMessage(payload);
             });
+            // === ONLINE ANALYTICS ===
+            stompClient.subscribe('/topic/analytics/online', function (message) {
+                const stats = JSON.parse(message.body); // OnlineStatsDto
+                console.log('[WS][ANALYTICS] stats', stats);
+                updateOnlineStats(stats);
+            });
+
+            // если пользователь уже успел тыкнуть "Start radio" до коннекта —
+            // сразу запускаем цикл heartbeats
+            if (radioEnabled) {
+                startAnalyticsHeartbeatLoop();
+            }
 
         }, function (error) {
             console.error('[WS] error', error);
@@ -620,6 +650,61 @@
         loadAndPlayFromPayload(payload);
     }
 
+    // ----------- REAL-TIME ANALYTICS -----------
+
+    function updateOnlineStats(stats) {
+        if (!stats || !nowListeningCountEl) return;
+        const total = stats.totalOnline != null ? stats.totalOnline : 0;
+        nowListeningCountEl.innerText = String(total);
+    }
+
+    function sendAnalyticsHeartbeat(listening) {
+        if (!stompClient || !stompClient.connected) {
+            // просто тихо выходим, без ошибок
+            return;
+        }
+
+        const payload = {
+            page: '/radio',
+            // если бек ждёт trackId — шлём его, если есть
+            trackId: currentPayload && currentPayload.playing
+                ? currentPayload.trackId
+                : null,
+            // если в HeartbeatMessage есть булево поле — используем
+            listening: listening
+        };
+
+        // этот destination должен совпадать с @MessageMapping на беке
+        stompClient.send('/app/analytics.heartbeat', {}, JSON.stringify(payload));
+    }
+
+    function startAnalyticsHeartbeatLoop() {
+        // сразу отправили "я слушаю"
+        sendAnalyticsHeartbeat(true);
+
+        if (analyticsHeartbeatTimer) {
+            clearInterval(analyticsHeartbeatTimer);
+        }
+        analyticsHeartbeatTimer = setInterval(() => {
+            // пока радио включено — шлём heartbeats
+            if (radioEnabled) {
+                sendAnalyticsHeartbeat(true);
+            }
+        }, HEARTBEAT_INTERVAL_MS);
+    }
+
+    function stopAnalyticsHeartbeatLoop(sendOffEvent) {
+        if (analyticsHeartbeatTimer) {
+            clearInterval(analyticsHeartbeatTimer);
+            analyticsHeartbeatTimer = null;
+        }
+        if (sendOffEvent) {
+            // одного off-ивента достаточно, бек сам обнулит сессию
+            sendAnalyticsHeartbeat(false);
+        }
+    }
+
+
     // ----------- STARTUP -----------
 
     window.addEventListener('load', () => {
@@ -628,10 +713,13 @@
         fetchCurrentForUiOnly();
         loadInitialChatPage(); // вместо старого loadChatHistory()
     });
+
+    window.addEventListener('beforeunload', () => {
+        // один off-ивент и остановка таймера
+        stopAnalyticsHeartbeatLoop(true);
+    });
+
 </script>
-
-
-
 
 
 </body>
