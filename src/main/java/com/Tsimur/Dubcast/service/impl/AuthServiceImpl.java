@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import com.Tsimur.Dubcast.repository.UserRepository;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import java.util.Locale;
 @Transactional
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
@@ -100,6 +102,8 @@ public class AuthServiceImpl implements AuthService {
         if (email == null) {
             return null;
         }
-        return email.trim().toLowerCase(Locale.ROOT);
+        String result = email.trim().toLowerCase(Locale.ROOT);
+        log.info("given - "+email+"normalized - "+result);
+        return result;
     }
 }
