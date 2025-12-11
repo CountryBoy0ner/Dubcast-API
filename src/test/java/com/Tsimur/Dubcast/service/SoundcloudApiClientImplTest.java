@@ -31,11 +31,16 @@ class SoundcloudApiClientImplTest {
     void setUp() throws Exception {
         client = new SoundcloudApiClientImpl(restTemplate, objectMapper);
 
-        // inject @Value field clientId via reflection
-        Field f = SoundcloudApiClientImpl.class.getDeclaredField("clientId");
-        f.setAccessible(true);
-        f.set(client, "test-client-id");
+        // clientId
+        Field clientIdField = SoundcloudApiClientImpl.class.getDeclaredField("clientId");
+        clientIdField.setAccessible(true);
+        clientIdField.set(client, "test-client-id");
+
+        Field baseUrlField = SoundcloudApiClientImpl.class.getDeclaredField("apiBaseUrl");
+        baseUrlField.setAccessible(true);
+        baseUrlField.set(client, "https://api-v2.soundcloud.com");
     }
+
 
     // ------------------------------------------------------------------------
     // getTrack

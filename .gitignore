@@ -34,4 +34,4 @@ build/
 
 BdRequairmenrs.txt
 
-.env
+.env.docker

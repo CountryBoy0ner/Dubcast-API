@@ -78,11 +78,11 @@ services:
   servicesite-db:
     image: postgres:16-alpine          # Лёгкий официальный образ PostgreSQL
     container_name: servicesite-db
-    # Все чувствительные значения (пароли) кладём в .env, а не в compose
+    # Все чувствительные значения (пароли) кладём в .env.docker, а не в compose
     env_file:
-      - .env
+      - .env.docker
     environment:
-      # Фолбэки на случай отсутствия переменных в .env
+      # Фолбэки на случай отсутствия переменных в .env.docker
       POSTGRES_DB: ${DB_NAME:-dubcast}
       POSTGRES_USER: ${DB_USERNAME:-dubcast}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me}
@@ -116,7 +116,7 @@ services:
       servicesite-db:
         condition: service_healthy
     env_file:
-      - .env                           # Тот же .env, чтобы не дублировать переменные
+      - .env.docker                           # Тот же .env.docker, чтобы не дублировать переменные
     environment:
       # Порт, на котором слушает Spring Boot внутри контейнера
       SERVER_PORT: 8080

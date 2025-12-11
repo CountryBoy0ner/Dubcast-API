@@ -18,5 +18,5 @@ out
 
 Dockerfile
 docker-compose.yml
-.env
+.env.docker
 .env.*

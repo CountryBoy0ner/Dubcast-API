@@ -4,6 +4,7 @@ import com.Tsimur.Dubcast.config.RadioTimeConfig;
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.exception.type.NotFoundException;
+import com.Tsimur.Dubcast.exception.type.SlotCurrentlyPlayingException;
 import com.Tsimur.Dubcast.mapper.ScheduleEntryMapper;
 import com.Tsimur.Dubcast.model.Playlist;
 import com.Tsimur.Dubcast.model.PlaylistTrack;
@@ -456,14 +457,15 @@ class ScheduleEntryServiceImplTest {
 
         when(scheduleEntryRepository.findById(1L)).thenReturn(Optional.of(entry));
 
-        IllegalStateException ex = assertThrows(
-                IllegalStateException.class,
+        SlotCurrentlyPlayingException ex = assertThrows(
+                SlotCurrentlyPlayingException.class,
                 () -> service.deleteSlotAndRebuildDay(1L)
         );
 
         assertTrue(ex.getMessage().contains("Cannot delete currently playing slot"));
         verify(scheduleEntryRepository, never()).delete(any());
     }
+
 
     @Test
     void deleteSlotAndRebuildDay_shouldDeleteAndRebuild_whenNotCurrent() {
