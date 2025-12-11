@@ -1,55 +1,77 @@
-version: "3.9"
+version: "3.9" # Опционально, Docker уже не требует, но можно оставить для явности
 
 services:
-  db:
-    image: postgres:16-alpine
+  # --- PostgreSQL база данных ---
+  servicesite-db:
+    image: postgres:16-alpine          # Лёгкий официальный образ PostgreSQL
     container_name: servicesite-db
-    restart: unless-stopped
+    # Все чувствительные значения (пароли) кладём в .env, а не в compose
     env_file:
       - .env
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      # Фолбэки на случай отсутствия переменных в .env
+      POSTGRES_DB: ${DB_NAME:-dubcast}
+      POSTGRES_USER: ${DB_USERNAME:-dubcast}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me}
     volumes:
-      - db-data:/var/lib/postgresql/data
+      # Персистентный volume для данных БД (stateful, но вынесен за пределы контейнера)
+      - dubcast_db-data:/var/lib/postgresql/data
+    networks:
+      - app-net
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      # Ждём, пока PostgreSQL станет доступен внутри сети
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-dubcast} -d ${DB_NAME:-dubcast} || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - app-net
     deploy:
+      # Необязательно для обычного compose, но хорошо смотрится на защите:
+      # демонстрирует понимание ограничений ресурсов
       resources:
         limits:
-          cpus: "0.5"
-          memory: "512M"
+          cpus: "1.0"
+          memory: 512M
 
-  backend:
+  # --- Backend: Dubcast Spring Boot + Playwright ---
+  servicesite-backend:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: .                       # Корень backend-проекта
+      dockerfile: Dockerfile           # Наш Dockerfile с multi-stage и Playwright
     container_name: servicesite-backend
-    restart: unless-stopped
-    env_file:
-      - .env
+    # Backend стартует только после того, как БД "здоровая"
     depends_on:
-      db:
+      servicesite-db:
         condition: service_healthy
+    env_file:
+      - .env                           # Тот же .env, чтобы не дублировать переменные
+    environment:
+      # Порт, на котором слушает Spring Boot внутри контейнера
+      SERVER_PORT: 8080
+      # JDBC-URL до Postgres по имени сервиса внутри docker-сети
+      DB_URL: jdbc:postgresql://servicesite-db:${DB_PORT:-5432}/${DB_NAME:-dubcast}
+      DB_USERNAME: ${DB_USERNAME:-dubcast}
+      DB_PASSWORD: ${DB_PASSWORD:-change_me}
     ports:
-      - "8089:8080"        # localhost:8089 -> container:8080
+      - "8089:8080"
     networks:
       - app-net
+    restart: unless-stopped            # Автоматический рестарт при падении
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
     deploy:
       resources:
         limits:
-          cpus: "0.75"
-          memory: "1024M"
+          cpus: "1.0"
+          memory: 1G
 
+# Изолированная сеть для взаимодействия backend <-> db
 networks:
   app-net:
     driver: bridge
 
+# Персистентный volume для данных PostgreSQL
 volumes:
-  db-data:
+  dubcast_db-data:

@@ -15,9 +15,4 @@ https://docs.google.com/document/d/1ySuJNWIDRcrLnE398XAK7ELGDpLvmFvQfV96Wp4-aXo/
 ---
 
 ## DataBase
-
 https://docs.google.com/document/d/1eEjRvm0ClqGzF0ZA0219kOlPtwJ-_SWOg6EqLVFVVOw/edit?usp=sharing
-
-
-
-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXp1a2llQG1haWwucnUiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzYzNjM0NTMxLCJleHAiOjE3NjM2MzgxMzF9.7shWR1YF8Tq3cNcQOB1n0hYMdo6IpxMFnGsQCqCr4Ug

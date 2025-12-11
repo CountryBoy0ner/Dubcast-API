@@ -25,16 +25,16 @@ databaseChangeLog:
             columns:
               - column:
                   name: sc_url
-                  value: "https://soundcloud.com/artist/dubcast-episode-1"
+                  value: "https://soundcloud.com/cppradio/xtra-spice-mikey-dobro-club-wroclaw-pl"
               - column:
                   name: embed_code
                   value: "<iframe>episode1</iframe>"
               - column:
                   name: title
-                  value: "Dubcast Episode 1"
+                  value: "XTRA SPICE MIKEY: Dobro club: Wroclaw PL: Amiga dj set"
               - column:
                   name: duration_seconds
-                  valueNumeric: 3600
+                  valueNumeric: 3420
 
         - insert:
             tableName: schedule_entries
