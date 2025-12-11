@@ -12,6 +12,7 @@ import java.util.Map;
 @Builder
 public class OnlineStatsDto {
     private int totalOnline;
+    @Deprecated
     private Map<Long, Integer> onlinePerTrack;
     private OffsetDateTime generatedAt;
 }

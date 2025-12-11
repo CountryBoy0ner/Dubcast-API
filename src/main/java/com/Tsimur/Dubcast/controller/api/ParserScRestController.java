@@ -28,7 +28,7 @@ public class ParserScRestController {
 
     private final ParserService parserService;
 
-    @PostMapping("/track")
+        @PostMapping("/track")
     @Operation(
             summary = "Parse a single SoundCloud track",
             description = "Accepts a SoundCloud track URL and returns parsed track metadata."

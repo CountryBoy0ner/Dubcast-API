@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,6 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .securityMatcher("/api/**")
+                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm ->
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -36,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers(ApiPaths.AUTH + "/**").permitAll()
                         .requestMatchers(ApiPaths.RADIO + "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, ApiPaths.CHAT + "/**").permitAll()
-                        .requestMatchers(ApiPaths.ADMIN + "/**").hasAuthority(Role.ROLE_ADMIN.name())
+                        .requestMatchers(ApiPaths.ADMIN + "/**",ApiPaths.PLAYLIST + "/**").hasAuthority(Role.ROLE_ADMIN.name())
 
                         .requestMatchers(ApiPaths.PROFILE + "/**").hasAnyAuthority(
                                 Role.ROLE_USER.name(),

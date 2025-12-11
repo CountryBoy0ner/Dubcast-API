@@ -20,7 +20,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(ApiPaths.PROFILE)
+@RequestMapping(ApiPaths.PLAYLIST)
 @RequiredArgsConstructor
 @Tag(
         name = "Playlists",

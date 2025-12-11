@@ -21,12 +21,10 @@ public class InMemoryOnlineAnalyticsService implements OnlineAnalyticsService {
     @Override
     public void handleHeartbeat(String sessionId, AnalyticsHeartbeatMessage msg) {
         OffsetDateTime now = OffsetDateTime.now();
-
         sessions.compute(sessionId, (id, old) -> {
             if (!msg.isListening()) {
                 return null;
             }
-
             ListenerState state = (old != null) ? old : new ListenerState();
             state.setLastSeen(now);
             state.setListening(true);
@@ -39,30 +37,19 @@ public class InMemoryOnlineAnalyticsService implements OnlineAnalyticsService {
     @Override
     public OnlineStatsDto getCurrentStats() {
         OffsetDateTime now = OffsetDateTime.now();
-
-        // чистим протухшие сессии
         sessions.entrySet().removeIf(e ->
                 e.getValue().getLastSeen().isBefore(now.minus(TTL))
         );
-
         int total = 0;
-        Map<Long, Integer> perTrack = new ConcurrentHashMap<>();
-
         for (ListenerState state : sessions.values()) {
             if (!state.isListening()) {
                 continue;
             }
             total++;
-
             Long trackId = state.getTrackId();
-            if (trackId != null) {
-                perTrack.merge(trackId, 1, Integer::sum);
-            }
         }
-
         return OnlineStatsDto.builder()
                 .totalOnline(total)
-                .onlinePerTrack(perTrack)
                 .generatedAt(now)
                 .build();
     }

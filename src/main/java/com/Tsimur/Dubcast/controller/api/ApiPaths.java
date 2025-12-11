@@ -14,6 +14,8 @@ public final class ApiPaths {
     public static final String CHAT = API + "/chat";
     public static final String PROFILE = API + "/profile";
     public static final String PARSER = API + "/parser";
+    public static final String PLAYLIST = API + "/playlist";
+
     public static final String PROGRAMMING = API + "/programming";
     public static final String SCHEDULE = API + "/schedule";
     public static final String TRACK = API + "/tracks";

@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-10-seed-users
+      author: tsimur
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              INSERT INTO users (id, email, password, role, created_at, bio, username)
+              VALUES (
+                'd4d48610-d52a-411b-9a61-843e44834425',
+                'roleadmin@mail.ru',
+                '$2a$10$VUzNpdDZaPCrPEaAxjitBuM4daeIrJP./2EUpW2iT0JrmKRQ5ZB6W',
+                'ROLE_ADMIN',
+                CURRENT_TIMESTAMP,
+                'test vio',
+                'DubWheel'
+              );
+
+              INSERT INTO users (id, email, password, role, created_at, bio, username)
+              VALUES (
+                'c0f30d34-0530-4ab5-a36d-fdcecc6a600d',
+                'roleuser@mail.ru',
+                '$2a$10$/lPOYCX7aF7fk6ti0PJE8u.InVQVvG1CiHwbHokWSH5VLy7jhQnMC',
+                'ROLE_USER',
+                CURRENT_TIMESTAMP,
+                NULL,
+                NULL
+              );

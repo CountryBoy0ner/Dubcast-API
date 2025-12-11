@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
 
-    <!-- Путь и имя файлов логов -->
     <property name="LOG_PATH" value="logs"/>
     <property name="LOG_FILE" value="${LOG_PATH}/app.log"/>
-
     <!-- Лог в консоль (можно убрать, если нужен только файл) -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -12,12 +10,10 @@
         </encoder>
     </appender>
 
-    <!-- Лог в файл с ротацией по размеру и дате -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE}</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- app.2025-12-08.0.log.gz, app.2025-12-08.1.log.gz и т.п. -->
             <fileNamePattern>${LOG_PATH}/app.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
             <maxFileSize>10MB</maxFileSize>
             <maxHistory>30</maxHistory>
@@ -29,14 +25,11 @@
         </encoder>
     </appender>
 
-    <!-- Корневой логгер -->
     <root level="INFO">
-        <!-- если лог только в файл — удали эту строку -->
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>
 
-    <!-- Пример: свой пакет логировать детальнее -->
     <logger name="com.Tsimur.Dubcast" level="DEBUG" additivity="false">
         <appender-ref ref="FILE"/>
         <appender-ref ref="CONSOLE"/>

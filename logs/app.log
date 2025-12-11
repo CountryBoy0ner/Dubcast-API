@@ -1,23 +1,23 @@
-2025-12-09 11:04:08.120 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
-2025-12-09 11:04:08.166 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 5692 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
-2025-12-09 11:04:08.167 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-12-09 11:04:08.167 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
-2025-12-09 11:04:09.254 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-12-09 11:04:09.413 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 151 ms. Found 6 JPA repository interfaces.
-2025-12-09 11:04:09.891 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
-2025-12-09 11:04:09.902 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
-2025-12-09 11:04:09.903 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-12-09 11:04:09.903 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
-2025-12-09 11:04:09.965 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-12-09 11:04:09.965 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1762 ms
-2025-12-09 11:04:10.142 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-12-09 11:04:10.192 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
-2025-12-09 11:04:10.222 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-12-09 11:04:10.478 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-12-09 11:04:10.503 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-12-09 11:04:10.647 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@45648e75
-2025-12-09 11:04:10.648 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-12-09 11:04:10.718 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-12-10 06:22:16.023 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-10 06:22:16.068 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 20992 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-10 06:22:16.069 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-10 06:22:16.070 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-10 06:22:17.454 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-10 06:22:17.633 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 170 ms. Found 6 JPA repository interfaces.
+2025-12-10 06:22:18.154 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-12-10 06:22:18.166 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
+2025-12-10 06:22:18.167 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-10 06:22:18.167 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-10 06:22:18.241 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-10 06:22:18.242 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2132 ms
+2025-12-10 06:22:18.440 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-10 06:22:18.492 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-12-10 06:22:18.523 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-10 06:22:18.808 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-10 06:22:18.837 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-10 06:22:19.059 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@45648e75
+2025-12-10 06:22:19.060 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-10 06:22:19.142 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 15.7
@@ -25,28 +25,31 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-12-09 11:04:11.568 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-12-09 11:04:11.570 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-12-09 11:04:11.811 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2025-12-09 11:04:11.930 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-12-09 11:04:12.836 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-12-09 11:04:12.867 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
-2025-12-09 11:04:12.966 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
-2025-12-09 11:04:13.157 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
-2025-12-09 11:04:13.664 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
-2025-12-09 11:04:13.664 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3b8c9157]]
-2025-12-09 11:04:13.665 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
-2025-12-09 11:04:13.704 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
-2025-12-09 11:04:13.718 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
-2025-12-09 11:04:13.729 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 6.086 seconds (process running for 7.064)
-2025-12-09 11:04:13.736 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2025-12-09 11:04:13.736 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2025-12-09 11:04:13.818 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
-2025-12-09 11:04:13.910 DEBUG [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-09T11:04:13.870551400+02:00 → recalc with now=2025-12-09T09:04:13.910553Z
-2025-12-09 11:04:13.913 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская Оборона - Like a rolling Stones
-2025-12-09 11:04:13.914 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская Оборона - Like a rolling Stones
-2025-12-09 11:04:13.963 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
-2025-12-09 11:04:13.966 ERROR [MessageBroker-1] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+2025-12-10 06:22:20.098 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-10 06:22:20.101 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10 06:22:20.386 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-12-10 06:22:20.557 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-10 06:22:21.965 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-10 06:22:22.023 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-12-10 06:22:22.159 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2025-12-10 06:22:22.468 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-10 06:22:23.282 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-12-10 06:22:23.282 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2560add9]]
+2025-12-10 06:22:23.283 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-12-10 06:22:23.338 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
+2025-12-10 06:22:23.356 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-12-10 06:22:23.371 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 7.761 seconds (process running for 8.458)
+2025-12-10 06:22:23.379 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2025-12-10 06:22:23.379 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2025-12-10 06:22:23.497 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 06:22:23.571 INFO  [http-nio-8089-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-10 06:22:23.571 INFO  [http-nio-8089-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-10 06:22:23.574 INFO  [http-nio-8089-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-12-10 06:22:23.650 DEBUG [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T06:22:23.598679300+02:00 → recalc with now=2025-12-10T04:22:23.649680500Z
+2025-12-10 06:22:23.653 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 11.Иуда будет в раю
+2025-12-10 06:22:23.654 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 11.Иуда будет в раю
+2025-12-10 06:22:23.712 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 06:22:23.714 ERROR [MessageBroker-1] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
 java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
 	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
 	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
@@ -76,19 +79,65 @@ java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEn
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-2025-12-09 11:04:14.105 INFO  [RMI TCP Connection(3)-25.63.110.158] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-12-09 11:04:14.105 INFO  [RMI TCP Connection(3)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-12-09 11:04:14.111 INFO  [RMI TCP Connection(3)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Completed initialization in 6 ms
-2025-12-09 11:04:14.733 INFO  [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская Оборона - Like a rolling Stones
-2025-12-09 11:04:14.733 INFO  [MessageBroker-2] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская Оборона - Like a rolling Stones
-2025-12-09 11:05:04.224 INFO  [http-nio-8089-exec-4] o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 622 ms
-2025-12-09 11:05:13.637 INFO  [MessageBroker-6] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 1 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(1)-CONNECTED(1)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 15, active threads = 0, queued tasks = 0, completed tasks = 15], outboundChannel[pool size = 2, active threads = 0, queued tasks = 0, completed tasks = 2], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 3, completed tasks = 67]
-2025-12-09 11:06:24.734 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
-2025-12-09 11:06:24.741 DEBUG [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-09T11:06:24.739789100+02:00 → recalc with now=2025-12-09T09:06:24.741789900Z
-2025-12-09 11:06:24.742 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Ghetto Jungle Music
-2025-12-09 11:06:24.742 INFO  [MessageBroker-12] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Ghetto Jungle Music
-2025-12-09 11:06:24.743 INFO  [MessageBroker-12] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
-2025-12-09 11:06:24.744 ERROR [MessageBroker-12] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+2025-12-10 06:22:24.378 INFO  [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 11.Иуда будет в раю
+2025-12-10 06:22:24.378 INFO  [MessageBroker-2] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 11.Иуда будет в раю
+2025-12-10 06:22:49.908 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-10 06:22:49.914 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-12-10 06:22:49.916 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-12-10 06:22:49.916 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@2560add9]]
+2025-12-10 06:22:49.916 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-12-10 06:22:49.944 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10 06:22:49.946 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-10 06:22:49.948 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-10 07:05:09.207 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-10 07:05:09.269 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 1776 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-10 07:05:09.269 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-10 07:05:09.270 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-10 07:05:10.428 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-10 07:05:10.599 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 163 ms. Found 6 JPA repository interfaces.
+2025-12-10 07:05:11.146 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-12-10 07:05:11.157 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
+2025-12-10 07:05:11.159 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-10 07:05:11.159 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-10 07:05:11.222 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-10 07:05:11.223 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1910 ms
+2025-12-10 07:05:11.430 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-10 07:05:11.483 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-12-10 07:05:11.515 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-10 07:05:11.786 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-10 07:05:11.812 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-10 07:05:11.968 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@b386a17
+2025-12-10 07:05:11.970 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-10 07:05:12.050 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-10 07:05:12.990 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-10 07:05:12.992 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10 07:05:13.254 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-12-10 07:05:13.389 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-10 07:05:14.412 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-10 07:05:14.458 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-12-10 07:05:14.612 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2025-12-10 07:05:14.933 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-10 07:05:15.681 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-12-10 07:05:15.682 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@70602f49]]
+2025-12-10 07:05:15.682 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-12-10 07:05:15.726 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
+2025-12-10 07:05:15.744 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-12-10 07:05:15.758 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 6.989 seconds (process running for 7.777)
+2025-12-10 07:05:15.765 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2025-12-10 07:05:15.766 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2025-12-10 07:05:15.867 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 07:05:15.978 DEBUG [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T07:05:15.934204500+02:00 → recalc with now=2025-12-10T05:05:15.978205600Z
+2025-12-10 07:05:15.981 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR021
+2025-12-10 07:05:15.982 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR021
+2025-12-10 07:05:16.026 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 07:05:16.029 ERROR [MessageBroker-1] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
 java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
 	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
 	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
@@ -118,33 +167,77 @@ java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEn
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-2025-12-09 11:06:25.733 INFO  [MessageBroker-9] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Ghetto Jungle Music
-2025-12-09 11:06:25.733 INFO  [MessageBroker-9] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Ghetto Jungle Music
-2025-12-09 11:08:27.084 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-12-09 11:08:27.090 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-12-09 11:08:27.093 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
-2025-12-09 11:08:27.093 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@3b8c9157]]
-2025-12-09 11:08:27.093 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
-2025-12-09 11:11:11.849 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
-2025-12-09 11:11:11.884 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 27156 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
-2025-12-09 11:11:11.884 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-12-09 11:11:11.885 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
-2025-12-09 11:11:12.890 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-12-09 11:11:13.027 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 131 ms. Found 6 JPA repository interfaces.
-2025-12-09 11:11:13.469 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
-2025-12-09 11:11:13.478 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
-2025-12-09 11:11:13.479 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-12-09 11:11:13.479 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
-2025-12-09 11:11:13.534 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-12-09 11:11:13.534 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1618 ms
-2025-12-09 11:11:13.715 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-12-09 11:11:13.757 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
-2025-12-09 11:11:13.784 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-12-09 11:11:14.012 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-12-09 11:11:14.034 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-12-09 11:11:14.156 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@764a3867
-2025-12-09 11:11:14.157 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-12-09 11:11:14.219 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-12-10 07:05:16.391 INFO  [RMI TCP Connection(2)-25.63.110.158] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-10 07:05:16.392 INFO  [RMI TCP Connection(2)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-10 07:05:16.397 INFO  [RMI TCP Connection(2)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+2025-12-10 07:05:16.770 INFO  [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR021
+2025-12-10 07:05:16.770 INFO  [MessageBroker-2] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR021
+2025-12-10 07:06:15.651 INFO  [MessageBroker-4] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 1, completed tasks = 60]
+2025-12-10 07:12:52.772 INFO  [MessageBroker-6] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 07:12:52.783 DEBUG [MessageBroker-6] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T07:12:52.779598700+02:00 → recalc with now=2025-12-10T05:12:52.783598200Z
+2025-12-10 07:12:52.784 INFO  [MessageBroker-6] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR027
+2025-12-10 07:12:52.785 INFO  [MessageBroker-6] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR027
+2025-12-10 07:12:52.787 INFO  [MessageBroker-6] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 07:12:52.787 ERROR [MessageBroker-6] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 07:12:53.763 INFO  [MessageBroker-6] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR027
+2025-12-10 07:12:53.763 INFO  [MessageBroker-6] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR027
+2025-12-10 07:14:02.014 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-10 07:14:02.020 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-12-10 07:14:02.024 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-12-10 07:14:02.024 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@70602f49]]
+2025-12-10 07:14:02.024 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-12-10 07:14:02.049 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10 07:14:02.051 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-10 07:14:02.053 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-10 07:14:06.379 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-10 07:14:06.441 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 14388 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-10 07:14:06.441 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-10 07:14:06.442 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-10 07:14:07.628 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-10 07:14:07.780 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 144 ms. Found 6 JPA repository interfaces.
+2025-12-10 07:14:08.317 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-12-10 07:14:08.329 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
+2025-12-10 07:14:08.331 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-10 07:14:08.331 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-10 07:14:08.397 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-10 07:14:08.397 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1913 ms
+2025-12-10 07:14:08.630 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-10 07:14:08.676 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-12-10 07:14:08.706 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-10 07:14:08.941 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-10 07:14:08.967 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-10 07:14:09.120 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@1d57b8f1
+2025-12-10 07:14:09.122 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-10 07:14:09.181 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 15.7
@@ -152,33 +245,891 @@ java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEn
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-12-09 11:11:15.017 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-12-09 11:11:15.020 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-12-09 11:11:15.236 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2025-12-09 11:11:15.353 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-12-09 11:11:16.189 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-12-09 11:11:16.219 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
-2025-12-09 11:11:16.303 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
-2025-12-09 11:11:16.506 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
-2025-12-09 11:11:17.016 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
-2025-12-09 11:11:17.016 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@484bd339]]
-2025-12-09 11:11:17.017 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
-2025-12-09 11:11:17.047 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
-2025-12-09 11:11:17.061 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
-2025-12-09 11:11:17.072 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 5.575 seconds (process running for 6.109)
-2025-12-09 11:11:17.079 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2025-12-09 11:11:17.079 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2025-12-09 11:11:17.162 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Ghetto Jungle Music
-2025-12-09 11:11:17.163 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Ghetto Jungle Music
-2025-12-09 11:11:17.599 INFO  [RMI TCP Connection(3)-25.63.110.158] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-12-09 11:11:17.599 INFO  [RMI TCP Connection(3)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-12-09 11:11:17.601 INFO  [RMI TCP Connection(3)-25.63.110.158] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-2025-12-09 11:12:16.997 INFO  [MessageBroker-15] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 1, completed tasks = 60]
-2025-12-09 11:30:41.823 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-12-09 11:30:41.832 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-12-09 11:30:41.834 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
-2025-12-09 11:30:41.834 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@484bd339]]
-2025-12-09 11:30:41.834 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
-2025-12-09 11:30:41.858 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-12-09 11:30:41.860 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-12-09 11:30:41.862 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-10 07:14:10.097 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-10 07:14:10.100 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10 07:14:10.352 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-12-10 07:14:10.488 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-10 07:14:11.469 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-10 07:14:11.506 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-12-10 07:14:11.603 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2025-12-10 07:14:11.866 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-10 07:14:12.528 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-12-10 07:14:12.528 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4b6ce5b6]]
+2025-12-10 07:14:12.529 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-12-10 07:14:12.567 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
+2025-12-10 07:14:12.583 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-12-10 07:14:12.596 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 6.695 seconds (process running for 7.317)
+2025-12-10 07:14:12.602 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2025-12-10 07:14:12.602 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2025-12-10 07:14:12.696 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR027
+2025-12-10 07:14:12.698 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR027
+2025-12-10 07:14:12.716 INFO  [http-nio-8089-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-10 07:14:12.717 INFO  [http-nio-8089-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-10 07:14:12.718 INFO  [http-nio-8089-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-12-10 07:15:12.496 INFO  [MessageBroker-4] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 1, completed tasks = 60]
+2025-12-10 07:22:01.516 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:22:09.861 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:22:19.069 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:22:25.508 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:22:35.920 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:22:44.553 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:22:54.431 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:23:01.577 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:23:08.846 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:23:16.745 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:23:24.574 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:23:34.378 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:23:44.905 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:23:55.299 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:24:03.639 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:24:11.892 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:24:18.152 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:24:23.884 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:24:32.839 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:24:43.179 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:24:51.342 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:24:59.066 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:25:07.119 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:25:15.401 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:25:25.496 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:25:33.140 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:25:41.453 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:25:51.588 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:01.285 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:07.880 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:13.357 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:19.359 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:25.348 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:31.360 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:37.356 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:43.352 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:49.372 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:26:55.369 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:01.380 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:07.374 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:13.418 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:19.449 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:25.663 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:31.499 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:37.661 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:43.861 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:53.249 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:27:58.367 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:28:04.704 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:28:15.296 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:28:23.576 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:28:32.299 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:28:40.114 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:28:49.409 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:28:57.145 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:29:06.997 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:29:17.271 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:29:23.936 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:29:31.798 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:29:38.768 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:29:46.327 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:29:54.066 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:03.315 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:10.789 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:16.355 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:22.358 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:28.354 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:34.354 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:40.348 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:46.369 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:52.369 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:30:58.361 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:04.363 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:10.401 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:16.398 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:22.433 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:28.499 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:34.823 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:40.833 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:47.451 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:31:54.856 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:32:03.571 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:32:11.233 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:32:19.813 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:32:27.170 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:32:35.771 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:32:42.936 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:32:50.185 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:32:56.561 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:33:05.674 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:33:16.044 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:33:25.770 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:33:33.972 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:33:43.443 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:33:53.572 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:01.875 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:11.779 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:17.360 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:23.354 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:29.360 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:35.351 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:41.352 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:47.351 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:53.359 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:34:59.372 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:05.360 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:11.395 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:17.402 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:23.419 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:29.447 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:35.699 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:41.935 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:49.113 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:35:58.801 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:06.945 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:16.934 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:22.359 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:28.353 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:34.356 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:40.358 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:46.370 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:52.374 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:36:58.373 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:04.372 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:10.385 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:16.378 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:22.385 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:28.515 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:34.563 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:40.746 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:47.579 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:37:54.700 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:38:02.264 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:38:09.226 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:38:17.107 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:38:23.593 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:38:31.624 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:38:38.410 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:38:47.904 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:38:56.061 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:39:04.844 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:39:15.257 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:39:23.964 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:39:32.466 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:39:40.126 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:39:50.348 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:40:00.943 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:40:08.166 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:40:15.874 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:40:25.958 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:40:32.707 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:40:42.534 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:40:50.754 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:40:59.510 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:41:09.902 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:41:16.713 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:41:24.065 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:41:33.478 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:41:41.107 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:41:49.671 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:41:58.041 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:42:06.676 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:42:16.615 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:42:24.909 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:42:31.045 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:42:39.815 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:42:47.211 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:42:54.114 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:43:00.862 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:43:11.234 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:43:14.615 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 07:43:14.729 DEBUG [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T07:43:14.679294200+02:00 → recalc with now=2025-12-10T05:43:14.729291300Z
+2025-12-10 07:43:14.732 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Вот они стоят
+2025-12-10 07:43:14.732 INFO  [MessageBroker-5] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Вот они стоят
+2025-12-10 07:43:14.737 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 07:43:14.738 ERROR [MessageBroker-5] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 07:43:15.603 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Вот они стоят
+2025-12-10 07:43:15.603 INFO  [MessageBroker-5] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Вот они стоят
+2025-12-10 07:43:20.776 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:43:29.002 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:43:35.942 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:43:45.606 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 07:43:45.622 DEBUG [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T07:43:45.616121700+02:00 → recalc with now=2025-12-10T05:43:45.622121Z
+2025-12-10 07:43:45.624 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Meeting Of The Minds Vol. 6 [FRMOTM006]
+2025-12-10 07:43:45.624 INFO  [MessageBroker-5] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Meeting Of The Minds Vol. 6 [FRMOTM006]
+2025-12-10 07:43:45.627 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 07:43:45.628 ERROR [MessageBroker-5] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 07:43:46.112 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:43:46.605 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Meeting Of The Minds Vol. 6 [FRMOTM006]
+2025-12-10 07:43:46.605 INFO  [MessageBroker-5] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Meeting Of The Minds Vol. 6 [FRMOTM006]
+2025-12-10 07:43:55.181 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:02.946 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:12.724 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:19.679 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:25.347 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:31.352 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:37.357 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:43.356 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:49.359 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:44:55.363 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:01.375 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:07.371 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:12.510 INFO  [MessageBroker-13] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 1, completed tasks = 1861]
+2025-12-10 07:45:13.362 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:19.389 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:25.433 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:31.462 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:37.518 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:43.915 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:49.835 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:45:56.478 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:46:06.505 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:46:16.479 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:46:25.311 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:46:30.357 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:46:36.363 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:46:42.352 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:46:48.353 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:46:54.354 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:00.348 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:06.363 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:12.364 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:18.367 WARN  [http-nio-8089-exec-7] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:24.391 WARN  [http-nio-8089-exec-9] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:28.973 WARN  [http-nio-8089-exec-1] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:29.306 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:34.641 WARN  [http-nio-8089-exec-5] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:40.815 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:47.435 WARN  [http-nio-8089-exec-6] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:47:55.789 WARN  [http-nio-8089-exec-8] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:02.895 WARN  [http-nio-8089-exec-4] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:11.010 WARN  [http-nio-8089-exec-10] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:18.276 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:27.655 WARN  [http-nio-8089-exec-6] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:33.359 WARN  [http-nio-8089-exec-8] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:39.359 WARN  [http-nio-8089-exec-4] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:45.351 WARN  [http-nio-8089-exec-10] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:51.354 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:48:57.359 WARN  [http-nio-8089-exec-6] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:03.362 WARN  [http-nio-8089-exec-8] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:09.396 WARN  [http-nio-8089-exec-4] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:15.558 WARN  [http-nio-8089-exec-10] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:21.370 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:27.389 WARN  [http-nio-8089-exec-6] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:33.433 WARN  [http-nio-8089-exec-8] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:39.510 WARN  [http-nio-8089-exec-4] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:45.545 WARN  [http-nio-8089-exec-10] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:51.570 WARN  [http-nio-8089-exec-3] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:49:57.790 WARN  [http-nio-8089-exec-6] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:50:05.022 WARN  [http-nio-8089-exec-8] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:50:15.141 WARN  [http-nio-8089-exec-4] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:50:22.950 WARN  [http-nio-8089-exec-10] o.s.w.s.s.t.h.DefaultSockJsService - "Invalid SockJS path '/radio-ws' - required to have 3 path segments"
+2025-12-10 07:50:30.209 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-10 07:50:30.221 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-12-10 07:50:30.225 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-12-10 07:50:30.226 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@4b6ce5b6]]
+2025-12-10 07:50:30.226 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-12-10 07:50:30.256 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10 07:50:30.258 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-12-10 07:50:30.259 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-12-10 10:01:39.737 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-10 10:01:39.797 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 10784 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-10 10:01:39.798 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-10 10:01:39.799 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-10 10:01:41.580 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-10 10:01:41.774 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 185 ms. Found 6 JPA repository interfaces.
+2025-12-10 10:01:42.548 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-12-10 10:01:42.565 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8089"]
+2025-12-10 10:01:42.568 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-10 10:01:42.569 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-10 10:01:42.676 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-10 10:01:42.677 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2827 ms
+2025-12-10 10:01:43.037 INFO  [main] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-10 10:01:43.118 INFO  [main] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.29.Final
+2025-12-10 10:01:43.168 INFO  [main] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-12-10 10:01:43.565 INFO  [main] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-10 10:01:43.621 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-10 10:01:43.843 INFO  [main] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@69e8b711
+2025-12-10 10:01:43.845 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-12-10 10:01:43.981 INFO  [main] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 15.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-10 10:01:45.486 INFO  [main] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-10 10:01:45.489 INFO  [main] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-10 10:01:45.824 DEBUG [main] c.T.D.s.jwt.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-12-10 10:01:46.071 INFO  [main] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-10 10:01:47.544 WARN  [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-10 10:01:47.596 INFO  [main] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-12-10 10:01:47.751 INFO  [main] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page template: index
+2025-12-10 10:01:48.120 INFO  [main] o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-12-10 10:01:49.000 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-12-10 10:01:49.001 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@605d942c]]
+2025-12-10 10:01:49.002 INFO  [main] o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-12-10 10:01:49.047 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8089"]
+2025-12-10 10:01:49.067 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-12-10 10:01:49.084 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Started DubcastApplication in 10.015 seconds (process running for 11.072)
+2025-12-10 10:01:49.095 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2025-12-10 10:01:49.096 WARN  [main] o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2025-12-10 10:01:49.159 INFO  [http-nio-8089-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-10 10:01:49.160 INFO  [http-nio-8089-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-12-10 10:01:49.162 INFO  [http-nio-8089-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-12-10 10:01:49.221 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:01:49.364 DEBUG [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:01:49.321641700+02:00 → recalc with now=2025-12-10T08:01:49.364644100Z
+2025-12-10 10:01:49.369 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 07. Oh, frost!
+2025-12-10 10:01:49.371 INFO  [MessageBroker-1] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 07. Oh, frost!
+2025-12-10 10:01:49.394 INFO  [MessageBroker-1] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:01:49.396 ERROR [MessageBroker-1] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:01:50.096 INFO  [MessageBroker-2] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 07. Oh, frost!
+2025-12-10 10:01:50.096 INFO  [MessageBroker-2] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 07. Oh, frost!
+2025-12-10 10:02:48.962 INFO  [MessageBroker-11] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 1 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(1)-CONNECTED(1)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 12, active threads = 0, queued tasks = 0, completed tasks = 12], outboundChannel[pool size = 1, active threads = 0, queued tasks = 0, completed tasks = 1], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 3, completed tasks = 74]
+2025-12-10 10:05:29.093 INFO  [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:05:29.106 DEBUG [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:05:29.103318900+02:00 → recalc with now=2025-12-10T08:05:29.106322400Z
+2025-12-10 10:05:29.109 INFO  [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гр.Об-Так Далеко
+2025-12-10 10:05:29.110 INFO  [MessageBroker-4] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гр.Об-Так Далеко
+2025-12-10 10:05:29.113 INFO  [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:05:29.114 ERROR [MessageBroker-4] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:05:30.091 INFO  [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гр.Об-Так Далеко
+2025-12-10 10:05:30.091 INFO  [MessageBroker-4] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гр.Об-Так Далеко
+2025-12-10 10:07:42.088 INFO  [MessageBroker-10] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:07:42.099 DEBUG [MessageBroker-10] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:07:42.096629300+02:00 → recalc with now=2025-12-10T08:07:42.099628700Z
+2025-12-10 10:07:42.100 INFO  [MessageBroker-10] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 11 C418 - Mice On Venus
+2025-12-10 10:07:42.100 INFO  [MessageBroker-10] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 11 C418 - Mice On Venus
+2025-12-10 10:07:42.103 INFO  [MessageBroker-10] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:07:42.103 ERROR [MessageBroker-10] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:07:43.085 INFO  [MessageBroker-10] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: 11 C418 - Mice On Venus
+2025-12-10 10:07:43.086 INFO  [MessageBroker-10] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: 11 C418 - Mice On Venus
+2025-12-10 10:12:24.089 INFO  [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:12:24.100 DEBUG [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:12:24.098843500+02:00 → recalc with now=2025-12-10T08:12:24.100844100Z
+2025-12-10 10:12:24.103 INFO  [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская Оборона - Прелюдия / Похуй Нахуй
+2025-12-10 10:12:24.103 INFO  [MessageBroker-4] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская Оборона - Прелюдия / Похуй Нахуй
+2025-12-10 10:12:24.106 INFO  [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:12:24.107 ERROR [MessageBroker-4] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:12:25.097 INFO  [MessageBroker-4] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская Оборона - Прелюдия / Похуй Нахуй
+2025-12-10 10:12:25.098 INFO  [MessageBroker-4] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская Оборона - Прелюдия / Похуй Нахуй
+2025-12-10 10:14:26.091 INFO  [MessageBroker-14] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:14:26.102 DEBUG [MessageBroker-14] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:14:26.098022600+02:00 → recalc with now=2025-12-10T08:14:26.102024100Z
+2025-12-10 10:14:26.103 INFO  [MessageBroker-14] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: К тебе
+2025-12-10 10:14:26.104 INFO  [MessageBroker-14] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: К тебе
+2025-12-10 10:14:26.107 INFO  [MessageBroker-14] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:14:26.108 ERROR [MessageBroker-14] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:14:27.088 INFO  [MessageBroker-14] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: К тебе
+2025-12-10 10:14:27.088 INFO  [MessageBroker-14] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: К тебе
+2025-12-10 10:17:30.088 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:17:30.099 DEBUG [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:17:30.097890900+02:00 → recalc with now=2025-12-10T08:17:30.099885700Z
+2025-12-10 10:17:30.101 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская Оборона - БГ
+2025-12-10 10:17:30.101 INFO  [MessageBroker-5] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская Оборона - БГ
+2025-12-10 10:17:30.106 INFO  [MessageBroker-5] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:17:30.107 ERROR [MessageBroker-5] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:17:31.097 INFO  [MessageBroker-14] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская Оборона - БГ
+2025-12-10 10:17:31.097 INFO  [MessageBroker-14] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская Оборона - БГ
+2025-12-10 10:19:48.085 INFO  [MessageBroker-3] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:19:48.099 DEBUG [MessageBroker-3] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:19:48.093914+02:00 → recalc with now=2025-12-10T08:19:48.099917800Z
+2025-12-10 10:19:48.103 INFO  [MessageBroker-3] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR048
+2025-12-10 10:19:48.103 INFO  [MessageBroker-3] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR048
+2025-12-10 10:19:48.111 INFO  [MessageBroker-3] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:19:48.112 ERROR [MessageBroker-3] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:19:49.093 INFO  [MessageBroker-3] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: FR048
+2025-12-10 10:19:49.093 INFO  [MessageBroker-3] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: FR048
+2025-12-10 10:32:48.976 INFO  [MessageBroker-11] o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 2 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(2)-CONNECTED(2)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 909], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 331], sockJsScheduler[pool size = 16, active threads = 1, queued tasks = 3, completed tasks = 2250]
+2025-12-10 10:35:01.092 INFO  [MessageBroker-8] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:35:01.109 DEBUG [MessageBroker-8] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:35:01.102158500+02:00 → recalc with now=2025-12-10T08:35:01.109158600Z
+2025-12-10 10:35:01.111 INFO  [MessageBroker-8] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Привет Вождю, привет Солнцу
+2025-12-10 10:35:01.112 INFO  [MessageBroker-8] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Привет Вождю, привет Солнцу
+2025-12-10 10:35:01.115 INFO  [MessageBroker-8] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:35:01.116 ERROR [MessageBroker-8] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:35:02.094 INFO  [MessageBroker-8] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Привет Вождю, привет Солнцу
+2025-12-10 10:35:02.094 INFO  [MessageBroker-8] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Привет Вождю, привет Солнцу
+2025-12-10 10:38:04.091 INFO  [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] No current track, trying autofill...
+2025-12-10 10:38:04.102 DEBUG [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Schedule updated from 2025-12-10T10:38:04.099492300+02:00 → recalc with now=2025-12-10T08:38:04.102491300Z
+2025-12-10 10:38:04.103 INFO  [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская оборона - Наваждение
+2025-12-10 10:38:04.104 INFO  [MessageBroker-11] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская оборона - Наваждение
+2025-12-10 10:38:04.108 INFO  [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: nothing
+2025-12-10 10:38:04.109 ERROR [MessageBroker-11] o.s.s.s.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task
+java.lang.NullPointerException: Cannot invoke "com.Tsimur.Dubcast.dto.ScheduleEntryDto.getTrack()" because "entry" is null
+	at com.Tsimur.Dubcast.radio.NowPlayingResponseFactory.fromScheduleEntry(NowPlayingResponseFactory.java:22)
+	at com.Tsimur.Dubcast.websocket.NowPlayingWebSocketBroadcaster.onNowPlayingChanged(NowPlayingWebSocketBroadcaster.java:22)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.doInvoke(ApplicationListenerMethodAdapter.java:383)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.processEvent(ApplicationListenerMethodAdapter.java:255)
+	at org.springframework.context.event.ApplicationListenerMethodAdapter.onApplicationEvent(ApplicationListenerMethodAdapter.java:174)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:454)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:400)
+	at com.Tsimur.Dubcast.radio.RadioClock.recalcAndPublish(RadioClock.java:101)
+	at com.Tsimur.Dubcast.radio.RadioClock.tick(RadioClock.java:55)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124)
+	at io.micrometer.observation.Observation.observe(Observation.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124)
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:85)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-10 10:38:05.088 INFO  [MessageBroker-11] com.Tsimur.Dubcast.radio.RadioClock - [RadioClock] Now playing changed: Гражданская оборона - Наваждение
+2025-12-10 10:38:05.088 INFO  [MessageBroker-11] c.T.D.w.NowPlayingWebSocketBroadcaster - [WS] Broadcasting now playing: Гражданская оборона - Наваждение
+2025-12-10 10:38:46.300 INFO  [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-10 10:38:46.331 INFO  [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-12-10 10:38:46.344 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-12-10 10:38:46.345 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@605d942c]]
+2025-12-10 10:38:46.345 INFO  [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-12-10 14:27:07.100 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.3.Final
+2025-12-10 14:27:07.146 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - Starting DubcastApplication using Java 21.0.2 with PID 21956 (D:\Diplom\Dubcast\Dubcast\target\classes started by Suzukie in D:\Diplom\Dubcast\Dubcast)
+2025-12-10 14:27:07.147 DEBUG [main] c.Tsimur.Dubcast.DubcastApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-12-10 14:27:07.147 INFO  [main] c.Tsimur.Dubcast.DubcastApplication - No active profile set, falling back to 1 default profile: "default"
+2025-12-10 14:27:08.387 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-10 14:27:08.555 INFO  [main] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 161 ms. Found 6 JPA repository interfaces.
+2025-12-10 14:27:09.084 INFO  [main] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-12-10 14:27:09.096 INFO  [main] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-12-10 14:27:09.098 INFO  [main] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-12-10 14:27:09.098 INFO  [main] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-12-10 14:27:09.169 INFO  [main] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-12-10 14:27:09.170 INFO  [main] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1986 ms
+2025-12-10 14:27:09.393 INFO  [main] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-12-10 14:27:12.718 ERROR [main] o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtAuthenticationFilter' defined in file [D:\Diplom\Dubcast\Dubcast\target\classes\com\Tsimur\Dubcast\security\jwt\JwtAuthenticationFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userRepository' defined in com.Tsimur.Dubcast.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-12-10 14:27:12.740 INFO  [main] o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-12-10 14:27:12.744 WARN  [main] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-12-10 14:27:12.755 INFO  [main] o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-10 14:27:12.768 ERROR [main] o.s.boot.SpringApplication - Application run failed
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:170)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.Tsimur.Dubcast.DubcastApplication.main(DubcastApplication.java:11)
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:147)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:517)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:219)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:193)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:167)
+	... 8 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtAuthenticationFilter' defined in file [D:\Diplom\Dubcast\Dubcast\target\classes\com\Tsimur\Dubcast\security\jwt\JwtAuthenticationFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userRepository' defined in com.Tsimur.Dubcast.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1395)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1232)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:230)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:184)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:179)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:164)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:96)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:271)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:245)
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4464)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:773)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:81)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:412)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:870)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:438)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128)
+	... 13 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userRepository' defined in com.Tsimur.Dubcast.repository.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1725)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1474)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:606)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1698)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1643)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:913)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 54 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpaSharedEM_entityManagerFactory': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:691)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:513)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1375)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1205)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+	... 67 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in class path resource [org/springframework/boot/autoconfigure/liquibase/LiquibaseAutoConfiguration$LiquibaseConfiguration.class]: liquibase.exception.DatabaseException: org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1826)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:607)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+	... 79 common frames omitted
+Caused by: liquibase.exception.LiquibaseException: liquibase.exception.DatabaseException: org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:288)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1873)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1822)
+	... 88 common frames omitted
+Caused by: liquibase.exception.DatabaseException: org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
+	at liquibase.integration.spring.SpringLiquibase.lambda$afterPropertiesSet$0(SpringLiquibase.java:280)
+	at liquibase.Scope.lambda$child$0(Scope.java:201)
+	at liquibase.Scope.child(Scope.java:210)
+	at liquibase.Scope.child(Scope.java:200)
+	at liquibase.Scope.child(Scope.java:179)
+	at liquibase.integration.spring.SpringLiquibase.afterPropertiesSet(SpringLiquibase.java:271)
+	... 90 common frames omitted
+Caused by: org.postgresql.util.PSQLException: Ошибка при попытке подсоединения.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:385)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:277)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:370)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:207)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:576)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:97)
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+	at liquibase.integration.spring.SpringLiquibase.lambda$afterPropertiesSet$0(SpringLiquibase.java:275)
+	... 95 common frames omitted
+Caused by: java.net.UnknownHostException: db
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:567)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:751)
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:261)
+	at org.postgresql.core.PGStream.<init>(PGStream.java:122)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:146)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 107 common frames omitted
