@@ -40,6 +40,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, ApiPaths.CHAT + "/**").permitAll()
                         .requestMatchers(ApiPaths.ADMIN + "/**",ApiPaths.PLAYLIST + "/**").hasAuthority(Role.ROLE_ADMIN.name())
 
+                        .requestMatchers("/actuator/health").permitAll()//health Check
+
+
                         .requestMatchers(ApiPaths.PROFILE + "/**").hasAnyAuthority(
                                 Role.ROLE_USER.name(),
                                 Role.ROLE_ADMIN.name()

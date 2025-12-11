@@ -16,3 +16,93 @@ https://docs.google.com/document/d/1ySuJNWIDRcrLnE398XAK7ELGDpLvmFvQfV96Wp4-aXo/
 
 ## DataBase
 https://docs.google.com/document/d/1eEjRvm0ClqGzF0ZA0219kOlPtwJ-_SWOg6EqLVFVVOw/edit?usp=sharing
+
+
+
+
+
+# Инструкция запуска backend через Docker Compose
+
+## 1. Предусловия
+
+- Установлен Docker и Docker Compose
+- В корне backend-проекта лежат файлы:
+    - `docker-compose.yml`
+    - `Dockerfile`
+
+## 2. Подготовить файл `.env.docker`
+
+Создай рядом с `docker-compose.yml` файл `.env.docker`, например:
+
+```env
+# База данных
+DB_NAME=dubcast
+DB_USERNAME=dubcast
+DB_PASSWORD=change_me
+DB_PORT=5432
+
+# JWT (dev-значение, в проде заменить)
+JWT_SECRET=dev-secret
+
+# Таймзона радио
+TIME_STAMP=Europe/Vilnius
+
+# SoundCloud API
+SOUNDCLOUD_CLIENT_ID=your-sc-client-id
+SOUNDCLOUD_API_BASE_URL=https://api-v2.soundcloud.com
+```
+
+## 3. Сборка и запуск контейнеров
+
+Из корня backend-проекта:
+
+```bash
+docker compose up --build
+# или, если старая версия:
+# docker-compose up --build
+```
+
+Compose поднимет два сервиса:
+
+- `servicesite-db` — PostgreSQL
+- `servicesite-backend` — Spring Boot + Playwright
+
+## 4. Доступ к приложению
+
+После успешного старта:
+
+- Backend API: http://localhost:8089
+- Swagger UI: http://localhost:8089/swagger-ui.html
+- Healthcheck (Actuator): http://localhost:8089/actuator/health
+
+## 5. Остановка
+
+```bash
+docker compose down
+# чтобы вместе с контейнерами удалить данные БД:
+# docker compose down -v
+```
+
+
+
+# ENV переменные
+
+Все настройки берутся из файлов `.env.docker` (для Docker) и `.env.local` (для локального запуска через IDE).
+
+**База данных**
+
+- `DB_NAME` – имя базы данных (по умолчанию `dubcast`)
+- `DB_USERNAME` – пользователь БД
+- `DB_PASSWORD` – пароль пользователя БД
+- `DB_PORT` – порт PostgreSQL (по умолчанию `5432`)
+
+**Backend / Spring**
+
+- `SERVER_PORT` – порт Spring Boot внутри контейнера (по умолчанию `8080`, наружу проброшен на `8089`)
+- `JWT_SECRET` – секрет для подписи JWT-токенов (обязательно переопределить вне dev)
+- `TIME_STAMP` – часовой пояс радио, например `Europe/Vilnius`
+
+**SoundCloud**
+
+- `SOUNDCLOUD_CLIENT_ID` – актуальный Client ID для SoundCloud API
+- `SOUNDCLOUD_API_BASE_URL` – базовый URL API (по умолчанию `https://api-v2.soundcloud.com`)

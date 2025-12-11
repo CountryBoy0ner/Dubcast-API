@@ -93,7 +93,7 @@ services:
       - app-net
     healthcheck:
       # Ждём, пока PostgreSQL станет доступен внутри сети
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-dubcast} -d ${DB_NAME:-dubcast} || exit 1"]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME:-dubcast} -d ${DB_NAME:-dubcast} || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -108,7 +108,7 @@ services:
   # --- Backend: Dubcast Spring Boot + Playwright ---
   servicesite-backend:
     build:
-      context: .                       # Корень backend-проекта
+      context: ..                       # Корень backend-проекта
       dockerfile: Dockerfile           # Наш Dockerfile с multi-stage и Playwright
     container_name: servicesite-backend
     # Backend стартует только после того, как БД "здоровая"
@@ -132,7 +132,7 @@ services:
     restart: unless-stopped            # Автоматический рестарт при падении
     healthcheck:
       # Проверяем health endpoint Spring Boot Actuator
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q '"status":"UP"' || exit 1"]
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q '"status":"UP"' || exit 1" ]
       interval: 15s
       timeout: 5s
       retries: 5
