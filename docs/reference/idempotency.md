@@ -1,103 +1,115 @@
-
 # Idempotency & Safe Request Practices — Dubcast Radio API
 
-This document describes how idempotency and safe operation principles apply to
-the Dubcast Radio API. It satisfies the advanced requirement for explaining
-complex REST design behavior.
+This document explains how **idempotency** and **safe request** principles apply to the **current Dubcast Radio API** (as implemented today).
+It helps API consumers build resilient clients (retries, refresh, double-click protection) and satisfies the advanced documentation requirement.
 
 ---
 
-# 1. What is Idempotency?
+## 1. What is Idempotency?
 
-A request is *idempotent* if performing it multiple times results in the same
-final state as performing it once.
+A request is **idempotent** if performing it multiple times results in the **same final server state** as performing it once.
 
-Examples of idempotent operations:
+- **Idempotent examples (in Dubcast):**
+   - `GET /api/radio/now`
+   - `GET /api/programming/current`
+   - `PUT /api/profile/username`
+   - `DELETE /api/schedule/{id}` *(final state stays “deleted”; repeated calls may return 404)*
 
-- GET /tracks/42
-- DELETE /schedule/10
-- PUT /profile/username
+- **Non-idempotent examples (in Dubcast):**
+   - `POST /api/tracks` *(creates a new track each time)*
+   - `POST /api/schedule` *(creates a new schedule entry each time)*
+   - `POST /api/admin/programming/day/{date}/insert-track` *(inserts a new slot; repeat inserts again)*
 
-Non-idempotent operations:
-
-- POST /tracks
-- POST /admin/programming/day/{date}/insert-track
-
-Understanding idempotency helps prevent accidental data corruption caused by:
-
-- network retries  
-- UI glitches  
-- user double-clicking  
-- mobile reconnection events  
+Idempotency matters because clients often retry requests due to:
+- unstable network / timeouts
+- mobile reconnection
+- UI double click
+- reverse proxy retries
 
 ---
 
-# 2. Idempotent Methods in Dubcast Radio
+## 2. Safe Methods in Dubcast
 
-### GET — Safe and idempotent
-Used for retrieving data, never changes state.
+### GET — safe and idempotent
+Used for reading data. It **must not change** server state.
 
-### PUT — Idempotent
-You can update a resource multiple times with the same body; the result is identical.
-
-### DELETE — Idempotent
-Deleting an already deleted resource returns 404, but calling DELETE twice does not harm state.
-
----
-
-# 3. Non‑Idempotent Methods
-
-### POST — Not idempotent
-Creating track or schedule entries always generates **new entities**.
-
-Example:
-```
-POST /admin/programming/day/2025-12-08/insert-track
-```
-Running twice inserts the track twice.
-
-### POST /parser/track
-Parsing twice results in multiple operations, even though end DB state may not change.
+Examples:
+- `GET /api/chat/messages`
+- `GET /api/playlist`
+- `GET /api/programming/next`
 
 ---
 
-# 4. Recommended Safe Practices for Clients
+## 3. Idempotent Methods
 
-1. **Avoid retrying POST automatically.**  
-2. **Use PUT/PATCH for updates instead of POST where possible.**
-3. **Include deduplication keys** (future feature) when sending create requests:
-   ```
-   Idempotency-Key: <uuid>
-   ```
-4. **Assume GET is always safe to retry.**
-5. **Handle 409 conflicts gracefully** when race conditions occur.
+### PUT — idempotent update
+A `PUT` request can be sent multiple times with the same body; the final state remains the same.
+
+Examples:
+- `PUT /api/profile/username`
+- `PUT /api/profile/bio`
+- `PUT /api/tracks/{id}`
+- `PUT /api/schedule/{id}`
+
+### DELETE — idempotent removal
+Deleting a resource multiple times results in the same final state (resource absent).
+The second call may return **404 Not Found**, but does not “delete more” than the first.
+
+Examples:
+- `DELETE /api/tracks/{id}`
+- `DELETE /api/schedule/{id}`
+- `DELETE /api/playlist/{id}`
+- `DELETE /api/admin/programming/slots/{id}`
 
 ---
 
-# 5. Potential Future Support for Full Idempotency Keys
+## 4. Non‑Idempotent Operations
 
-The API may introduce optional headers:
+### POST — not idempotent by default
+POST is generally used for creation and can cause duplicates if repeated.
+
+Examples:
+- `POST /api/tracks`
+- `POST /api/users`
+- `POST /api/schedule`
+- `POST /api/playlist/import`
+- `POST /api/parser/track`
+- `POST /api/parser/playlist`
+
+Also note:
+- Some POST endpoints are “actions” (not simple creation). For example, inserting or appending tracks changes schedule structure and should **not** be retried automatically.
+
+---
+
+## 5. Recommended Safe Practices for Clients
+
+1. **Never auto‑retry POST** unless you know it is safe for a specific endpoint.
+2. **Retry GET safely** (with exponential backoff).
+3. Prefer **PUT** for updates and user edits (where possible).
+4. Treat **409 Conflict** as a normal business outcome (duplicate email/username, slot is currently playing, etc.).
+5. If a request fails with a timeout after sending data, the server **may have processed it**. Avoid repeating non-idempotent requests without checking state first.
+
+---
+
+## 6. Optional Future Enhancement: Idempotency Keys (Not Implemented Yet)
+
+The API may later introduce a header like:
 
 ```
 Idempotency-Key: <uuid>
 ```
 
-Behavior:
+Possible future behavior:
+- The server stores the key for a period of time
+- Repeated identical requests with the same key return the same response
+- Prevents duplicate creations for endpoints like `POST /api/schedule` or `POST /api/tracks`
 
-- Server logs key
-- Repeated request with same key returns the same response
-- Prevents duplicated schedule entries or tracks
-
-This aligns with Stripe, PayPal, and AWS best practices.
+**Important:** at the moment, Dubcast API does **not** guarantee Idempotency-Key semantics — clients must implement their own deduplication strategy.
 
 ---
 
-# 6. Summary
+## 7. Summary
 
-Dubcast Radio uses REST principles where:
-
-- GET, PUT, DELETE are idempotent  
-- POST is not idempotent  
-- Future enhancements may add full idempotency-key support  
-
-This document provides the advanced conceptual explanation required for high‑grade documentation.
+- **GET / PUT / DELETE** are safe to retry (idempotent; DELETE may return 404 on repeat).
+- **POST** is generally **not safe** to retry automatically (can create duplicates or repeated side effects).
+- For resilience, clients should retry reads, handle conflicts, and avoid blind POST retries.

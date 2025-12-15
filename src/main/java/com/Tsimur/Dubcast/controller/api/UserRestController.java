@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -155,7 +157,7 @@ public class UserRestController {
                             description = "List of users",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = UserDto.class)
+                                    array = @ArraySchema(schema = @Schema(implementation = UserDto.class))
                             )
                     ),
                     @ApiResponse(

@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Dubcast Radio API",
-    "description": "API интернет-радио Dubcast.\nСодержит публичные, пользовательские и админские эндпоинты.\n",
+    "description": "        Dubcast Internet Radio API.\nContains public, user, and admin endpoints.\n",
     "version": "v1"
   },
   "servers": [
@@ -1023,7 +1023,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
                 }
               }
             }
@@ -1248,7 +1251,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TrackDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrackDto"
+                  }
                 }
               }
             }
@@ -1370,7 +1376,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleEntryDto"
+                  }
                 }
               }
             }
@@ -1478,7 +1487,7 @@
         ]
       }
     },
-    "/api/playlists/import": {
+    "/api/playlist/import": {
       "post": {
         "tags": [
           "Playlists"
@@ -2147,11 +2156,14 @@
             }
           },
           "200": {
-            "description": "List of schedule entries in the given range",
+            "description": "Day schedule entries",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleEntryDto"
+                  }
                 }
               }
             }
@@ -2211,7 +2223,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleEntryDto"
+                  }
                 }
               }
             }
@@ -2264,14 +2279,7 @@
             }
           },
           "204": {
-            "description": "Nothing is playing right now (no scheduled entry for the current time)",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/NowPlayingResponse"
-                }
-              }
-            }
+            "description": "Nothing is playing right now (no scheduled entry for the current time)"
           }
         }
       }
@@ -2306,14 +2314,7 @@
             }
           },
           "204": {
-            "description": "No previous schedule slot",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduleEntryDto"
-                }
-              }
-            }
+            "description": "No previous schedule slot"
           }
         }
       }
@@ -2348,14 +2349,7 @@
             }
           },
           "204": {
-            "description": "No upcoming schedule slot",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduleEntryDto"
-                }
-              }
-            }
+            "description": "No upcoming schedule slot"
           }
         }
       }
@@ -2390,14 +2384,7 @@
             }
           },
           "204": {
-            "description": "No current schedule slot (nothing is scheduled right now)",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ScheduleEntryDto"
-                }
-              }
-            }
+            "description": "No current schedule slot (nothing is scheduled right now)"
           }
         }
       }
@@ -2449,7 +2436,7 @@
         ]
       }
     },
-    "/api/playlists": {
+    "/api/playlist": {
       "get": {
         "tags": [
           "Playlists"
@@ -2484,7 +2471,7 @@
         }
       }
     },
-    "/api/playlists/{id}": {
+    "/api/playlist/{id}": {
       "get": {
         "tags": [
           "Playlists"
@@ -2758,6 +2745,26 @@
         ]
       }
     },
+    "/api/admin/analytics/online": {
+      "get": {
+        "tags": [
+          "admin-analytics-rest-controller"
+        ],
+        "operationId": "getOnlineStats",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OnlineStatsDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/admin/programming/slots/{id}": {
       "delete": {
         "tags": [
@@ -2805,6 +2812,16 @@
           },
           "403": {
             "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Slot is currently playing and cannot be deleted",
             "content": {
               "*/*": {
                 "schema": {
@@ -3254,6 +3271,28 @@
             "items": {
               "type": "string"
             }
+          }
+        }
+      },
+      "OnlineStatsDto": {
+        "type": "object",
+        "properties": {
+          "totalOnline": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "onlinePerTrack": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32",
+              "deprecated": true
+            },
+            "deprecated": true
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }

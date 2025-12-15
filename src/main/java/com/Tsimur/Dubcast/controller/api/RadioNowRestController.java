@@ -48,7 +48,8 @@ public class RadioNowRestController {
                     ),
                     @ApiResponse(
                             responseCode = "204",
-                            description = "Nothing is playing right now (no scheduled entry for the current time)"
+                            description = "Nothing is playing right now (no scheduled entry for the current time)",
+                            content = @Content
                     )
             }
     )

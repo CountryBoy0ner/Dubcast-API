@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 
 
 @RestController
@@ -137,7 +138,7 @@ public class TrackRestController {
                             description = "List of tracks",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = TrackDto.class)
+                                    array = @ArraySchema(schema = @Schema(implementation = TrackDto.class))
                             )
                     ),
                     @ApiResponse(
@@ -218,7 +219,8 @@ public class TrackRestController {
             responses = {
                     @ApiResponse(
                             responseCode = "204",
-                            description = "Track deleted (no content)"
+                            description = "Track deleted (no content)",
+                            content = @Content
                     ),
                     @ApiResponse(
                             responseCode = "404",

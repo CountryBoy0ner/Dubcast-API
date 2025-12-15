@@ -4,7 +4,6 @@ services:
   # --- PostgreSQL база данных ---
   servicesite-db:
     image: postgres:16-alpine          # Лёгкий официальный образ PostgreSQL
-    container_name: servicesite-db
     # Все чувствительные значения (пароли) кладём в .env.docker, а не в compose
     env_file:
       - .env.docker
@@ -37,7 +36,6 @@ services:
     build:
       context: .                       # Корень backend-проекта
       dockerfile: Dockerfile           # Наш Dockerfile с multi-stage и Playwright
-    container_name: servicesite-backend
     # Backend стартует только после того, как БД "здоровая"
     depends_on:
       servicesite-db:

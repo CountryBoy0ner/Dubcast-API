@@ -42,7 +42,8 @@ public class RadioProgrammingRestController {
                     ),
                     @ApiResponse(
                             responseCode = "204",
-                            description = "No current schedule slot (nothing is scheduled right now)"
+                            description = "No current schedule slot (nothing is scheduled right now)",
+                            content = @Content
                     )
             }
     )
@@ -70,7 +71,8 @@ public class RadioProgrammingRestController {
                     ),
                     @ApiResponse(
                             responseCode = "204",
-                            description = "No upcoming schedule slot"
+                            description = "No upcoming schedule slot",
+                            content = @Content
                     )
             }
     )
@@ -98,7 +100,8 @@ public class RadioProgrammingRestController {
                     ),
                     @ApiResponse(
                             responseCode = "204",
-                            description = "No previous schedule slot"
+                            description = "No previous schedule slot",
+                            content = @Content
                     )
             }
     )

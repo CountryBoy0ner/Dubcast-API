@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 
 @RestController
 @RequiredArgsConstructor
@@ -147,7 +148,7 @@ public class ScheduleEntryRestController {
                             description = "List of schedule entries",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ScheduleEntryDto.class)
+                                    array = @ArraySchema(schema = @Schema(implementation = ScheduleEntryDto.class))
                             )
                     ),
                     @ApiResponse(
@@ -290,12 +291,13 @@ public class ScheduleEntryRestController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "List of schedule entries in the given range",
+                            description = "Day schedule entries",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ScheduleEntryDto.class)
+                                    array = @ArraySchema(schema = @Schema(implementation = ScheduleEntryDto.class))
                             )
-                    ),
+                    )
+                    ,
                     @ApiResponse(
                             responseCode = "400",
                             description = "Invalid date/time format",
@@ -339,9 +341,10 @@ public class ScheduleEntryRestController {
                             description = "Day schedule entries",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = ScheduleEntryDto.class)
+                                    array = @ArraySchema(schema = @Schema(implementation = ScheduleEntryDto.class))
                             )
-                    ),
+                    )
+                    ,
                     @ApiResponse(
                             responseCode = "400",
                             description = "Invalid date format",

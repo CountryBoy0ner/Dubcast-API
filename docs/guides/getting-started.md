@@ -1,31 +1,37 @@
-
 # Getting Started — Dubcast Radio API
 
-This guide provides the minimal steps required to start using the Dubcast Radio API.
-It explains how to authenticate, how to call your first endpoint, and how to work with
-the API securely.
+This guide shows the minimum steps to start using the **Dubcast Radio API**: base URL, authentication (JWT),
+and a first authenticated request.
 
 ---
 
-# 1. Base URL
+## 1. Base URL
 
-All API requests are sent to:
+All REST API requests use the `/api` prefix:
 
-```
+```text
 http://localhost:8089/api
 ```
 
+> If you run the project via Docker Compose, the backend is typically published as `8089` on the host
+> (host `8089` → container `8080`). Your setup may differ.
+
 ---
 
-# 2. Authentication (JWT)
+## 2. Authentication (JWT)
 
-Before accessing most API endpoints, you must authenticate and obtain a **JWT access token**.
+Most endpoints require a JWT access token in the `Authorization` header:
 
-## 2.1 Login
+```text
+Authorization: Bearer <accessToken>
+```
 
-**POST /api/auth/login**
+### 2.1 Login
 
-### Request
+**POST** `/api/auth/login`
+
+#### Request body
+
 ```json
 {
   "email": "admin@example.com",
@@ -33,40 +39,59 @@ Before accessing most API endpoints, you must authenticate and obtain a **JWT ac
 }
 ```
 
-### cURL
+#### Example (cURL)
+
 ```bash
-curl -X POST http://localhost:8089/api/auth/login   -H "Content-Type: application/json"   -d '{"email":"admin@example.com","password":"Admin123"}'
+curl -X POST "http://localhost:8089/api/auth/login"   -H "Content-Type: application/json"   -d '{"email":"admin@example.com","password":"Admin123"}'
 ```
 
-### Response
+#### Successful response
+
 ```json
 {
   "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
 ```
 
-Save this token — it is required for all secured requests.
+Save the token and reuse it in secured calls.
+
+### 2.2 Register (optional)
+
+**POST** `/api/auth/register`
+
+```json
+{
+  "email": "user@example.com",
+  "password": "User123"
+}
+```
 
 ---
 
-# 3. Calling Your First Authenticated Endpoint
+## 3. Your first API calls
 
-Most admin and user operations require a header:
+### 3.1 Call a public endpoint (no token)
 
-```
-Authorization: Bearer <token>
-```
+**GET** `/api/radio/now`
 
-## Example: Get Current User Profile
-
-**GET /api/profile/me**
-
-### cURL
 ```bash
-curl -X GET http://localhost:8089/api/profile/me   -H "Authorization: Bearer eyJh..."
+curl -i "http://localhost:8089/api/radio/now"
 ```
 
-### Successful Response
+Expected outcomes:
+- `200 OK` with the currently playing track info (when something is playing)
+- `204 No Content` if nothing is scheduled at the moment
+
+### 3.2 Call an authenticated endpoint
+
+**GET** `/api/profile/me`
+
+```bash
+curl -X GET "http://localhost:8089/api/profile/me"   -H "Authorization: Bearer <accessToken>"
+```
+
+Example response:
+
 ```json
 {
   "username": "dubast",
@@ -76,54 +101,52 @@ curl -X GET http://localhost:8089/api/profile/me   -H "Authorization: Bearer eyJ
 
 ---
 
-# 4. Common Authorization Errors
+## 4. Roles and access rules (quick overview)
 
-## 401 Unauthorized
-Occurs when token is:
-- missing
-- expired
-- malformed
+- **Public** endpoints: can be accessed without a token (e.g. `/api/radio/**`, `/api/programming/**`, chat GET endpoints).
+- **User** endpoints: require a valid JWT (e.g. `/api/profile/**`).
+- **Admin** endpoints: require **ROLE_ADMIN** (e.g. `/api/admin/**`, `/api/users/**`, `/api/tracks/**`, `/api/schedule/**`).
+
+If you call an admin endpoint as a normal user, you should receive **403 Forbidden**.
+
+---
+
+## 5. Common errors
+
+The API uses a unified JSON error format (see `reference/error-handling.md`).
+
+### 401 Unauthorized
+
+Occurs when the token is missing, expired, or invalid.
+
+### 403 Forbidden
+
+Occurs when you are authenticated but lack the required role.
+
+### 400 Bad Request (validation)
+
+Occurs when request body fields fail validation (typically includes `validationErrors`).
+
+---
+
+## 6. OpenAPI / Swagger
+
+Interactive documentation and the generated schema:
+
+- Swagger UI: `/swagger-ui/`
+- OpenAPI JSON: `/v3/api-docs`
+- OpenAPI YAML: `/v3/api-docs.yaml`
 
 Example:
-```json
-{
-  "status": 401,
-  "error": "UNAUTHORIZED",
-  "message": "Invalid or missing token"
-}
-```
 
-## 403 Forbidden
-You are authenticated, but do not have the required role (e.g., ADMIN-only endpoint).
-
-```json
-{
-  "status": 403,
-  "error": "FORBIDDEN",
-  "message": "Access denied"
-}
+```text
+http://localhost:8089/swagger-ui/
 ```
 
 ---
 
-# 5. Useful Test Flow
+## 7. Notes about API versioning
 
-1. Register or log in
-2. Copy JWT from login response
-3. Call authenticated endpoints with:
-
-```
--H "Authorization: Bearer <token>"
-```
-
-4. Use API examples from `api-examples.md` to explore additional functionality.
-
----
-
-# 6. Next Steps
-
-- Read `api-examples.md` for full request/response examples
-- Review `api-architecture-overview.md` to understand system structure
-- Explore your OpenAPI docs at:
-    - `/v3/api-docs`
-    - `/v3/api-docs.yaml`  
+Current public API is treated as **v1**, but endpoints are currently exposed under `/api/...`
+(without a `/v1` prefix). See `reference/api-versioning.md` for the lifecycle strategy and how `v2`
+would be introduced when breaking changes are needed.

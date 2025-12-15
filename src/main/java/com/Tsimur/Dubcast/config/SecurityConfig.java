@@ -1,6 +1,8 @@
 package com.Tsimur.Dubcast.config;
 
 import com.Tsimur.Dubcast.controller.api.ApiPaths;
+import com.Tsimur.Dubcast.exception.handler.api.RestAccessDeniedHandler;
+import com.Tsimur.Dubcast.exception.handler.api.RestAuthEntryPoint;
 import com.Tsimur.Dubcast.model.Role;
 import com.Tsimur.Dubcast.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +19,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
+
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final RestAuthEntryPoint restAuthEntryPoint;
+    private final RestAccessDeniedHandler restAccessDeniedHandler;
 
     @Bean
     @Order(1)
@@ -31,22 +37,31 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm ->
-                        sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(restAuthEntryPoint)
+                        .accessDeniedHandler(restAccessDeniedHandler)
                 )
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers(ApiPaths.AUTH + "/**").permitAll()
                         .requestMatchers(ApiPaths.RADIO + "/**").permitAll()
+                        .requestMatchers(ApiPaths.PROGRAMMING + "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, ApiPaths.CHAT + "/**").permitAll()
+
+
+                        .requestMatchers(HttpMethod.GET, ApiPaths.PLAYLIST + "/**").permitAll()
+
+                        // ADMIN
+
                         .requestMatchers(
                                 ApiPaths.ADMIN + "/**",
-                                ApiPaths.PLAYLIST + "/**",
-                                ApiPaths.USERS+"/**",
-                                ApiPaths.TRACK+"/**"
+                                ApiPaths.USERS + "/**",
+                                ApiPaths.TRACK + "/**",
+                                ApiPaths.SCHEDULE + "/**",
+                                ApiPaths.PLAYLIST + "/**"
                         ).hasAuthority(Role.ROLE_ADMIN.name())
 
-                        .requestMatchers("/actuator/health").permitAll()//health Check
-
+                        .requestMatchers("/actuator/**").permitAll()
 
                         .requestMatchers(ApiPaths.PROFILE + "/**").hasAnyAuthority(
                                 Role.ROLE_USER.name(),
@@ -54,6 +69,7 @@ public class SecurityConfig {
                         )
 
                         .anyRequest().authenticated()
+
                 )
                 .addFilterBefore(jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class);

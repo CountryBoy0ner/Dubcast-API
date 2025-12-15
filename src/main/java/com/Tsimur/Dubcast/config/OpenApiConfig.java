@@ -21,8 +21,8 @@ public class OpenApiConfig {
                                 .title("Dubcast Radio API")
                                 .version("v1")
                                 .description("""
-                                API интернет-радио Dubcast.
-                                Содержит публичные, пользовательские и админские эндпоинты.
+                                        Dubcast Internet Radio API.
+                                Contains public, user, and admin endpoints.
                                 """)
                         )
                         .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))

@@ -20,6 +20,38 @@ https://docs.google.com/document/d/1eEjRvm0ClqGzF0ZA0219kOlPtwJ-_SWOg6EqLVFVVOw/
 
 
 
+## Quick links
+
+- **OpenAPI schema**
+  - `schemas/openapi.json`
+  - `schemas/openapi.yaml`
+
+## Table of contents
+
+### Guides (how to use the API)
+1. [Getting Started](guides/getting-started.md)
+2. [Integration Tutorial: Chat & Radio](guides/integration-chat-and-radio.md)
+
+### Examples (ready-to-run)
+1. [cURL Requests](examples/curl-requests.md)
+
+### Reference (rules & contracts)
+1. [Error Handling](reference/error-handling.md)
+2. [API Versioning](reference/api-versioning.md)
+3. [Idempotency](reference/idempotency.md)
+4. [Changelog](reference/changelog.md)
+5. [Documentation Strategy](reference/documentation-strategy.md)
+
+### Architecture
+1. [API Architecture Overview](architecture/api-architecture-overview.md)
+2. [Container Architecture](architecture/container-architecture-en.md)
+
+### Deployment
+1. [Containerization Report](deployment/containerization-report-en.md)
+
+
+
+
 
 # Инструкция запуска backend через Docker Compose
 
@@ -88,3 +120,7 @@ docker compose down
 
 - `SOUNDCLOUD_CLIENT_ID` – актуальный Client ID для SoundCloud API
 - `SOUNDCLOUD_API_BASE_URL` – базовый URL API (по умолчанию `https://api-v2.soundcloud.com`)
+
+
+
+

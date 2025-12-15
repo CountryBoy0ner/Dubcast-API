@@ -1,9 +1,9 @@
 openapi: 3.1.0
 info:
   title: Dubcast Radio API
-  description: |
-    API интернет-радио Dubcast.
-    Содержит публичные, пользовательские и админские эндпоинты.
+  description: |2
+            Dubcast Internet Radio API.
+    Contains public, user, and admin endpoints.
   version: v1
 servers:
   - url: http://localhost:8089
@@ -652,7 +652,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserDto"
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDto"
         "401":
           description: Unauthorized
           content:
@@ -794,7 +796,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TrackDto"
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrackDto"
         "401":
           description: Unauthorized
           content:
@@ -871,7 +875,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ScheduleEntryDto"
+                type: array
+                items:
+                  $ref: "#/components/schemas/ScheduleEntryDto"
         "401":
           description: Unauthorized
           content:
@@ -933,7 +939,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
       security:
         - bearerAuth: []
-  /api/profile/import:
+  /api/playlist/import:
     post:
       tags:
         - Playlists
@@ -1373,11 +1379,13 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "200":
-          description: List of schedule entries in the given range
+          description: Day schedule entries
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ScheduleEntryDto"
+                type: array
+                items:
+                  $ref: "#/components/schemas/ScheduleEntryDto"
         "400":
           description: Invalid date/time format
           content:
@@ -1416,7 +1424,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ScheduleEntryDto"
+                type: array
+                items:
+                  $ref: "#/components/schemas/ScheduleEntryDto"
         "400":
           description: Invalid date format
           content:
@@ -1450,10 +1460,6 @@ paths:
         "204":
           description: Nothing is playing right now (no scheduled entry for the current
             time)
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/NowPlayingResponse"
   /api/programming/previous:
     get:
       tags:
@@ -1478,10 +1484,6 @@ paths:
                 $ref: "#/components/schemas/ScheduleEntryDto"
         "204":
           description: No previous schedule slot
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ScheduleEntryDto"
   /api/programming/next:
     get:
       tags:
@@ -1506,10 +1508,6 @@ paths:
                 $ref: "#/components/schemas/ScheduleEntryDto"
         "204":
           description: No upcoming schedule slot
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ScheduleEntryDto"
   /api/programming/current:
     get:
       tags:
@@ -1534,11 +1532,36 @@ paths:
                 $ref: "#/components/schemas/ScheduleEntryDto"
         "204":
           description: No current schedule slot (nothing is scheduled right now)
+  /api/profile/me:
+    get:
+      tags:
+        - Profile
+      summary: Get current user's profile
+      description: "Returns email, username, bio and other data of the currently authenticated\
+        \ user."
+      operationId: getMe
+      responses:
+        "404":
+          description: Not Found
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/ScheduleEntryDto"
-  /api/profile:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Profile found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileResponse"
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security:
+        - bearerAuth: []
+  /api/playlist:
     get:
       tags:
         - Playlists
@@ -1560,7 +1583,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/PlaylistDto"
-  /api/profile/{id}:
+  /api/playlist/{id}:
     get:
       tags:
         - Playlists
@@ -1608,35 +1631,6 @@ paths:
           content: {}
         "204":
           description: Playlist successfully deleted.
-  /api/profile/me:
-    get:
-      tags:
-        - Profile
-      summary: Get current user's profile
-      description: "Returns email, username, bio and other data of the currently authenticated\
-        \ user."
-      operationId: getMe
-      responses:
-        "404":
-          description: Not Found
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "200":
-          description: Profile found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserProfileResponse"
-        "401":
-          description: Unauthorized
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-      security:
-        - bearerAuth: []
   /api/chat/messages:
     get:
       tags:
@@ -1782,7 +1776,7 @@ paths:
   /api/admin/analytics/online:
     get:
       tags:
-        - admin-analytics-rest-controller
+        - admin-analytics-api-controller
       operationId: getOnlineStats
       responses:
         "200":
@@ -2154,6 +2148,8 @@ components:
           additionalProperties:
             type: integer
             format: int32
+            deprecated: true
+          deprecated: true
         generatedAt:
           type: string
           format: date-time
