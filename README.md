@@ -32,25 +32,7 @@ https://docs.google.com/document/d/1eEjRvm0ClqGzF0ZA0219kOlPtwJ-_SWOg6EqLVFVVOw/
 
 ## 2. Подготовить файл `.env.docker`
 
-Создай рядом с `docker-compose.yml` файл `.env.docker`, например:
-
-```env
-# База данных
-DB_NAME=dubcast
-DB_USERNAME=dubcast
-DB_PASSWORD=change_me
-DB_PORT=5432
-
-# JWT (dev-значение, в проде заменить)
-JWT_SECRET=dev-secret
-
-# Таймзона радио
-TIME_STAMP=Europe/Vilnius
-
-# SoundCloud API
-SOUNDCLOUD_CLIENT_ID=your-sc-client-id
-SOUNDCLOUD_API_BASE_URL=https://api-v2.soundcloud.com
-```
+Создайте рядом с `docker-compose.yml` файл `.env.docker`, 
 
 ## 3. Сборка и запуск контейнеров
 

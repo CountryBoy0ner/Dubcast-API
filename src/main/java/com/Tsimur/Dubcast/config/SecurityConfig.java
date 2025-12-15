@@ -38,7 +38,12 @@ public class SecurityConfig {
                         .requestMatchers(ApiPaths.AUTH + "/**").permitAll()
                         .requestMatchers(ApiPaths.RADIO + "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, ApiPaths.CHAT + "/**").permitAll()
-                        .requestMatchers(ApiPaths.ADMIN + "/**",ApiPaths.PLAYLIST + "/**").hasAuthority(Role.ROLE_ADMIN.name())
+                        .requestMatchers(
+                                ApiPaths.ADMIN + "/**",
+                                ApiPaths.PLAYLIST + "/**",
+                                ApiPaths.USERS+"/**",
+                                ApiPaths.TRACK+"/**"
+                        ).hasAuthority(Role.ROLE_ADMIN.name())
 
                         .requestMatchers("/actuator/health").permitAll()//health Check
 
@@ -79,15 +84,12 @@ public class SecurityConfig {
                                 "/images/**",
                                 "/radio-ws/**",
                                 "/reel-radio-poc",
-                                // swagger, если будешь открывать UI без авторизации
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
 
-                        // web-админка, если есть (/admin/**) — только админ
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
-                        // страница /profile (html) — только залогиненный пользователь/админ
                         .requestMatchers("/profile/**").hasAnyRole("USER", "ADMIN")
 
                         .anyRequest().authenticated()
