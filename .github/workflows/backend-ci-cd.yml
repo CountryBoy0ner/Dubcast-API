@@ -54,7 +54,6 @@ jobs:
           path: target/surefire-reports/**
           if-no-files-found: warn
 
-      # Минимальный security gate (вместо owasp dependency-check, который часто капризный)
       - name: Trivy FS scan (HIGH/CRITICAL)
         uses: aquasecurity/trivy-action@0.28.0
         with:
