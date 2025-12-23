@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-users-masked-view
+      author: dubcast
+      changes:
+        - sql: |
+            CREATE OR REPLACE VIEW view_users_masked AS
+            SELECT
+              id,
+              regexp_replace(email, '(.).+(@.+)', '\1***\2') AS email_masked,
+              role,
+              created_at
+            FROM users;

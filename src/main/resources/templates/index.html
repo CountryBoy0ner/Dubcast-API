@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dubcast Radio</title>
+
+    <!-- основной стиль -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body class="page">
+
+<header class="header">
+    <div class="header__inner">
+        <a href="/" class="logo">Dubcast</a>
+
+        <nav class="nav">
+            <!-- Гость: Login / Register -->
+            <a th:if="${!authenticated}" th:href="@{/login}" class="nav__link">Login</a>
+            <a th:if="${!authenticated}" th:href="@{/register}" class="nav__link">Register</a>
+
+            <!-- Залогинен: имя, профиль, logout -->
+            <span th:if="${authenticated}" class="nav__user">
+                Logged in as <span th:text="${principalName}">user</span>
+            </span>
+
+            <a th:if="${authenticated}" th:href="@{/profile}" class="nav__link">Profile</a>
+
+            <form th:if="${authenticated}"
+                  th:action="@{/logout}" method="post"
+                  style="display:inline; margin-left: 10px;">
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}"/>
+                <button type="submit"
+                        class="nav__link"
+                        style="border:none;background:none;cursor:pointer;">
+                    Logout
+                </button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+
+<main class="main">
+    <section class="now-playing">
+        <h2 class="now-playing__title">Now playing</h2>
+
+        <div class="now-playing__content">
+            <!-- Обложка -->
+            <div class="now-playing__artwork-wrapper">
+                <img
+                        id="artwork"
+                        class="now-playing__artwork"
+                        src=""
+                        alt="Artwork"
+                        style="display: none;">
+            </div>
+
+            <!-- Информация о треке -->
+            <div class="now-playing__info">
+                <p id="track-title" class="now-playing__track">
+                    Now playing: nothing right now.
+                </p>
+                <p id="playlist-title" class="now-playing__playlist">
+                    Playlist: none
+                </p>
+            </div>
+        </div>
+
+        <!--
+            Кнопка "плей/пауза" — должна быть круглой, как в аудиоплеерах.
+            Дизайн и круглую форму потом задавать через CSS по классам .btn / .btn--round / .btn--active
+        -->
+        <div class="now-playing__controls">
+            <button id="start-radio-btn" class="btn btn--primary btn--round">
+                Start radio
+            </button>
+        </div>
+
+        <!-- Громкость -->
+        <div class="now-playing__volume">
+            <label for="volume-range" class="now-playing__volume-label">Volume:</label>
+            <input
+                    type="range"
+                    id="volume-range"
+                    class="now-playing__volume-range"
+                    min="0"
+                    max="100"
+                    step="1">
+        </div>
+
+        <div class="now-playing__stats">
+            Now listening:&nbsp;
+            <span id="now-listening-count">0</span>
+        </div>
+
+        <!-- Debug: показывать / скрывать реальный плеер -->
+        <div class="now-playing__debug">
+            <label class="now-playing__debug-label">
+                <input type="checkbox" id="show-player-checkbox" checked>
+                Show SoundCloud player (debug)
+            </label>
+        </div>
+
+        <!-- Контейнер, куда будет вставляться embed-код -->
+        <div id="sc-player-wrapper" class="now-playing__player-wrapper">
+            <!-- сюда js подставит iframe -->
+        </div>
+    </section>
+
+    <!-- CHAT SECTION -->
+    <section class="chat">
+        <h2 class="chat__title">Chat</h2>
+
+        <div id="chat-messages" class="chat__messages">
+            <!-- сюда JS будет добавлять сообщения -->
+        </div>
+
+        <div class="chat__input-row">
+            <input
+                    id="chat-input"
+                    class="chat__input"
+                    type="text"
+                    placeholder="Type a message..."
+                    autocomplete="off">
+            <button id="chat-send-btn" class="btn btn--primary">
+                Send
+            </button>
+        </div>
+
+        <div id="chat-error" class="chat__error" style="display:none;"></div>
+    </section>
+</main>
+
+<!-- SockJS + STOMP -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+<!-- SoundCloud Widget API -->
+<script src="https://w.soundcloud.com/player/api.js"></script>
+
+<!-- флаг авторизации из Spring Security -->
+
+<!-- флаг авторизации для JS (чат) -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    window.isAuthenticated = [[${authenticated}]];
+    console.log('[AUTH] isAuthenticated =', window.isAuthenticated);
+    /*]]>*/
+</script>
+
+<script>
+    // ----------- STATE -----------
+    let radioEnabled = false;      // радио включено пользователем или нет (тоггл)
+    let currentPlaylistId = null;
+    let stompClient = null;
+    let currentPayload = null;     // NowPlayingResponse
+    let scWidget = null;           // SC.Widget
+    let userVolume = 70;
+
+    // === online analytics ===
+    const HEARTBEAT_INTERVAL_MS = 5000;  // раз в 5 секунд
+    let analyticsHeartbeatTimer = null;
+    const nowListeningCountEl = document.getElementById('now-listening-count');
+
+    const playlistTitleEl = document.getElementById('playlist-title');
+    const artworkEl = document.getElementById('artwork');
+    const titleEl = document.getElementById('track-title');
+    const volumeEl = document.getElementById('volume-range');
+    const startBtn = document.getElementById('start-radio-btn');
+    const showPlayerCheckbox = document.getElementById('show-player-checkbox');
+    const playerWrapper = document.getElementById('sc-player-wrapper');
+
+    // ----------- CHAT STATE -----------
+    const chatMessagesEl = document.getElementById('chat-messages');
+    const chatInputEl = document.getElementById('chat-input');
+    const chatSendBtn = document.getElementById('chat-send-btn');
+    const chatErrorEl = document.getElementById('chat-error');
+
+    // Пагинация истории чата
+    let currentPage = 0;
+    const pageSize = 50;
+    let loadingPage = false;
+    let noMorePages = false;
+
+    // если гость — подскажем в placeholder
+    if (!window.isAuthenticated && chatInputEl) {
+        chatInputEl.placeholder = 'Войдите, чтобы писать в чат';
+    }
+
+    // ----------- INIT VOLUME -----------
+
+    (function initVolume() {
+        const saved = localStorage.getItem('dubcast_volume');
+        userVolume = saved != null ? parseInt(saved, 10) : 70;
+        if (isNaN(userVolume)) userVolume = 70;
+        volumeEl.value = userVolume;
+        console.log('[VOL] initial =', userVolume);
+    })();
+
+    volumeEl.addEventListener('input', function () {
+        userVolume = parseInt(this.value, 10);
+        localStorage.setItem('dubcast_volume', String(userVolume));
+        console.log('[VOL] change ->', userVolume);
+        if (scWidget) {
+            scWidget.setVolume(userVolume);
+        }
+    });
+
+    // ----------- SHOW / HIDE IFRAME (debug) -----------
+
+    showPlayerCheckbox.addEventListener('change', function () {
+        playerWrapper.style.display = this.checked ? 'block' : 'none';
+        console.log('[UI] toggle iframe visible =', this.checked);
+    });
+
+    // ----------- UI UPDATE -----------
+
+    function updateUiFromPayload(payload) {
+        console.log('[UI] update', payload);
+
+        if (!payload || !payload.playing) {
+            artworkEl.style.display = 'none';
+            titleEl.innerText = 'Now playing: nothing right now.';
+            playlistTitleEl.innerText = 'Playlist: none';
+            currentPlaylistId = null;
+            return;
+        }
+
+        if (payload.artworkUrl) {
+            artworkEl.src = payload.artworkUrl;
+            artworkEl.style.display = 'block';
+        } else {
+            artworkEl.style.display = 'none';
+        }
+
+        titleEl.innerText = 'Now playing: ' + (payload.title || 'unknown track');
+
+        currentPlaylistId = payload.playlistTitle ? 1 : null; // просто пример
+        if (payload.playlistTitle) {
+            playlistTitleEl.innerText = 'Playlist: ' + payload.playlistTitle;
+        } else {
+            playlistTitleEl.innerText = 'Playlist: none';
+        }
+    }
+
+    // ----------- HELPERS -----------
+
+    function computeTrackPositionMs(payload) {
+        if (!payload || !payload.startedAt || !payload.durationSeconds) {
+            return 0;
+        }
+        const startedAtMs = Date.parse(payload.startedAt);
+        if (Number.isNaN(startedAtMs)) {
+            return 0;
+        }
+        const nowMs = Date.now();
+        let elapsedSec = Math.max(0, (nowMs - startedAtMs) / 1000);
+        if (elapsedSec > payload.durationSeconds - 1) {
+            elapsedSec = payload.durationSeconds - 1;
+        }
+        const pos = Math.floor(elapsedSec * 1000);
+        console.log('[POS] =', pos, 'ms from', payload.startedAt);
+        return pos;
+    }
+
+    // ----------- WIDGET SETUP -----------
+
+    function ensureWidgetIframe() {
+        if (scWidget) {
+            return;
+        }
+
+        const placeholderTrack = 'https://soundcloud.com/ppjrecordings/ontology-maximum-ruffness-krave-remix';
+
+        const src = 'https://w.soundcloud.com/player'
+            + '?visual=true'
+            + '&url=' + encodeURIComponent(placeholderTrack)
+            + '&auto_play=false';
+
+        playerWrapper.innerHTML = `
+            <iframe
+                id="sc-widget"
+                width="100%"
+                height="450"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                src="${src}">
+            </iframe>
+        `;
+
+        const iframe = document.getElementById('sc-widget');
+        scWidget = SC.Widget(iframe);
+
+        console.log('[SC] widget created with placeholder');
+
+        scWidget.bind(SC.Widget.Events.READY, function () {
+            console.log('[SC] READY');
+            scWidget.setVolume(userVolume);
+        });
+
+        scWidget.bind(SC.Widget.Events.ERROR, function (e) {
+            console.error('[SC] ERROR', e);
+        });
+
+        // когда трек закончился, сами узнаём, что сейчас по расписанию
+        scWidget.bind(SC.Widget.Events.FINISH, function () {
+            console.log('[SC] FINISH');
+            if (!radioEnabled) {
+                console.log('[SC FINISH] radio OFF, ignore');
+                return;
+            }
+
+            fetch('/api/radio/now')
+                .then(r => {
+                    console.log('[SC FINISH] /api/radio/now status =', r.status);
+                    return r.ok ? r.json() : null;
+                })
+                .then(payload => {
+                    console.log('[SC FINISH] payload =', payload);
+                    if (!payload || !payload.playing) {
+                        console.log('[SC FINISH] nothing playing');
+                        return;
+                    }
+                    currentPayload = payload;
+                    updateUiFromPayload(payload);
+                    loadAndPlayFromPayload(payload);
+                })
+                .catch(err => console.error('[SC FINISH] error', err));
+        });
+    }
+
+    // ----------- LOAD & PLAY (фикс громкости) -----------
+
+    function loadAndPlayFromPayload(payload) {
+        if (!payload || !payload.playing) {
+            console.log('[Radio] loadAndPlay: nothing playing in payload');
+            return;
+        }
+        if (!payload.trackUrl) {
+            console.error('[Radio] payload.trackUrl is missing');
+            return;
+        }
+
+        ensureWidgetIframe();
+        if (!scWidget) {
+            console.error('[Radio] scWidget is null even after ensureWidgetIframe()');
+            return;
+        }
+
+        const url = payload.trackUrl;
+        const posMs = computeTrackPositionMs(payload);
+
+        console.log('[Radio] widget.load url =', url, 'posMs =', posMs, 'userVolume =', userVolume);
+
+        scWidget.load(url, {
+            auto_play: true,
+            visual: true,
+            callback: function () {
+                console.log('[SC] load callback, setVolume', userVolume, 'seekTo', posMs);
+                scWidget.setVolume(userVolume);
+                if (posMs > 0) {
+                    scWidget.seekTo(posMs);
+                }
+            }
+        });
+    }
+
+    // ----------- REST: /api/radio/now -----------
+
+    async function fetchCurrentForUiOnly() {
+        try {
+            console.log('[REST] GET /api/radio/now for UI');
+            const resp = await fetch('/api/radio/now');
+            console.log('[REST] /api/radio/now status =', resp.status);
+            if (resp.status === 204) {
+                console.log('[REST] 204 No Content');
+                currentPayload = null;
+                updateUiFromPayload(null);
+                return;
+            }
+            if (!resp.ok) {
+                console.error('[REST] /api/radio/now error', resp.status);
+                return;
+            }
+            const payload = await resp.json();
+            console.log('[REST] initial payload', payload);
+            currentPayload = payload;
+            updateUiFromPayload(payload);   // только UI
+        } catch (e) {
+            console.error('[REST] current-for-ui error', e);
+        }
+    }
+
+    // ----------- START RADIO BUTTON (TOGGLE) -----------
+
+    startBtn.addEventListener('click', async function () {
+        // переключаем состояние
+        radioEnabled = !radioEnabled;
+
+        if (!radioEnabled) {
+            // ВЫКЛЮЧЕНИЕ РАДИО
+            console.log('[Radio] turned OFF by user');
+            startBtn.innerText = 'Start radio';
+            startBtn.classList.remove('btn--active'); // визуальное состояние "не играет"
+            if (scWidget) {
+                scWidget.pause();
+            }
+            stopAnalyticsHeartbeatLoop(true);
+
+            return;
+        }
+
+        // ВКЛЮЧЕНИЕ РАДИО
+        console.log('[Radio] turned ON by user');
+        startBtn.innerText = 'Radio is playing';
+        startBtn.classList.add('btn--active'); // визуальное состояние "играет"
+        startAnalyticsHeartbeatLoop();
+
+
+
+        try {
+            if (!currentPayload) {
+                console.log('[Radio] no currentPayload, fetch now');
+                const resp = await fetch('/api/radio/now');
+                console.log('[Radio] /api/radio/now (start) status =', resp.status);
+                if (resp.status === 204 || !resp.ok) {
+                    console.log('[REST] no current track on start');
+                    // откатываем состояние, т.к. по факту ничего не играет
+                    radioEnabled = false;
+                    startBtn.innerText = 'Start radio';
+                    startBtn.classList.remove('btn--active');
+                    return;
+                }
+                currentPayload = await resp.json();
+            }
+
+            updateUiFromPayload(currentPayload);
+            // ВАЖНО: при каждом включении пересчитываем позицию по startedAt
+            loadAndPlayFromPayload(currentPayload);
+        } catch (e) {
+            console.error('[Radio] start-radio exception', e);
+            // на всякий случай откат кнопки
+            radioEnabled = false;
+            startBtn.innerText = 'Start radio';
+            startBtn.classList.remove('btn--active');
+
+            // стопаем heartbeats
+            stopAnalyticsHeartbeatLoop(true);
+
+        }
+    });
+
+    // ======================= CHAT =======================
+
+    // общий конструктор DOM-элемента сообщения
+    function createChatMessageElement(msg) {
+        const div = document.createElement('div');
+        div.className = 'chat__message';
+
+        const time = msg.createdAt
+            ? new Date(msg.createdAt).toLocaleTimeString()
+            : '';
+
+        div.innerText = `[${time}] ${msg.username}: ${msg.text}`;
+        return div;
+    }
+
+    // Добавить одно сообщение в конец (для WebSocket и отправки)
+    function appendChatMessage(msg) {
+        const div = createChatMessageElement(msg);
+        chatMessagesEl.appendChild(div);
+        // прокрутка вниз
+        chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+    }
+
+    function showChatError(msg) {
+        if (!chatErrorEl) {
+            alert(msg);
+            return;
+        }
+        chatErrorEl.innerText = msg;
+        chatErrorEl.style.display = 'block';
+        setTimeout(() => {
+            chatErrorEl.style.display = 'none';
+        }, 3000);
+    }
+
+    function sendChatFromInput() {
+        const text = chatInputEl.value.trim();
+        if (!text) return;
+
+        // гость — не отправляем, а показываем подсказку
+        if (!window.isAuthenticated) {
+            showChatError('Чтобы написать в чат, войдите в аккаунт.');
+            return;
+        }
+
+        if (!stompClient || !stompClient.connected) {
+            console.warn('[CHAT] STOMP not connected');
+            return;
+        }
+
+        const payload = {text: text};
+        stompClient.send('/app/chat.send', {}, JSON.stringify(payload));
+        chatInputEl.value = '';
+    }
+
+    // ----------- ЗАГРУЗКА ИСТОРИИ (постранично) -----------
+
+    async function loadOlderMessages() {
+        if (!chatMessagesEl) return;
+        if (loadingPage || noMorePages) return;
+
+        loadingPage = true;
+        try {
+            console.log('[CHAT] loading page', currentPage);
+            const resp = await fetch(`/api/chat/messages/page?page=${currentPage}&size=${pageSize}`);
+            if (!resp.ok) {
+                console.error('[CHAT] page load error', resp.status);
+                return;
+            }
+            const list = await resp.json(); // Array<ChatMessageDto>
+
+            if (list.length === 0) {
+                noMorePages = true;
+                return;
+            }
+
+            const prevScrollHeight = chatMessagesEl.scrollHeight;
+
+            if (currentPage === 0) {
+                // первая страница — просто рисуем всё и скроллим вниз
+                chatMessagesEl.innerHTML = '';
+                list.forEach(msg => {
+                    const el = createChatMessageElement(msg);
+                    chatMessagesEl.appendChild(el);
+                });
+                chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+            } else {
+                // последующие страницы — более старые сообщения, подгружаем сверху
+                for (let i = list.length - 1; i >= 0; i--) {
+                    const el = createChatMessageElement(list[i]);
+                    chatMessagesEl.insertBefore(el, chatMessagesEl.firstChild);
+                }
+                const newScrollHeight = chatMessagesEl.scrollHeight;
+                // сохраняем позицию прокрутки, чтобы не "прыгало"
+                chatMessagesEl.scrollTop = newScrollHeight - prevScrollHeight;
+            }
+
+            currentPage += 1;
+        } catch (e) {
+            console.error('[CHAT] loadOlderMessages exception', e);
+        } finally {
+            loadingPage = false;
+        }
+    }
+
+    function loadInitialChatPage() {
+        currentPage = 0;
+        noMorePages = false;
+        loadingPage = false;
+        if (chatMessagesEl) {
+            chatMessagesEl.innerHTML = '';
+            loadOlderMessages();
+        }
+    }
+
+    // Подгружать старые сообщения при прокрутке вверх
+    if (chatMessagesEl) {
+        chatMessagesEl.addEventListener('scroll', () => {
+            if (chatMessagesEl.scrollTop === 0) {
+                loadOlderMessages();
+            }
+        });
+    }
+
+    // ----------- BIND UI EVENTS -----------
+
+    if (chatSendBtn) {
+        chatSendBtn.addEventListener('click', sendChatFromInput);
+    }
+
+    if (chatInputEl) {
+        chatInputEl.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                sendChatFromInput();
+            }
+        });
+    }
+
+    // ----------- WS / STOMP -----------
+
+    function connectWs() {
+        console.log('[WS] Opening Web Socket...');
+        const socket = new SockJS('/radio-ws');
+        stompClient = Stomp.over(socket);
+        // stompClient.debug = null;
+
+        stompClient.connect({}, function (frame) {
+            console.log('[WS] connected:', frame);
+
+            // now-playing
+            stompClient.subscribe('/topic/now-playing', function (message) {
+                const payload = JSON.parse(message.body);
+                console.log('[WS] now-playing payload', payload);
+                handleNowPlaying(payload);
+            });
+
+            // CHAT
+            stompClient.subscribe('/topic/chat', function (message) {
+                const payload = JSON.parse(message.body); // ChatMessageDto
+                console.log('[WS][CHAT] message', payload);
+                appendChatMessage(payload);
+            });
+            // === ONLINE ANALYTICS ===
+            stompClient.subscribe('/topic/analytics/online', function (message) {
+                const stats = JSON.parse(message.body); // OnlineStatsDto
+                console.log('[WS][ANALYTICS] stats', stats);
+                updateOnlineStats(stats);
+            });
+
+            // если пользователь уже успел тыкнуть "Start radio" до коннекта —
+            // сразу запускаем цикл heartbeats
+            if (radioEnabled) {
+                startAnalyticsHeartbeatLoop();
+            }
+
+        }, function (error) {
+            console.error('[WS] error', error);
+        });
+    }
+
+    function handleNowPlaying(payload) {
+        console.log('[WS] handleNowPlaying', payload);
+        currentPayload = payload;
+        updateUiFromPayload(payload);
+
+        if (!radioEnabled) {
+            console.log('[Radio] OFF, just update UI (no sound)');
+            return;
+        }
+        if (!payload.playing) {
+            console.log('[Radio] payload says nothing playing');
+            return;
+        }
+
+        loadAndPlayFromPayload(payload);
+    }
+
+    // ----------- REAL-TIME ANALYTICS -----------
+
+    function updateOnlineStats(stats) {
+        if (!stats || !nowListeningCountEl) return;
+        const total = stats.totalOnline != null ? stats.totalOnline : 0;
+        nowListeningCountEl.innerText = String(total);
+    }
+
+    function sendAnalyticsHeartbeat(listening) {
+        if (!stompClient || !stompClient.connected) {
+            // просто тихо выходим, без ошибок
+            return;
+        }
+
+        const payload = {
+            page: '/radio',
+            // если бек ждёт trackId — шлём его, если есть
+            trackId: currentPayload && currentPayload.playing
+                ? currentPayload.trackId
+                : null,
+            // если в HeartbeatMessage есть булево поле — используем
+            listening: listening
+        };
+
+        // этот destination должен совпадать с @MessageMapping на беке
+        stompClient.send('/app/analytics.heartbeat', {}, JSON.stringify(payload));
+    }
+
+    function startAnalyticsHeartbeatLoop() {
+        // сразу отправили "я слушаю"
+        sendAnalyticsHeartbeat(true);
+
+        if (analyticsHeartbeatTimer) {
+            clearInterval(analyticsHeartbeatTimer);
+        }
+        analyticsHeartbeatTimer = setInterval(() => {
+            // пока радио включено — шлём heartbeats
+            if (radioEnabled) {
+                sendAnalyticsHeartbeat(true);
+            }
+        }, HEARTBEAT_INTERVAL_MS);
+    }
+
+    function stopAnalyticsHeartbeatLoop(sendOffEvent) {
+        if (analyticsHeartbeatTimer) {
+            clearInterval(analyticsHeartbeatTimer);
+            analyticsHeartbeatTimer = null;
+        }
+        if (sendOffEvent) {
+            // одного off-ивента достаточно, бек сам обнулит сессию
+            sendAnalyticsHeartbeat(false);
+        }
+    }
+
+
+    // ----------- STARTUP -----------
+
+    window.addEventListener('load', () => {
+        console.log('[BOOT] Page loaded, init WS + fetch current + chat history');
+        connectWs();
+        fetchCurrentForUiOnly();
+        loadInitialChatPage(); // вместо старого loadChatHistory()
+    });
+
+    window.addEventListener('beforeunload', () => {
+        // один off-ивент и остановка таймера
+        stopAnalyticsHeartbeatLoop(true);
+    });
+
+</script>
+
+
+</body>
+</html>

@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+BdRequairmenrs.txt
+
+.env.docker
+.env
+*.env

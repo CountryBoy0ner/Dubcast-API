@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - includeAll:
+      path: db/changelog/V1.0
+
+  - includeAll:
+      path: db/changelog/V1.1
+
+#  - includeAll:
+#      path: db/changelog/V1.2
+
+  - includeAll:
+      path: db/changelog/V1.3
+
+  - includeAll:
+      path: db/changelog/V1.4
+
+  - includeAll:
+      path: db/changelog/V1.5
+
+  - includeAll:
+      path: db/changelog/V1.7
+
+  - includeAll:
+      path: db/changelog/V1.8
+
+  - includeAll:
+      path: db/changelog/V1.9
+
+  - includeAll:
+      path: db/changelog/V2.0
+
+  - includeAll:
+      path: db/changelog/V2.1
+
+  - includeAll:
+      path: db/changelog/V2.2
+
+  - includeAll:
+      path: db/changelog/V2.3
+
+  - includeAll:
+      path: db/changelog/V2.4
+
+  - includeAll:
+      path: db/changelog/V2.5
+
+
+
+

@@ -1,0 +1,22 @@
+<h1>Login</h1>
+
+<div th:if="${param.error}">
+    Неверный логин или пароль
+</div>
+<div th:if="${param.logout}">
+    Вы успешно вышли
+</div>
+
+<form th:action="@{/login}" method="post">
+    <label>Email:
+        <input type="text" name="username"/>
+    </label>
+    <br/>
+    <label>Password:
+        <input type="password" name="password"/>
+    </label>
+    <br/>
+    <button type="submit">Login</button>
+    <a th:href="@{/}">Main Page</a>
+
+</form>

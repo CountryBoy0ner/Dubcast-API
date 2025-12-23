@@ -1,0 +1,163 @@
+databaseChangeLog:
+  - changeSet:
+      id: init-schema
+      author: dubcast
+      changes:
+
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: email
+                  type: text
+                  constraints:
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: password
+                  type: text
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: role
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - sql:
+            sql: >
+              ALTER TABLE users
+              ADD CONSTRAINT chk_users_role
+              CHECK (role IN ('ROLE_USER', 'ROLE_ADMIN'));
+
+        - createTable:
+            tableName: tracks
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: sc_url
+                  type: text
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: embed_code
+                  type: text
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: title
+                  type: text
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: duration_seconds
+                  type: integer
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: artwork_url
+                  type: text
+
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: tracks
+            columnNames: sc_url
+            constraintName: uq_tracks_sc_url
+
+        - sql:
+            sql: >
+              ALTER TABLE tracks
+              ADD CONSTRAINT chk_tracks_duration_positive
+              CHECK (duration_seconds > 0);
+
+        - createTable:
+            tableName: schedule_entries
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: track_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: start_time
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: end_time
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: schedule_entries
+            baseColumnNames: track_id
+            referencedTableName: tracks
+            referencedColumnNames: id
+            constraintName: fk_schedule_entries_track
+            onDelete: RESTRICT
+
+        - createIndex:
+            tableName: schedule_entries
+            indexName: idx_schedule_time
+            columns:
+              - column:
+                  name: start_time
+              - column:
+                  name: end_time
+
+        - sql:
+            sql: >
+              ALTER TABLE schedule_entries
+              ADD CONSTRAINT chk_schedule_time
+              CHECK (end_time > start_time);

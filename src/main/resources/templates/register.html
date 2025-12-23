@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+</head>
+<body>
+<h1>Register</h1>
+
+<form th:action="@{/register}" th:object="${registerRequest}" method="post">
+    <label>Email:
+        <input type="text" th:field="*{email}"/>
+    </label>
+    <div th:if="${#fields.hasErrors('email')}"
+         th:errors="*{email}"></div>
+
+    <br/>
+
+    <label>Password:
+        <input type="password" th:field="*{password}"/>
+    </label>
+    <div th:if="${#fields.hasErrors('password')}"
+         th:errors="*{password}"></div>
+
+    <br/>
+
+    <button type="submit">Sign up</button>
+
+
+
+    <!-- ошибки валидации -->
+    <div th:if="${#fields.hasErrors('email')}"
+         th:errors="*{email}"></div>
+
+    <!-- сообщение из EmailAlreadyUsedException -->
+    <div th:if="${emailError}"
+         th:text="${emailError}"></div>
+
+</form>
+
+<a th:href="@{/login}">Already have account? Login</a>
+<a th:href="@{/}">Main Page</a>
+
+</body>
+</html>
