@@ -1,6 +1,7 @@
 package com.Tsimur.Dubcast.service.impl;
 
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
+import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import com.Tsimur.Dubcast.mapper.ScheduleEntryMapper;
 import com.Tsimur.Dubcast.model.ScheduleEntry;
 import com.Tsimur.Dubcast.repository.ScheduleEntryRepository;
@@ -33,7 +34,7 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     @Transactional(readOnly = true)
     public ScheduleEntryDto getById(Long id) {
         ScheduleEntry entity = scheduleEntryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("ScheduleEntry not found: " + id));
+                .orElseThrow(() -> NotFoundException.of("Schedule", "id", id));
         return scheduleEntryMapper.toDto(entity);
     }
 
@@ -47,7 +48,7 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     @Override
     public ScheduleEntryDto update(Long id, ScheduleEntryDto dto) {
         ScheduleEntry existing = scheduleEntryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("ScheduleEntry not found: " + id));
+                .orElseThrow(() -> NotFoundException.of("Schedule", "id", id));
 
         scheduleEntryMapper.updateEntityFromDto(dto, existing);
 
@@ -58,7 +59,7 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     @Override
     public void delete(Long id) {
         if (!scheduleEntryRepository.existsById(id)) {
-            throw new EntityNotFoundException("ScheduleEntry not found: " + id);
+            throw  NotFoundException.of("Schedule", "id", id);
         }
         scheduleEntryRepository.deleteById(id);
     }

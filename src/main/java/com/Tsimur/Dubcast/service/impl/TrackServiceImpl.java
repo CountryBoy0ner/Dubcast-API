@@ -2,6 +2,7 @@ package com.Tsimur.Dubcast.service.impl;
 
 
 import com.Tsimur.Dubcast.dto.TrackDto;
+import com.Tsimur.Dubcast.exception.type.NotFoundException;
 import com.Tsimur.Dubcast.mapper.TrackMapper;
 import com.Tsimur.Dubcast.model.Track;
 import com.Tsimur.Dubcast.repository.TrackRepository;
@@ -33,7 +34,7 @@ public class TrackServiceImpl implements TrackService {
     @Transactional(readOnly = true)
     public TrackDto getById(Long id) {
         Track track = trackRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Track not found: " + id));
+                .orElseThrow(() -> NotFoundException.of("Track","id", id));
         return trackMapper.toDto(track);
     }
 
@@ -46,7 +47,7 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public TrackDto update(Long id, TrackDto dto) {
         Track existing = trackRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Track not found: " + id));
+                .orElseThrow(() -> NotFoundException.of("Track","id", id));
 
         trackMapper.updateEntityFromDto(dto, existing);
 
@@ -57,7 +58,7 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public void delete(Long id) {
         if (!trackRepository.existsById(id)) {
-            throw new EntityNotFoundException("Track not found: " + id);
+            throw NotFoundException.of("Track","id", id);
         }
         trackRepository.deleteById(id);
     }
