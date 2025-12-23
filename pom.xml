@@ -227,6 +227,11 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
+                            <!-- проверяем покрытие только бизнес-логики -->
+                            <includes>
+                                <include>com/Tsimur/Dubcast/service/**</include>
+                            </includes>
+
                             <rules>
                                 <rule>
                                     <element>BUNDLE</element>
@@ -239,10 +244,12 @@
                                     </limits>
                                 </rule>
                             </rules>
+
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
