@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-roles
+      author: dubcast
+      changes:
+
+        - sql: CREATE ROLE app_read;
+
+        - sql: CREATE ROLE app_write;
+
+        - sql: CREATE ROLE app_admin;
+
+        - sql: CREATE USER dubcast_app WITH PASSWORD 'change_me';
+
+        - sql: GRANT app_read, app_write TO dubcast_app;
+
+        - sql: GRANT SELECT ON ALL TABLES IN SCHEMA public TO app_read;
+
+        - sql: GRANT INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_write;
+
+        - sql: GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO app_admin;

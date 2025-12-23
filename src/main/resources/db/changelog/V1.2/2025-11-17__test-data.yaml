@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: test-data
+      author: dubcast
+      changes:
+
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  value: "00000000-0000-0000-0000-000000000001"
+              - column:
+                  name: email
+                  value: "test@example.com"
+              - column:
+                  name: password
+                  value: "secret"
+              - column:
+                  name: role
+                  value: "ROLE_USER"
+
+        - insert:
+            tableName: tracks
+            columns:
+              - column:
+                  name: sc_url
+                  value: "https://soundcloud.com/artist/dubcast-episode-1"
+              - column:
+                  name: embed_code
+                  value: "<iframe>episode1</iframe>"
+              - column:
+                  name: title
+                  value: "Dubcast Episode 1"
+              - column:
+                  name: duration_seconds
+                  valueNumeric: 3600
+
+        - insert:
+            tableName: schedule_entries
+            columns:
+              - column:
+                  name: track_id
+                  valueNumeric: 1
+              - column:
+                  name: start_time
+                  value: "2025-11-17T10:00:00Z"
+              - column:
+                  name: end_time
+                  value: "2025-11-17T11:00:00Z"
