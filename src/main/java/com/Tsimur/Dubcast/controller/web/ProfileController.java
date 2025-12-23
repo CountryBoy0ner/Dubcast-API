@@ -2,6 +2,7 @@ package com.Tsimur.Dubcast.controller.web;
 
 import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.repository.UserRepository;
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -9,103 +10,106 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.Principal;
-
 @Controller
 @RequiredArgsConstructor
 public class ProfileController {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    // ------------------ МОЙ ПРОФИЛЬ ------------------
+  // ------------------ МОЙ ПРОФИЛЬ ------------------
 
-    @GetMapping("/profile")
-    public String myProfile(Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-
-        String email = principal.getName();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("User not found: " + email));
-
-        fillHeader(model, principal);
-
-        model.addAttribute("email", user.getEmail());
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("bio", user.getBio());
-
-        // только владелец может редактировать
-        model.addAttribute("canEdit", true);
-
-        return "profile";
+  @GetMapping("/profile")
+  public String myProfile(Model model, Principal principal) {
+    if (principal == null) {
+      return "redirect:/login";
     }
 
-    // обновление username
-    @PostMapping("/profile/username")
-    public String updateUsername(@RequestParam("username") String username,
-                                 Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
+    String email = principal.getName();
+    User user =
+        userRepository
+            .findByEmail(email)
+            .orElseThrow(() -> new IllegalStateException("User not found: " + email));
 
-        String email = principal.getName();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("User not found: " + email));
+    fillHeader(model, principal);
 
-        user.setUsername(username);
-        userRepository.save(user);
+    model.addAttribute("email", user.getEmail());
+    model.addAttribute("username", user.getUsername());
+    model.addAttribute("bio", user.getBio());
 
-        return "redirect:/profile?usernameUpdated";
+    // только владелец может редактировать
+    model.addAttribute("canEdit", true);
+
+    return "profile";
+  }
+
+  // обновление username
+  @PostMapping("/profile/username")
+  public String updateUsername(@RequestParam("username") String username, Principal principal) {
+    if (principal == null) {
+      return "redirect:/login";
     }
 
-    // обновление bio
-    @PostMapping("/profile/bio")
-    public String updateBio(@RequestParam("bio") String bio,
-                            Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
+    String email = principal.getName();
+    User user =
+        userRepository
+            .findByEmail(email)
+            .orElseThrow(() -> new IllegalStateException("User not found: " + email));
 
-        String email = principal.getName();
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("User not found: " + email));
+    user.setUsername(username);
+    userRepository.save(user);
 
-        user.setBio(bio);
-        userRepository.save(user);
+    return "redirect:/profile?usernameUpdated";
+  }
 
-        return "redirect:/profile?bioUpdated";
+  // обновление bio
+  @PostMapping("/profile/bio")
+  public String updateBio(@RequestParam("bio") String bio, Principal principal) {
+    if (principal == null) {
+      return "redirect:/login";
     }
 
-    // ------------------ ПУБЛИЧНЫЙ ПРОФИЛЬ ПО USERNAME ------------------
+    String email = principal.getName();
+    User user =
+        userRepository
+            .findByEmail(email)
+            .orElseThrow(() -> new IllegalStateException("User not found: " + email));
 
-    @GetMapping("/profile/{username}")
-    public String publicProfile(@PathVariable("username") String username,
-                                Model model,
-                                Principal principal) {
+    user.setBio(bio);
+    userRepository.save(user);
 
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    return "redirect:/profile?bioUpdated";
+  }
 
-        fillHeader(model, principal);
+  // ------------------ ПУБЛИЧНЫЙ ПРОФИЛЬ ПО USERNAME ------------------
 
-        model.addAttribute("email", user.getEmail());
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("bio", user.getBio());
+  @GetMapping("/profile/{username}")
+  public String publicProfile(
+      @PathVariable("username") String username, Model model, Principal principal) {
 
-        boolean isOwner = principal != null && principal.getName().equals(user.getEmail());
-        model.addAttribute("canEdit", isOwner);   // формы только если это мой профиль
+    User user =
+        userRepository
+            .findByUsername(username)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return "profile";
+    fillHeader(model, principal);
+
+    model.addAttribute("email", user.getEmail());
+    model.addAttribute("username", user.getUsername());
+    model.addAttribute("bio", user.getBio());
+
+    boolean isOwner = principal != null && principal.getName().equals(user.getEmail());
+    model.addAttribute("canEdit", isOwner); // формы только если это мой профиль
+
+    return "profile";
+  }
+
+  // ------------------ общие данные для шапки ------------------
+
+  private void fillHeader(Model model, Principal principal) {
+    boolean authenticated = (principal != null);
+    model.addAttribute("authenticated", authenticated);
+    if (authenticated) {
+      model.addAttribute("principalName", principal.getName());
     }
-
-    // ------------------ общие данные для шапки ------------------
-
-    private void fillHeader(Model model, Principal principal) {
-        boolean authenticated = (principal != null);
-        model.addAttribute("authenticated", authenticated);
-        if (authenticated) {
-            model.addAttribute("principalName", principal.getName());
-        }
-    }
+  }
 }

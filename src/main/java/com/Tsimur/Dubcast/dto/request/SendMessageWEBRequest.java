@@ -4,6 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class ChangePasswordRequest {
-  @NotBlank private String password;
+public class SendMessageWEBRequest {
+  @NotBlank private String text;
 }

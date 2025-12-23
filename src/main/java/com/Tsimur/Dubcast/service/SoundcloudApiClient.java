@@ -3,9 +3,7 @@ package com.Tsimur.Dubcast.service;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public interface SoundcloudApiClient {
-    JsonNode getTrack(long trackId);
+  JsonNode getTrack(long trackId);
 
-
-    JsonNode resolveByUrl(String url);
-
+  JsonNode resolveByUrl(String url);
 }

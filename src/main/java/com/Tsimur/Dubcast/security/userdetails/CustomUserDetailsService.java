@@ -1,8 +1,8 @@
 package com.Tsimur.Dubcast.security.userdetails;
 
-
 import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.repository.UserRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,33 +11,28 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user =
+        userRepository
+            .findByEmail(username)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        //"ROLE_USER" / "ROLE_ADMIN" + src/main/resources/db/changelog/V1.0/2025-11-17__init-schema.yaml
-        List<GrantedAuthority> authorities =
-                List.of(new SimpleGrantedAuthority(user.getRole().name()));
+    // "ROLE_USER" / "ROLE_ADMIN" +
+    // src/main/resources/db/changelog/V1.0/2025-11-17__init-schema.yaml
+    List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().name()));
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                authorities
-        );
-    }
+    return new org.springframework.security.core.userdetails.User(
+        user.getEmail(), user.getPassword(), authorities);
+  }
 
-    public User loadUserEntity(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow();
-    }
-
+  public User loadUserEntity(String email) {
+    return userRepository.findByEmail(email).orElseThrow();
+  }
 }

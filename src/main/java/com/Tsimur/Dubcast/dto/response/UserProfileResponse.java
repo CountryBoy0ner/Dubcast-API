@@ -4,12 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Builder
 public class UserProfileResponse {
 
-    private String username;
-    private String bio;
+  private String username;
+  private String bio;
 }

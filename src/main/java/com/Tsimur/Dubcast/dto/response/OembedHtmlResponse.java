@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class OembedHtmlResponse {
-    private String code;
+  private String code;
 
-    public OembedHtmlResponse(String s) {
-        this.code = s;
-    }
+  public OembedHtmlResponse(String s) {
+    this.code = s;
+  }
 }

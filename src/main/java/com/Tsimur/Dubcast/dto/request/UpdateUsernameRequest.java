@@ -10,11 +10,10 @@ import lombok.Setter;
 @Setter
 public class UpdateUsernameRequest {
 
-    @NotBlank
-    @Size(min = 3, max = 50)
-    @Pattern(
-            regexp = "^[A-Za-z0-9_.]+$",
-            message = "Username can contain letters, digits, underscore and dot"
-    )
-    private String username;
+  @NotBlank
+  @Size(min = 3, max = 50)
+  @Pattern(
+      regexp = "^[A-Za-z0-9_.]+$",
+      message = "Username can contain letters, digits, underscore and dot")
+  private String username;
 }

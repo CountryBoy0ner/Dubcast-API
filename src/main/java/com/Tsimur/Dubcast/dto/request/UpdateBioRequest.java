@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class UpdateBioRequest {
 
-    @Size(max = 512, message = "Bio must be at most 512 characters")
-    private String bio;
+  @Size(max = 512, message = "Bio must be at most 512 characters")
+  private String bio;
 }

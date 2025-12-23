@@ -11,12 +11,9 @@ import lombok.*;
 @Builder
 public class PlaylistTrackDto {
 
-    private Long id;
+  private Long id;
 
-    @NotNull
-    @PositiveOrZero
-    private Integer position;
+  @NotNull @PositiveOrZero private Integer position;
 
-    @NotNull
-    private TrackDto track;
+  @NotNull private TrackDto track;
 }

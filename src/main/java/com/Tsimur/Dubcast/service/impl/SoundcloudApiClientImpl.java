@@ -15,45 +15,45 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Slf4j
 public class SoundcloudApiClientImpl implements SoundcloudApiClient {
 
-    private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
+  private final RestTemplate restTemplate;
+  private final ObjectMapper objectMapper;
 
-    @Value("${soundcloud.client-id}")
-    private String clientId;
+  @Value("${soundcloud.client-id}")
+  private String clientId;
 
-    @Value("${soundcloud.api-base-url}")
-    private String apiBaseUrl;
+  @Value("${soundcloud.api-base-url}")
+  private String apiBaseUrl;
 
-    @Override
-    public JsonNode getTrack(long id) {
-        String url = UriComponentsBuilder
-                .fromHttpUrl(apiBaseUrl + "/tracks/" + id)
-                .queryParam("client_id", clientId)
-                .toUriString();
+  @Override
+  public JsonNode getTrack(long id) {
+    String url =
+        UriComponentsBuilder.fromHttpUrl(apiBaseUrl + "/tracks/" + id)
+            .queryParam("client_id", clientId)
+            .toUriString();
 
-        try {
-            String json = restTemplate.getForObject(url, String.class);
-            return objectMapper.readTree(json);
-        } catch (Exception e) {
-            log.warn("Failed to call getTrack({})", id, e);
-            throw new RuntimeException("SoundCloud getTrack failed: " + url, e);
-        }
+    try {
+      String json = restTemplate.getForObject(url, String.class);
+      return objectMapper.readTree(json);
+    } catch (Exception e) {
+      log.warn("Failed to call getTrack({})", id, e);
+      throw new RuntimeException("SoundCloud getTrack failed: " + url, e);
     }
+  }
 
-    @Override
-    public JsonNode resolveByUrl(String trackUrl) {
-        String url = UriComponentsBuilder
-                .fromHttpUrl(apiBaseUrl + "/resolve")
-                .queryParam("url", trackUrl)
-                .queryParam("client_id", clientId)
-                .toUriString();
+  @Override
+  public JsonNode resolveByUrl(String trackUrl) {
+    String url =
+        UriComponentsBuilder.fromHttpUrl(apiBaseUrl + "/resolve")
+            .queryParam("url", trackUrl)
+            .queryParam("client_id", clientId)
+            .toUriString();
 
-        try {
-            String json = restTemplate.getForObject(url, String.class);
-            return objectMapper.readTree(json);
-        } catch (Exception e) {
-            log.warn("Failed to resolve url={}", trackUrl, e);
-            throw new RuntimeException("SoundCloud resolve failed: " + url, e);
-        }
+    try {
+      String json = restTemplate.getForObject(url, String.class);
+      return objectMapper.readTree(json);
+    } catch (Exception e) {
+      log.warn("Failed to resolve url={}", trackUrl, e);
+      throw new RuntimeException("SoundCloud resolve failed: " + url, e);
     }
+  }
 }

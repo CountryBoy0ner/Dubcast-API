@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @SpringBootApplication
 public class DubcastApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(DubcastApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(DubcastApplication.class, args);
+  }
 }

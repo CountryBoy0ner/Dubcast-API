@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class NowPlayingWebSocketBroadcaster {
 
-    private final SimpMessagingTemplate messagingTemplate;
-    private final NowPlayingResponseFactory nowPlayingResponseFactory;
+  private final SimpMessagingTemplate messagingTemplate;
+  private final NowPlayingResponseFactory nowPlayingResponseFactory;
 
-    @EventListener
-    public void onNowPlayingChanged(NowPlayingChangedEvent event) {
-        NowPlayingResponse dto = nowPlayingResponseFactory.fromScheduleEntry(event.current());
-        log.info("[WS] Broadcasting now playing: {}", dto.getTitle());
-        messagingTemplate.convertAndSend("/topic/now-playing", dto);
-    }
+  @EventListener
+  public void onNowPlayingChanged(NowPlayingChangedEvent event) {
+    NowPlayingResponse dto = nowPlayingResponseFactory.fromScheduleEntry(event.current());
+    log.info("[WS] Broadcasting now playing: {}", dto.isPlaying() ? dto.getTitle() : "nothing");
+    messagingTemplate.convertAndSend("/topic/now-playing", dto);
+  }
 }

@@ -5,7 +5,5 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class DurationOfTrackInSecondsResponse {
-    @NotBlank
-    Integer durationSeconds;
-
+  @NotBlank Integer durationSeconds;
 }

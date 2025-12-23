@@ -11,14 +11,11 @@ import lombok.*;
 @Builder
 public class PlaylistDto {
 
-    private Long id;
+  private Long id;
 
-    @NotBlank
-    private String soundcloudUrl;
+  @NotBlank private String soundcloudUrl;
 
-    @NotBlank
-    private String title;
+  @NotBlank private String title;
 
-    @Positive
-    private Integer totalTracks;
+  @Positive private Integer totalTracks;
 }

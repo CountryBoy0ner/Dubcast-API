@@ -24,8 +24,6 @@ services:
       timeout: 5s
       retries: 5
     deploy:
-      # Необязательно для обычного compose, но хорошо смотрится на защите:
-      # демонстрирует понимание ограничений ресурсов
       resources:
         limits:
           cpus: "1.0"

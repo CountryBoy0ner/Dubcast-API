@@ -1,11 +1,7 @@
 package com.Tsimur.Dubcast.dto;
 
-
-import lombok.*;
-
-import java.time.Instant;
-
 import jakarta.validation.constraints.*;
+import lombok.*;
 
 @Getter
 @Setter
@@ -14,19 +10,13 @@ import jakarta.validation.constraints.*;
 @Builder
 public class TrackDto {
 
-    private Long id;
+  private Long id;
 
-    @NotBlank
-    private String soundcloudUrl;
+  @NotBlank private String soundcloudUrl;
 
+  @NotBlank private String title;
 
-    @NotBlank
-    private String title;
+  @NotNull @Positive private Integer durationSeconds;
 
-    @NotNull
-    @Positive
-    private Integer durationSeconds;
-
-    private String artworkUrl;
-
+  private String artworkUrl;
 }

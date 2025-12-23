@@ -1680,6 +1680,110 @@
         }
       }
     },
+    "/api/chat/messages": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Get last chat messages",
+        "description": "Returns the last N chat messages as a flat list.\n\nMessages are ordered from oldest to newest inside the response.\nThis endpoint is typically used on initial page load to show recent chat activity.\n",
+        "operationId": "getMessages",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of messages to return. If not specified, defaults to 50. Values \u003C= 0 or \u003E 200 are normalized on the server side.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            },
+            "example": 50
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "List of chat messages successfully returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChatMessageDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid limit parameter"
+          },
+          "500": {
+            "description": "Unexpected server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Send chat message",
+        "description": "Creates a new chat message from the currently authenticated user.\n\nRequires JWT authentication. The sender is resolved from Principal (user email).\n",
+        "operationId": "sendMessage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageAPIRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Message successfully created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error (empty message)"
+          },
+          "401": {
+            "description": "Unauthorized (no valid JWT token)"
+          },
+          "500": {
+            "description": "Unexpected server error"
+          }
+        }
+      }
+    },
     "/api/auth/validate": {
       "post": {
         "tags": [
@@ -2544,61 +2648,6 @@
         }
       }
     },
-    "/api/chat/messages": {
-      "get": {
-        "tags": [
-          "Chat"
-        ],
-        "summary": "Get last chat messages",
-        "description": "Returns the last N chat messages as a flat list.\n\nMessages are ordered from oldest to newest inside the response.\nThis endpoint is typically used on initial page load to show recent chat activity.\n",
-        "operationId": "getMessages",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Maximum number of messages to return. If not specified, defaults to 50. Values \u003C= 0 or \u003E 200 are normalized on the server side.",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "default": 50
-            },
-            "example": 50
-          }
-        ],
-        "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "List of chat messages successfully returned",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ChatMessageDto"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid limit parameter"
-          },
-          "500": {
-            "description": "Unexpected server error"
-          }
-        }
-      }
-    },
     "/api/chat/messages/page": {
       "get": {
         "tags": [
@@ -3101,6 +3150,37 @@
           "title"
         ]
       },
+      "SendMessageAPIRequest": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ChatMessageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "username": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "ValidateTokenResponse": {
         "type": "object",
         "properties": {
@@ -3231,25 +3311,6 @@
           },
           "bio": {
             "type": "string"
-          }
-        }
-      },
-      "ChatMessageDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "username": {
-            "type": "string"
-          },
-          "text": {
-            "type": "string"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },

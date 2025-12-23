@@ -8,6 +8,5 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class ValidateTokenRequest {
 
-    @NotBlank
-    private String token;
+  @NotBlank private String token;
 }

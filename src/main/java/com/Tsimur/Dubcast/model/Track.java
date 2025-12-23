@@ -1,11 +1,9 @@
 package com.Tsimur.Dubcast.model;
 
-
 import jakarta.persistence.*;
+import java.time.OffsetDateTime;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "tracks")
@@ -16,24 +14,23 @@ import java.time.OffsetDateTime;
 @Builder
 public class Track {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String scUrl;
+  @Column(nullable = false, unique = true)
+  private String scUrl;
 
+  @Column(nullable = false)
+  private String title;
 
-    @Column(nullable = false)
-    private String title;
+  @Column(nullable = false)
+  private Integer durationSeconds;
 
-    @Column(nullable = false)
-    private Integer durationSeconds;
+  private String artworkUrl;
 
-    private String artworkUrl;
-
-    @CreationTimestamp
-    @Setter(AccessLevel.NONE)
-    @Column(nullable = false)
-    private OffsetDateTime createdAt;
+  @CreationTimestamp
+  @Setter(AccessLevel.NONE)
+  @Column(nullable = false)
+  private OffsetDateTime createdAt;
 }

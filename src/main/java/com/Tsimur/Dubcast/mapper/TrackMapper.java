@@ -1,31 +1,28 @@
 package com.Tsimur.Dubcast.mapper;
 
-
-import com.Tsimur.Dubcast.model.Track;
 import com.Tsimur.Dubcast.dto.TrackDto;
+import com.Tsimur.Dubcast.model.Track;
+import java.util.List;
 import org.mapstruct.*;
 
-import java.util.List;
-
 @Mapper(
-        componentModel = "spring",
-        uses = {DateTimeMapper.class}
-)
+    componentModel = "spring",
+    uses = {DateTimeMapper.class})
 public interface TrackMapper {
 
-    @Mapping(source = "scUrl", target = "soundcloudUrl")
-    TrackDto toDto(Track entity);
+  @Mapping(source = "scUrl", target = "soundcloudUrl")
+  TrackDto toDto(Track entity);
 
-    @Mapping(source = "soundcloudUrl", target = "scUrl")
-    Track toEntity(TrackDto dto);
+  @Mapping(source = "soundcloudUrl", target = "scUrl")
+  Track toEntity(TrackDto dto);
 
-    List<TrackDto> toDtoList(List<Track> entities);
+  List<TrackDto> toDtoList(List<Track> entities);
 
-    List<Track> toEntityList(List<TrackDto> dtos);
+  List<Track> toEntityList(List<TrackDto> dtos);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "scUrl", source = "soundcloudUrl")
-    void updateEntityFromDto(TrackDto dto, @MappingTarget Track entity);
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "scUrl", source = "soundcloudUrl")
+  void updateEntityFromDto(TrackDto dto, @MappingTarget Track entity);
 }
