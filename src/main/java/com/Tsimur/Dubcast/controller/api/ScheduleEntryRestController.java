@@ -1,4 +1,4 @@
-package com.Tsimur.Dubcast.controller;
+package com.Tsimur.Dubcast.controller.api;
 
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
 import com.Tsimur.Dubcast.service.ScheduleEntryService;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/schedule")
-public class ScheduleEntryController {
+public class ScheduleEntryRestController {
 
     private final ScheduleEntryService scheduleEntryService;
 

@@ -1,4 +1,4 @@
-package com.Tsimur.Dubcast.controller;
+package com.Tsimur.Dubcast.controller.api;
 
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.service.TrackService;
@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/tracks")
-public class TrackController {
+public class TrackRestController {
 
     private final TrackService trackService;
 

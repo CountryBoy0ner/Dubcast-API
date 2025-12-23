@@ -7,14 +7,11 @@ import com.Tsimur.Dubcast.mapper.UserMapper;
 import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.repository.UserRepository;
 import com.Tsimur.Dubcast.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,9 +35,7 @@ public class UserServiceImpl implements UserService {
         User entity = userMapper.toEntity(dto);
         entity.setPassword(passwordEncoder.encode(rawPassword));
 
-        if (entity.getCreatedAt() == null) {
-            entity.setCreatedAt(OffsetDateTime.now(ZoneOffset.UTC));
-        }
+
 
         User saved = userRepository.save(entity);
         return userMapper.toDto(saved);
@@ -65,14 +60,12 @@ public class UserServiceImpl implements UserService {
         User existing = userRepository.findById(id)
                 .orElseThrow(() -> NotFoundException.of("User", "id", id));
 
-        // не даём менять email на уже занятый
         if (dto.getEmail() != null
                 && !dto.getEmail().equals(existing.getEmail())
                 && userRepository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException("User with email " + dto.getEmail() + " already exists");
         }
 
-        // маппер должен игнорировать password и id
         userMapper.updateEntityFromDto(dto, existing);
 
         User saved = userRepository.save(existing);
