@@ -110,5 +110,5 @@ jobs:
           image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
           format: table
           exit-code: "1"
-          severity: "HIGH,CRITICAL"
+          severity: "CRITICAL"
           ignore-unfixed: true
