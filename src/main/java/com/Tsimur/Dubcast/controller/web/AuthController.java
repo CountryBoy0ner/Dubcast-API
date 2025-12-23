@@ -1,6 +1,5 @@
 package com.Tsimur.Dubcast.controller.web;
 
-import com.Tsimur.Dubcast.dto.request.LoginRequest;
 import com.Tsimur.Dubcast.dto.request.RegisterRequest;
 import com.Tsimur.Dubcast.service.AuthService;
 import jakarta.validation.Valid;
@@ -12,40 +11,38 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+  private final AuthService authService;
 
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
-        model.addAttribute("registerRequest", new RegisterRequest());
-        return "register";
+  @GetMapping("/register")
+  public String showRegisterForm(Model model) {
+    model.addAttribute("registerRequest", new RegisterRequest());
+    return "register";
+  }
+
+  @GetMapping("/login")
+  public String loginPage() {
+    return "login";
+  }
+
+  @PostMapping("/register")
+  public String processRegister(
+      @Valid @ModelAttribute("registerRequest") RegisterRequest request,
+      BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      return "register";
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";
-    }
+    authService.register(request);
 
+    return "redirect:/login?registered";
+  }
 
-
-
-    @PostMapping("/register")
-    public String processRegister(
-            @Valid @ModelAttribute("registerRequest") RegisterRequest request,
-            BindingResult bindingResult
-    ) {
-        if (bindingResult.hasErrors()) {
-            return "register";
-        }
-
-        // Если email уже занят, authService.register() бросит EmailAlreadyUsedException
-        // и её перехватит WebExceptionHandler.handleEmailAlreadyUsed()
-        authService.register(request);
-
-        return "redirect:/login?registered";
-    }
+  @GetMapping("/reel-radio-poc")
+  public String reelRadioPoc() {
+    return "reelRadioPoc";
+  }
 }

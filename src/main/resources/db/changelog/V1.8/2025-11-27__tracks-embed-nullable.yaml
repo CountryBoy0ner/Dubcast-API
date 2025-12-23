@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-11-27-tracks-embed-nullable
+      author: tsimur
+      changes:
+        - dropNotNullConstraint:
+            tableName: tracks
+            columnName: embed_code
+            columnDataType: TEXT

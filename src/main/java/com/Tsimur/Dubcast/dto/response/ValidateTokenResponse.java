@@ -7,13 +7,9 @@ import lombok.Data;
 @Data
 @Builder
 public class ValidateTokenResponse {
-    @NotBlank
-    private boolean valid;
+  @NotBlank private boolean valid;
 
-    @NotBlank
-    private String email;
+  @NotBlank private String email;
 
-    @NotBlank
-    private String role;
+  @NotBlank private String role;
 }
-

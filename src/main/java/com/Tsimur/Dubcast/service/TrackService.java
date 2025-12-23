@@ -1,18 +1,20 @@
 package com.Tsimur.Dubcast.service;
 
 import com.Tsimur.Dubcast.dto.TrackDto;
-
 import java.util.List;
+import java.util.Optional;
 
 public interface TrackService {
 
-    TrackDto create(TrackDto dto);
+  TrackDto create(TrackDto dto);
 
-    TrackDto getById(Long id);
+  TrackDto getById(Long id);
 
-    List<TrackDto> getAll();
+  List<TrackDto> getAll();
 
-    TrackDto update(Long id, TrackDto dto);
+  TrackDto update(Long id, TrackDto dto);
 
-    void delete(Long id);
+  void delete(Long id);
+
+  Optional<TrackDto> getRandomTrack();
 }

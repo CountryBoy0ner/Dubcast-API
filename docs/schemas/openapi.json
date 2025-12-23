@@ -1,0 +1,3370 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Dubcast Radio API",
+    "description": "        Dubcast Internet Radio API.\nContains public, user, and admin endpoints.\n",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8089",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Schedule entries (Admin)",
+      "description": "CRUD endpoints for managing radio schedule entries. Typically used from admin tools."
+    },
+    {
+      "name": "Chat",
+      "description": "Public chat history endpoints. Messages are returned in chronological order (oldest first) inside each response."
+    },
+    {
+      "name": "Radio",
+      "description": "Public endpoints for reading current radio state."
+    },
+    {
+      "name": "Users (Admin)",
+      "description": "Admin endpoints for managing users: create, read, update, delete and change password."
+    },
+    {
+      "name": "Admin Programming",
+      "description": "Admin-only endpoints for managing radio schedule and playlists."
+    },
+    {
+      "name": "Authentication",
+      "description": "Endpoints for user registration, login and JWT token validation."
+    },
+    {
+      "name": "Profile",
+      "description": "Endpoints for managing the current user's profile."
+    },
+    {
+      "name": "Parser",
+      "description": "Endpoints for parsing SoundCloud tracks and playlists by URL."
+    },
+    {
+      "name": "Playlists",
+      "description": "Endpoints for managing radio playlists and importing them from external sources."
+    },
+    {
+      "name": "Tracks (Admin)",
+      "description": "CRUD endpoints for managing tracks in the system. Intended for admin/back-office usage."
+    },
+    {
+      "name": "Radio Programming (Public)",
+      "description": "Read-only endpoints to inspect radio schedule around the current time."
+    }
+  ],
+  "paths": {
+    "/api/users/{id}": {
+      "get": {
+        "tags": [
+          "Users (Admin)"
+        ],
+        "summary": "Get user by ID",
+        "description": "Returns full user information for the given user ID.",
+        "operationId": "getById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "User found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (caller is not an admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Users (Admin)"
+        ],
+        "summary": "Update user",
+        "description": "Updates user's email and role.\nPassword is not changed here – use the dedicated change password endpoint.\n",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "User updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error in request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (caller is not an admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Users (Admin)"
+        ],
+        "summary": "Delete user",
+        "description": "Deletes a user by ID.\nThis operation is irreversible and should be used with care.\n",
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "User deleted (no content)"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (caller is not an admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/tracks/{id}": {
+      "get": {
+        "tags": [
+          "Tracks (Admin)"
+        ],
+        "summary": "Get track by ID",
+        "description": "Returns a single track by its identifier.\n",
+        "operationId": "getById_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Track ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 42
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Track not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Track found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Tracks (Admin)"
+        ],
+        "summary": "Update track",
+        "description": "Updates an existing track by ID.\nAll updatable fields are taken from the request body.\n",
+        "operationId": "update_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Track ID to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 42
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrackDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Track not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Track updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error in request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Tracks (Admin)"
+        ],
+        "summary": "Delete track",
+        "description": "Deletes an existing track by its ID.\nTypically used to clean up invalid or obsolete tracks.\n",
+        "operationId": "delete_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Track ID to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 42
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Track not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Track deleted (no content)"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/schedule/{id}": {
+      "get": {
+        "tags": [
+          "Schedule entries (Admin)"
+        ],
+        "summary": "Get schedule entry by ID",
+        "description": "Returns a single schedule entry by its identifier.\nOnly accessible for ADMIN users.\n",
+        "operationId": "getById_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Schedule entry ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Schedule entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Schedule entry found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Schedule entries (Admin)"
+        ],
+        "summary": "Update schedule entry",
+        "description": "Updates an existing schedule entry.\nOnly accessible for ADMIN users.\n",
+        "operationId": "update_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Schedule entry ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 10
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleEntryDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Schedule entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Schedule entry updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Schedule entries (Admin)"
+        ],
+        "summary": "Delete schedule entry",
+        "description": "Deletes a schedule entry by ID.\nOnly accessible for ADMIN users.\n",
+        "operationId": "delete_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Schedule entry ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Schedule entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Schedule entry deleted"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/profile/username": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Update username",
+        "description": "Updates the current user's username. Must be unique.",
+        "operationId": "updateUsername",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUsernameRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Username updated"
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Username already in use",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/profile/bio": {
+      "put": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Update bio",
+        "description": "Updates the bio field of the current user.",
+        "operationId": "updateBio",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBioRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Bio updated"
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/programming/slots/{id}/change-track": {
+      "put": {
+        "tags": [
+          "Admin Programming"
+        ],
+        "summary": "Change track in an existing slot",
+        "description": "Replaces the current track in a schedule slot with another track.",
+        "operationId": "changeTrack",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Schedule slot ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 123
+          },
+          {
+            "name": "trackId",
+            "in": "query",
+            "description": "New track ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 99
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Slot or track not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Slot updated with new track",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminScheduleSlotDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/programming/day/{date}/reorder": {
+      "put": {
+        "tags": [
+          "Admin Programming"
+        ],
+        "summary": "Reorder day schedule slots",
+        "description": "Reorders all slots for a given day according to the provided list of slot IDs.\nAll IDs must belong to that specific day.\n",
+        "operationId": "reorderDay",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "description": "Date of the schedule (yyyy-MM-dd)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2025-12-08"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "description": "List of slot IDs in the desired order",
+                "items": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Day or one of the slots not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Day schedule reordered"
+          },
+          "400": {
+            "description": "Invalid slot ID list",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "Users (Admin)"
+        ],
+        "summary": "Get all users",
+        "description": "Returns the full list of users in the system.",
+        "operationId": "getAll",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (caller is not an admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Users (Admin)"
+        ],
+        "summary": "Create a new user",
+        "description": "Creates a new user with a given email, role and password.\nThis endpoint is intended for admin usage (e.g. back-office user management).\n",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error in request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "User with this email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (no or invalid JWT)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (caller is not an admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/users/{id}/password": {
+      "post": {
+        "tags": [
+          "Users (Admin)"
+        ],
+        "summary": "Change user password",
+        "description": "Changes password for the specified user.\nThis is an admin-only operation and does not require the old password.\n",
+        "operationId": "changePassword",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID whose password is changed",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Password changed successfully"
+          },
+          "400": {
+            "description": "Validation error in request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (caller is not an admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/tracks": {
+      "get": {
+        "tags": [
+          "Tracks (Admin)"
+        ],
+        "summary": "Get all tracks",
+        "description": "Returns the full list of tracks in the catalog.\nCan be used in admin UI to browse or search tracks.\n",
+        "operationId": "getAll_1",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "List of tracks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrackDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Tracks (Admin)"
+        ],
+        "summary": "Create track",
+        "description": "Creates a new track in the catalog.\nTypically used from admin tools or import flows.\n",
+        "operationId": "create_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrackDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Track created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error in request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (no or invalid JWT)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (user is not an admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/schedule": {
+      "get": {
+        "tags": [
+          "Schedule entries (Admin)"
+        ],
+        "summary": "Get all schedule entries",
+        "description": "Returns the full list of schedule entries.\nIntended for admin tools / back-office operations, not for end users.\n",
+        "operationId": "getAll_2",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "List of schedule entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleEntryDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Schedule entries (Admin)"
+        ],
+        "summary": "Create schedule entry",
+        "description": "Creates a new schedule entry (track slot in the radio timeline).\nOnly accessible for ADMIN users.\n",
+        "operationId": "create_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleEntryDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Schedule entry created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (no or invalid token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (user is not an admin)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/playlist/import": {
+      "post": {
+        "tags": [
+          "Playlists"
+        ],
+        "summary": "Import playlist from URL",
+        "description": "Imports a playlist from an external URL (for example, SoundCloud playlist URL),\nparses its metadata and stores it as a new playlist in the system.\n",
+        "operationId": "importPlaylist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UrlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Playlist successfully imported.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaylistDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or unsupported URL."
+          },
+          "500": {
+            "description": "Unexpected server error during import."
+          }
+        }
+      }
+    },
+    "/api/parser/track": {
+      "post": {
+        "tags": [
+          "Parser"
+        ],
+        "summary": "Parse a single SoundCloud track",
+        "description": "Accepts a SoundCloud track URL and returns parsed track metadata.",
+        "operationId": "parseTrack",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UrlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Track was successfully parsed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid URL format or unsupported resource."
+          },
+          "500": {
+            "description": "Unexpected server error while contacting SoundCloud or parsing the track."
+          }
+        }
+      }
+    },
+    "/api/parser/playlist": {
+      "post": {
+        "tags": [
+          "Parser"
+        ],
+        "summary": "Parse a SoundCloud playlist",
+        "description": "Accepts a SoundCloud playlist URL and returns metadata for all tracks in the playlist.",
+        "operationId": "parsePlaylist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UrlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Playlist was successfully parsed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrackDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid URL format or unsupported resource."
+          },
+          "500": {
+            "description": "Unexpected server error while contacting SoundCloud or parsing the playlist."
+          }
+        }
+      }
+    },
+    "/api/parser/duration": {
+      "post": {
+        "tags": [
+          "Parser"
+        ],
+        "summary": "Get track duration in seconds",
+        "description": "Accepts a SoundCloud track URL and returns its duration in seconds.",
+        "operationId": "getDuration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UrlRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Track not found or duration could not be determined.",
+            "content": {
+
+            }
+          },
+          "200": {
+            "description": "Duration was successfully calculated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Duration of the track in seconds."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid URL format or unsupported resource."
+          },
+          "500": {
+            "description": "Unexpected server error while contacting SoundCloud or parsing metadata."
+          }
+        }
+      }
+    },
+    "/api/chat/messages": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Get last chat messages",
+        "description": "Returns the last N chat messages as a flat list.\n\nMessages are ordered from oldest to newest inside the response.\nThis endpoint is typically used on initial page load to show recent chat activity.\n",
+        "operationId": "getMessages",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of messages to return. If not specified, defaults to 50. Values \u003C= 0 or \u003E 200 are normalized on the server side.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            },
+            "example": 50
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "List of chat messages successfully returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChatMessageDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid limit parameter"
+          },
+          "500": {
+            "description": "Unexpected server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Send chat message",
+        "description": "Creates a new chat message from the currently authenticated user.\n\nRequires JWT authentication. The sender is resolved from Principal (user email).\n",
+        "operationId": "sendMessage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageAPIRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Message successfully created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatMessageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error (empty message)"
+          },
+          "401": {
+            "description": "Unauthorized (no valid JWT token)"
+          },
+          "500": {
+            "description": "Unexpected server error"
+          }
+        }
+      }
+    },
+    "/api/auth/validate": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Validate JWT access token",
+        "description": "Validates the provided JWT token and returns information about its validity,\nexpiration time and optionally the user identity.\n",
+        "operationId": "validate",
+        "requestBody": {
+          "description": "Object containing the token to validate",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidateTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Token successfully validated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidateTokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed (e.g. token is missing or malformed)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token invalid or expired",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register a new user",
+        "description": "Creates a new user account and returns an authentication response\n(typically containing a JWT access token and basic user info).\n",
+        "operationId": "register",
+        "requestBody": {
+          "description": "Registration data (email, password, optional username)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "User successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed (invalid email, weak password, etc.)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already in use",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login with email and password",
+        "description": "Authenticates a user using email and password.\nOn success returns an AuthResponse with a JWT access token.\n",
+        "operationId": "login",
+        "requestBody": {
+          "description": "Login credentials (email and password)",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed (e.g. missing email or password)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid email or password",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/programming/tracks/{trackId}/append": {
+      "post": {
+        "tags": [
+          "Admin Programming"
+        ],
+        "summary": "Append a single track to global schedule",
+        "description": "Appends a single track to the end of the current radio schedule.",
+        "operationId": "appendTrackToSchedule",
+        "parameters": [
+          {
+            "name": "trackId",
+            "in": "path",
+            "description": "Track ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 42
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Track not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Track appended to schedule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/programming/playlists/{playlistId}/append": {
+      "post": {
+        "tags": [
+          "Admin Programming"
+        ],
+        "summary": "Append playlist to global schedule",
+        "description": "Appends all tracks from the specified playlist to the end of the current radio schedule.",
+        "operationId": "appendPlaylistToSchedule",
+        "parameters": [
+          {
+            "name": "playlistId",
+            "in": "path",
+            "description": "Playlist ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 5
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Playlist not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Playlist appended to schedule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaylistScheduleResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/programming/day/{date}/insert-track": {
+      "post": {
+        "tags": [
+          "Admin Programming"
+        ],
+        "summary": "Insert a track into a day schedule",
+        "description": "Inserts a track into the schedule of a specific day at a given position.\nPosition is zero-based (0 — at the beginning, 1 — after the first slot, etc.).\n",
+        "operationId": "insertTrackIntoDay",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "description": "Date of the schedule (yyyy-MM-dd)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2025-12-08"
+          },
+          {
+            "name": "trackId",
+            "in": "query",
+            "description": "Track ID to insert",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 42
+          },
+          {
+            "name": "position",
+            "in": "query",
+            "description": "Zero-based position in the day schedule",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Track or day not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Track inserted into schedule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminScheduleSlotDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters (e.g. position out of range)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/schedule/range": {
+      "get": {
+        "tags": [
+          "Schedule entries (Admin)"
+        ],
+        "summary": "Get schedule entries in a time range",
+        "description": "Returns all schedule entries that intersect with the given time range.\nTime parameters are expected in ISO-8601 format with offset, for example:\n2025-12-07T10:00:00+03:00\n",
+        "operationId": "getRange",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Start of the time range (inclusive), ISO-8601 with offset",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-12-07T10:00:00+03:00"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "End of the time range (exclusive), ISO-8601 with offset",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2025-12-07T12:00:00+03:00"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Day schedule entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleEntryDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date/time format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/schedule/day": {
+      "get": {
+        "tags": [
+          "Schedule entries (Admin)"
+        ],
+        "summary": "Get schedule for a day",
+        "description": "Returns all schedule entries for a specific calendar day.\nDate parameter is expected in ISO format, e.g. 2025-12-07.\n",
+        "operationId": "getDay",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Day for which to return schedule, ISO date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2025-12-07"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Day schedule entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleEntryDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/radio/now": {
+      "get": {
+        "tags": [
+          "Radio"
+        ],
+        "summary": "Get currently playing track",
+        "description": "Returns information about the track that is currently playing on the radio.\nIf there is no scheduled track at the current time, the API responds with HTTP 204 No Content.\n",
+        "operationId": "getNow",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A track is currently playing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NowPlayingResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Nothing is playing right now (no scheduled entry for the current time)"
+          }
+        }
+      }
+    },
+    "/api/programming/previous": {
+      "get": {
+        "tags": [
+          "Radio Programming (Public)"
+        ],
+        "summary": "Get previous schedule slot",
+        "description": "Returns the previous schedule entry before the current time.\nIf there is no previous slot, the API responds with HTTP 204 No Content.\n",
+        "operationId": "getPrevious",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Previous schedule slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No previous schedule slot"
+          }
+        }
+      }
+    },
+    "/api/programming/next": {
+      "get": {
+        "tags": [
+          "Radio Programming (Public)"
+        ],
+        "summary": "Get next schedule slot",
+        "description": "Returns the next schedule entry after the current time.\nIf there is no upcoming slot, the API responds with HTTP 204 No Content.\n",
+        "operationId": "getNext",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Next schedule slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No upcoming schedule slot"
+          }
+        }
+      }
+    },
+    "/api/programming/current": {
+      "get": {
+        "tags": [
+          "Radio Programming (Public)"
+        ],
+        "summary": "Get current schedule slot",
+        "description": "Returns the schedule entry (track/slot) that is active at the current time.\nIf there is no active slot, the API responds with HTTP 204 No Content.\n",
+        "operationId": "getCurrent",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Current schedule slot found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleEntryDto"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No current schedule slot (nothing is scheduled right now)"
+          }
+        }
+      }
+    },
+    "/api/profile/me": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Get current user's profile",
+        "description": "Returns email, username, bio and other data of the currently authenticated user.",
+        "operationId": "getMe",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Profile found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/playlist": {
+      "get": {
+        "tags": [
+          "Playlists"
+        ],
+        "summary": "Get all playlists",
+        "description": "Returns a list of all playlists available in the system.",
+        "operationId": "getAll_3",
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "List of playlists successfully returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlaylistDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/playlist/{id}": {
+      "get": {
+        "tags": [
+          "Playlists"
+        ],
+        "summary": "Get playlist by ID",
+        "description": "Returns a single playlist by its identifier.",
+        "operationId": "getById_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the playlist",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Playlist with the given ID was not found.",
+            "content": {
+
+            }
+          },
+          "200": {
+            "description": "Playlist found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaylistDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Playlists"
+        ],
+        "summary": "Delete playlist",
+        "description": "Deletes a playlist by its identifier. This operation is typically available only for admins.",
+        "operationId": "delete_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the playlist to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Playlist with the given ID was not found.",
+            "content": {
+
+            }
+          },
+          "204": {
+            "description": "Playlist successfully deleted."
+          }
+        }
+      }
+    },
+    "/api/chat/messages/page": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Get paged chat history",
+        "description": "Returns a page of chat messages for infinite scroll / lazy loading.\n\nMessages inside each page are ordered from oldest to newest.\nPage index is zero-based (page=0 is the most recent page).\n",
+        "operationId": "page",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index. 0 = latest messages page.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size (number of messages per page). If not specified, defaults to 50. Values \u003C= 0 or \u003E 200 are normalized on the server side.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 50
+            },
+            "example": 50
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A page of chat messages successfully returned",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChatMessageDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid page or size parameters"
+          },
+          "500": {
+            "description": "Unexpected server error"
+          }
+        }
+      }
+    },
+    "/api/admin/programming/day": {
+      "get": {
+        "tags": [
+          "Admin Programming"
+        ],
+        "summary": "Get admin day schedule",
+        "description": "Returns a paginated list of schedule slots for a given date.\nThis endpoint is intended for the admin panel to view and manage the radio schedule.\n",
+        "operationId": "getDaySchedule",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "Date of the schedule (yyyy-MM-dd)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2025-12-08"
+          },
+          {
+            "name": "pageable",
+            "in": "query",
+            "description": "Pagination and sorting parameters",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Pageable"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Day schedule returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminScheduleSlotDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/admin/analytics/online": {
+      "get": {
+        "tags": [
+          "admin-analytics-rest-controller"
+        ],
+        "operationId": "getOnlineStats",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OnlineStatsDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/programming/slots/{id}": {
+      "delete": {
+        "tags": [
+          "Admin Programming"
+        ],
+        "summary": "Delete a schedule slot",
+        "description": "Deletes a schedule slot by its ID and rebuilds the schedule for that day.",
+        "operationId": "deleteSlot",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Schedule slot ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 123
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Slot not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Slot deleted"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Slot is currently playing and cannot be deleted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "validationErrors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "username": {
+            "type": "string",
+            "minLength": 1
+          },
+          "bio": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "role",
+          "username"
+        ]
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "description": "Updated email and role",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "TrackDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "soundcloudUrl": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "durationSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "artworkUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "durationSeconds",
+          "soundcloudUrl",
+          "title"
+        ]
+      },
+      "ScheduleEntryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "track": {
+            "$ref": "#/components/schemas/TrackDto"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "playlistId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "endTime",
+          "startTime",
+          "track"
+        ]
+      },
+      "UpdateUsernameRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 3,
+            "pattern": "^[A-Za-z0-9_.]+$"
+          }
+        },
+        "required": [
+          "username"
+        ]
+      },
+      "UpdateBioRequest": {
+        "type": "object",
+        "properties": {
+          "bio": {
+            "type": "string",
+            "maxLength": 512,
+            "minLength": 0
+          }
+        }
+      },
+      "AdminScheduleSlotDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "trackTitle": {
+            "type": "string"
+          },
+          "trackArtworkUrl": {
+            "type": "string"
+          },
+          "trackScUrl": {
+            "type": "string"
+          },
+          "playlistId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "playlistName": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateUserRequest": {
+        "type": "object",
+        "description": "User data and password to create",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "role"
+        ]
+      },
+      "ChangePasswordRequest": {
+        "type": "object",
+        "description": "New password payload",
+        "properties": {
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "password"
+        ]
+      },
+      "UrlRequest": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "PlaylistDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "soundcloudUrl": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "totalTracks": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": [
+          "soundcloudUrl",
+          "title"
+        ]
+      },
+      "SendMessageAPIRequest": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ChatMessageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "username": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ValidateTokenResponse": {
+        "type": "object",
+        "properties": {
+          "valid": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "email",
+          "role",
+          "valid"
+        ]
+      },
+      "ValidateTokenRequest": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "accessToken"
+        ]
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "minLength": 1
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "PlaylistScheduleResponse": {
+        "type": "object",
+        "properties": {
+          "playlist": {
+            "$ref": "#/components/schemas/PlaylistDto"
+          },
+          "scheduleEntries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScheduleEntryDto"
+            }
+          }
+        }
+      },
+      "NowPlayingResponse": {
+        "type": "object",
+        "properties": {
+          "playing": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          },
+          "artworkUrl": {
+            "type": "string"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trackUrl": {
+            "type": "string"
+          },
+          "playlistTitle": {
+            "type": "string"
+          }
+        }
+      },
+      "UserProfileResponse": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "bio": {
+            "type": "string"
+          }
+        }
+      },
+      "Pageable": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "OnlineStatsDto": {
+        "type": "object",
+        "properties": {
+          "totalOnline": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "onlinePerTrack": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32",
+              "deprecated": true
+            },
+            "deprecated": true
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "name": "bearerAuth",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

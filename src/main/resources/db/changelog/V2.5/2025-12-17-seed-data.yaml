@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-17-cleanup-old-test-data
+      author: dubcast
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              -- удалить расписание, которое ссылается на старый тест-трек
+              DELETE FROM schedule_entries se
+              USING tracks t
+              WHERE se.track_id = t.id
+                AND t.sc_url = 'https://soundcloud.com/cppradio/xtra-spice-mikey-dobro-club-wroclaw-pl';
+
+              -- удалить старый тест-трек
+              DELETE FROM tracks
+              WHERE sc_url = 'https://soundcloud.com/cppradio/xtra-spice-mikey-dobro-club-wroclaw-pl';
+
+              -- удалить старого тест-юзера
+              DELETE FROM users
+              WHERE email = 'test@example.com';
+
+  - changeSet:
+      id: 2025-12-17-seed-users
+      author: dubcast
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              -- ADMIN (если нет)
+              INSERT INTO users (id, email, password, role, created_at, bio, username)
+              SELECT
+                'd4d48610-d52a-411b-9a61-843e44834425',
+                'roleadmin@mail.ru',
+                '$2a$10$VUzNpdDZaPCrPEaAxjitBuM4daeIrJP./2EUpW2iT0JrmKRQ5ZB6W',
+                'ROLE_ADMIN',
+                CURRENT_TIMESTAMP,
+                'test vio',
+                'DubWheel'
+              WHERE NOT EXISTS (
+                SELECT 1 FROM users WHERE email = 'roleadmin@mail.ru'
+              );
+
+              -- USER (если нет)
+              INSERT INTO users (id, email, password, role, created_at, bio, username)
+              SELECT
+                'c0f30d34-0530-4ab5-a36d-fdcecc6a600d',
+                'roleuser@mail.ru',
+                '$2a$10$/lPOYCX7aF7fk6ti0PJE8u.InVQVvG1CiHwbHokWSH5VLy7jhQnMC',
+                'ROLE_USER',
+                CURRENT_TIMESTAMP,
+                NULL,
+                NULL
+              WHERE NOT EXISTS (
+                SELECT 1 FROM users WHERE email = 'roleuser@mail.ru'
+              );
+
+  - changeSet:
+      id: 2025-12-17-seed-tracks
+      author: dubcast
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              -- делаем sc_url уникальным (нужно для ON CONFLICT)
+              CREATE UNIQUE INDEX IF NOT EXISTS ux_tracks_sc_url
+                ON tracks (sc_url);
+
+              INSERT INTO tracks (sc_url, title, duration_seconds, artwork_url)
+              VALUES
+                ('https://soundcloud.com/suzukies/night-shade', 'Night Shade by Suzukie', 420, 'https://i1.sndcdn.com/artworks-aFDzUlJa6cQRXmFO-NMXZVw-t500x500.jpg'),
+                ('https://soundcloud.com/ppjrecordings/1-s-kid-original-ninja-ppj-003', 'S. Kid - Original Ninja by PPJ Recordings', 352, 'https://i1.sndcdn.com/artworks-6vzsr1iy2RiycKdr-sCgSmA-t500x500.jpg'),
+                ('https://soundcloud.com/pires11/intense-journey-to-the-unknown', 'Intense   Journey To The Unknown by pires11', 365, 'https://i1.sndcdn.com/artworks-000178436291-qy25ea-t500x500.jpg'),
+                ('https://soundcloud.com/trippyrecordsuk/coco-bryce-shine-like-u-gagaku-ep-meditator008', 'Coco Bryce - Shine Like U (Gagaku EP - MEDITATOR008) by Trippy Records', 272, 'https://i1.sndcdn.com/artworks-4t2xnyQsVvuRzpjE-lrCEyg-t500x500.jpg'),
+                ('https://soundcloud.com/vox/roni', 'Roni by Fence''', 336, 'https://i1.sndcdn.com/artworks-JKNsMc94ynJbSjZu-eqqCkw-t500x500.jpg'),
+                ('https://soundcloud.com/amenology/tim-reaper-my-reality-128-kbpspre-order', 'Tim Reaper - My Reality by AMENOLOGY', 384, 'https://i1.sndcdn.com/artworks-000261407309-pqdsym-t500x500.jpg'),
+                ('https://soundcloud.com/cocobrycebeats/coco-bryce-kissed-it-up-free-download', 'Coco Bryce - Kissed It Up (Free Download) by cocobrycebeats', 366, 'https://i1.sndcdn.com/artworks-NYL7pvHIYCKp102A-uZvPNA-t500x500.jpg'),
+                ('https://soundcloud.com/green-bay-wax/luckymuff-003-plasmic-the-future-effect-ep-pre-order-up-now', 'LUCKYMUFF 003 - Plasmic - The Future Effect EP (Pre-Order Up Now!!) by Green Bay Wax', 689, 'https://i1.sndcdn.com/artworks-000233453564-pc8o4p-t500x500.jpg'),
+                ('https://soundcloud.com/dajoogmusic/dwarde-coming-again-1', 'Dwarde - Coming Again by Joog Music', 319, 'https://i1.sndcdn.com/artworks-GAdaff9Vp7osApKK-UnRecw-t500x500.jpg'),
+                ('https://soundcloud.com/repertoiresound/tim-reaper-second-chance', 'Tim Reaper - Second Chance by Repertoire', 324, 'https://i1.sndcdn.com/artworks-000109476057-ls0d5y-t500x500.jpg')
+              ON CONFLICT (sc_url) DO NOTHING;

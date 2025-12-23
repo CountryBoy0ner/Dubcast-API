@@ -1,12 +1,8 @@
 package com.Tsimur.Dubcast.dto;
 
-
-import lombok.*;
-
-import java.time.Instant;
-import java.util.UUID;
-
 import jakarta.validation.constraints.*;
+import java.util.UUID;
+import lombok.*;
 
 @Getter
 @Setter
@@ -15,14 +11,13 @@ import jakarta.validation.constraints.*;
 @Builder
 public class UserDto {
 
-    @NotBlank
-    private UUID id;
+  private UUID id;
 
-    @Email
-    @NotBlank
-    private String email;
-    @NotBlank
-    private String role;
+  @Email @NotBlank private String email;
 
-    private Instant createdAt;
+  @NotBlank private String role;
+
+  @NotBlank private String username;
+
+  private String bio;
 }

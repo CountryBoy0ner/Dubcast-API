@@ -1,0 +1,93 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-11-27-playlists
+      author: tsimur
+      changes:
+        - createTable:
+            tableName: playlists
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_playlists
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sc_playlist_url
+                  type: VARCHAR(500)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: scheduled_date
+                  type: DATE
+                  constraints:
+                    nullable: true
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: playlist_tracks
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_playlist_tracks
+              - column:
+                  name: playlist_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: track_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: position
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: offset_seconds
+                  type: INT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: custom_duration_seconds
+                  type: INT
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: playlist_tracks
+            baseColumnNames: playlist_id
+            constraintName: fk_playlist_tracks_playlist
+            referencedTableName: playlists
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: playlist_tracks
+            baseColumnNames: track_id
+            constraintName: fk_playlist_tracks_track
+            referencedTableName: tracks
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - addUniqueConstraint:
+            tableName: playlist_tracks
+            columnNames: playlist_id, position
+            constraintName: uk_playlist_track_position
