@@ -35,3 +35,5 @@ build/
 BdRequairmenrs.txt
 
 .env.docker
+.env
+*.env
