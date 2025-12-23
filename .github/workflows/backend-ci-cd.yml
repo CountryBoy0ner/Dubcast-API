@@ -87,10 +87,11 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
           tags: |
             type=sha
             type=raw,value=latest
+      
 
       - name: Build & push image
         uses: docker/build-push-action@v6
@@ -106,7 +107,7 @@ jobs:
       - name: Trivy image scan (HIGH/CRITICAL)
         uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
+          image-ref: ${{ fromJSON(steps.meta.outputs.json).tags[0] }}
           format: table
           exit-code: "1"
           severity: "HIGH,CRITICAL"
