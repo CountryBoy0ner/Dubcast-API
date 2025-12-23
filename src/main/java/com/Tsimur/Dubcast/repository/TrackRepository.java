@@ -1,0 +1,9 @@
+package com.Tsimur.Dubcast.repository;
+
+import com.Tsimur.Dubcast.model.Track;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TrackRepository extends JpaRepository<Track, Long> {
+
+    boolean existsByScUrl(String scUrl);
+}
