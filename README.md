@@ -123,4 +123,17 @@ docker compose down
 
 
 
+## Linter Check :
+
+
+```
+
+# check
+.\mvnw.cmd -ntp spotless:check
+# apply
+.\mvnw.cmd -ntp spotless:apply
+
+
+```
+
 
