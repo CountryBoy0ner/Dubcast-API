@@ -93,7 +93,10 @@ public class SecurityConfig {
                         "/radio-ws/**",
                         "/reel-radio-poc",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**")
+                        "/v3/api-docs/**",
+                        "/actuator/health",
+                        "/actuator/health/**",
+                        "/actuator/info")
                     .permitAll()
                     .requestMatchers("/admin/**")
                     .hasRole("ADMIN")
