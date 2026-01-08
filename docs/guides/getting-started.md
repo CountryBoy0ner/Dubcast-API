@@ -110,38 +110,14 @@ Example response:
 If you call an admin endpoint as a normal user, you should receive **403 Forbidden**.
 
 ---
-
-## 5. Common errors
-
-The API uses a unified JSON error format (see `reference/error-handling.md`).
-
-### 401 Unauthorized
-
-Occurs when the token is missing, expired, or invalid.
-
-### 403 Forbidden
-
-Occurs when you are authenticated but lack the required role.
-
-### 400 Bad Request (validation)
-
-Occurs when request body fields fail validation (typically includes `validationErrors`).
-
----
-
-## 6. OpenAPI / Swagger
+## 5. OpenAPI / Swagger
 
 Interactive documentation and the generated schema:
 
-- Swagger UI: `/swagger-ui/`
-- OpenAPI JSON: `/v3/api-docs`
-- OpenAPI YAML: `/v3/api-docs.yaml`
+- Swagger UI: `http://localhost:8089/swagger-ui/index.html`
+- OpenAPI JSON: `http://localhost:8089/v3/api-docs`
+- OpenAPI YAML: `http://localhost:8089/v3/api-docs.yaml`
 
-Example:
-
-```text
-http://localhost:8089/swagger-ui/
-```
 
 ---
 

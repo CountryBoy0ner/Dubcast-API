@@ -54,7 +54,7 @@ jobs:
           path: target/surefire-reports/**
           if-no-files-found: warn
 
-      - name: Trivy FS scan (HIGH/CRITICAL)
+      - name: Trivy FS scan (CRITICAL)
         uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: fs

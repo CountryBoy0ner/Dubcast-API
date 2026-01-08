@@ -1,0 +1,62 @@
+site_name: "Dubcast — Diploma Documentation"
+site_url: ""
+
+# Your markdown lives here (as on your screenshot)
+docs_dir: docs/diploma
+site_dir: site
+
+theme:
+  name: material
+  language: en
+
+plugins:
+  - search
+  - pdf-export:
+      enabled_if_env: ENABLE_PDF_EXPORT
+      combined: true
+      combined_output_path: Dubcast_Documentation.pdf
+
+markdown_extensions:
+  - tables
+  - admonition
+  - toc:
+      permalink: false
+
+# Minimal CSS only for PDF (fixes blank pages from Material "Skip to content")
+extra_css:
+  - stylesheets/pdf.css
+
+nav:
+  - Home: index.md
+
+  - "1. Project Overview":
+      - Overview: 01-project-overview/index.md
+      - Problem & Goals: 01-project-overview/problem-and-goals.md
+      - Stakeholders: 01-project-overview/stakeholders.md
+      - Scope: 01-project-overview/scope.md
+      - Features: 01-project-overview/features.md
+
+  - "2. Technical Implementation":
+      - Overview: 02-technical/index.md
+      - Tech Stack: 02-technical/tech-stack.md
+      - Deployment: 02-technical/deployment.md
+      - Criteria:
+          - Back-End: 02-technical/criteria/backend.md
+          - Database: 02-technical/criteria/database.md
+          - Frontend: 02-technical/criteria/frontend.md
+          - Containerization: 02-technical/criteria/containerization.md
+          - CI/CD: 02-technical/criteria/cicd.md
+          - Analytics: 02-technical/criteria/analytics.md
+          - API Documentation: 02-technical/criteria/api-documentation.md
+
+  - "3. User Guide":
+      - Overview: 03-user-guide/index.md
+      - Getting Started: 03-user-guide/getting Started.md
+      - Features Walkthrough: 03-user-guide/features.md
+      - FAQ: 03-user-guide/faq.md
+
+  - "4. Retrospective":
+      - Retrospective: 04-retrospective/index.md
+
+  - Appendices:
+      - Database Schema: appendices/db-schema.md

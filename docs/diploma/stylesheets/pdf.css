@@ -1,0 +1,90 @@
+/* Print/PDF fixes for MkDocs Material + mkdocs-pdf-export-plugin
+   Goal: remove "Skip to content" extra pages, hide navigation, and improve print layout.
+*/
+
+@page {
+  size: A4;
+  margin: 18mm 14mm;
+}
+
+@media print {
+  /* Hide Material UI chrome */
+  .md-header,
+  .md-tabs,
+  .md-sidebar,
+  .md-footer,
+  .md-top,
+  .md-search,
+  .md-nav,
+  .md-announce {
+    display: none !important;
+  }
+
+  /* This link was creating "almost empty" pages in PDF */
+  .md-skip {
+    display: none !important;
+  }
+
+  /* Prevent an extra page break before content */
+  main,
+  .md-main,
+  .md-content {
+    page-break-before: auto !important;
+  }
+
+  /* Make content use full page width */
+  .md-main__inner {
+    margin: 0 !important;
+  }
+  .md-content {
+    margin: 0 !important;
+  }
+  .md-content__inner {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  /* Typography */
+  body {
+    font-size: 11pt;
+    line-height: 1.35;
+  }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 16pt; }
+  h3 { font-size: 13pt; }
+
+  /* Links look nicer on paper */
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  /* Tables: readable in PDF */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table, th, td {
+    border: 1px solid #999;
+  }
+  th, td {
+    padding: 6px;
+    vertical-align: top;
+  }
+
+  /* Code blocks */
+  pre, code {
+    font-size: 9pt;
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Avoid awkward splits */
+  pre, table, blockquote {
+    page-break-inside: avoid;
+  }
+}

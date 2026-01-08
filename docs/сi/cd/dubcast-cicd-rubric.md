@@ -1,4 +1,4 @@
-# Dubcast CI/CD documentation (meets rubric)
++# Dubcast CI/CD documentation (meets rubric)
 
 This document describes the CI/CD pipeline for the **Dubcast** project and is written to satisfy the provided assessment criteria.
 
