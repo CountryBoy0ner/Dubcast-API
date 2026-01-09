@@ -199,120 +199,149 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
   @Transactional
   public void deleteSlotAndRebuildDay(Long slotId) {
     ScheduleEntry entry =
-        scheduleEntryRepository
-            .findById(slotId)
-            .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
+            scheduleEntryRepository.findById(slotId)
+                    .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
 
     var zone = radioTimeConfig.getRadioZoneId();
     OffsetDateTime now = OffsetDateTime.now(zone);
 
-    boolean started = !now.isBefore(entry.getStartTime()); // now >= start
-    boolean notFinished = now.isBefore(entry.getEndTime()); // now < end
-
+    boolean started = !now.isBefore(entry.getStartTime());   // now >= start
+    boolean notFinished = now.isBefore(entry.getEndTime());  // now < end
     if (started && notFinished) {
       throw new SlotCurrentlyPlayingException(slotId);
     }
 
-    // если слот не текущий – дальше логика как была
+    OffsetDateTime deletedStart = entry.getStartTime();
     LocalDate date = entry.getStartTime().atZoneSameInstant(zone).toLocalDate();
 
     scheduleEntryRepository.delete(entry);
+    scheduleEntryRepository.flush();
 
     OffsetDateTime dayStart = date.atStartOfDay(zone).toOffsetDateTime();
     OffsetDateTime dayEnd = dayStart.plusDays(1);
 
     List<ScheduleEntry> dayEntries =
-        scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
+            scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
 
-    rebuildDaySchedule(date, dayEntries);
+    if (dayEntries.isEmpty()) {
+      eventPublisher.publishEvent(new ScheduleUpdatedEvent(deletedStart));
+      return;
+    }
+
+    int fromIndex = 0;
+    while (fromIndex < dayEntries.size()
+            && dayEntries.get(fromIndex).getStartTime().isBefore(deletedStart)) {
+      fromIndex++;
+    }
+
+    rebuildFromIndex(deletedStart, dayEntries, fromIndex);
   }
+
 
   @Override
   @Transactional
   public ScheduleEntryDto insertTrackIntoDay(LocalDate date, Long trackId, int position) {
-
     Track track =
-        trackRepository
-            .findById(trackId)
-            .orElseThrow(() -> NotFoundException.of("Track", "id", trackId));
+            trackRepository.findById(trackId)
+                    .orElseThrow(() -> NotFoundException.of("Track", "id", trackId));
 
     var zone = radioTimeConfig.getRadioZoneId();
     OffsetDateTime dayStart = date.atStartOfDay(zone).toOffsetDateTime();
     OffsetDateTime dayEnd = dayStart.plusDays(1);
 
     List<ScheduleEntry> dayEntries =
-        scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
+            scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
 
     if (position < 0) position = 0;
     if (position > dayEntries.size()) position = dayEntries.size();
 
-    ScheduleEntry newEntry = ScheduleEntry.builder().track(track).playlist(null).build();
+    ScheduleEntry newEntry = ScheduleEntry.builder()
+            .track(track)
+            .playlist(null)
+            .build();
 
     dayEntries.add(position, newEntry);
 
-    rebuildDaySchedule(date, dayEntries);
+    OffsetDateTime anchorStart;
+    int fromIndex;
+
+    if (dayEntries.size() == 1) {
+      anchorStart = dayStart;
+      fromIndex = 0;
+    } else if (position == 0) {
+      anchorStart = dayEntries.get(1).getStartTime();
+      fromIndex = 0;
+    } else {
+      anchorStart = dayEntries.get(position - 1).getEndTime();
+      fromIndex = position;
+    }
+
+    rebuildFromIndex(anchorStart, dayEntries, fromIndex);
 
     return scheduleEntryMapper.toDto(newEntry);
   }
+
 
   @Override
   @Transactional
   public ScheduleEntryDto changeTrackInSlot(Long slotId, Long newTrackId) {
     ScheduleEntry entry =
-        scheduleEntryRepository
-            .findById(slotId)
-            .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
+            scheduleEntryRepository.findById(slotId)
+                    .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
 
     Track newTrack =
-        trackRepository
-            .findById(newTrackId)
-            .orElseThrow(() -> NotFoundException.of("Track", "id", newTrackId));
-
-    entry.setTrack(newTrack);
+            trackRepository.findById(newTrackId)
+                    .orElseThrow(() -> NotFoundException.of("Track", "id", newTrackId));
 
     var zone = radioTimeConfig.getRadioZoneId();
-    LocalDate date = entry.getStartTime().atZoneSameInstant(zone).toLocalDate();
+    OffsetDateTime now = OffsetDateTime.now(zone);
 
+    // (рекомендую) не давать менять текущий проигрываемый слот, иначе "радио" и БД разъедутся
+    boolean started = !now.isBefore(entry.getStartTime());  // now >= start
+    boolean notFinished = now.isBefore(entry.getEndTime()); // now < end
+    if (started && notFinished) {
+      throw new SlotCurrentlyPlayingException(slotId);
+    }
+
+    // меняем трек
+    entry.setTrack(newTrack);
+    scheduleEntryRepository.save(entry);
+    scheduleEntryRepository.flush();
+
+    LocalDate date = entry.getStartTime().atZoneSameInstant(zone).toLocalDate();
     OffsetDateTime dayStart = date.atStartOfDay(zone).toOffsetDateTime();
     OffsetDateTime dayEnd = dayStart.plusDays(1);
 
     List<ScheduleEntry> dayEntries =
-        scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
+            scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
 
-    rebuildDaySchedule(date, dayEntries);
+    // находим индекс изменённого слота в списке дня
+    int fromIndex = -1;
+    for (int i = 0; i < dayEntries.size(); i++) {
+      if (Objects.equals(dayEntries.get(i).getId(), slotId)) {
+        fromIndex = i;
+        break;
+      }
+    }
+    if (fromIndex == -1) {
+      // теоретически не должно случиться, но пусть будет понятная ошибка
+      throw new IllegalStateException("Slot " + slotId + " not found in dayEntries after reload");
+    }
 
-    return scheduleEntryMapper.toDto(entry);
+    rebuildFromIndex(entry.getStartTime(), dayEntries, fromIndex);
+
+    ScheduleEntry refreshed =
+            scheduleEntryRepository.findById(slotId)
+                    .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
+
+    return scheduleEntryMapper.toDto(refreshed);
   }
 
   @Override
-  @Transactional
   public void reorderDay(LocalDate date, List<Long> orderedIds) {
-    var zone = radioTimeConfig.getRadioZoneId();
-    OffsetDateTime dayStart = date.atStartOfDay(zone).toOffsetDateTime();
-    OffsetDateTime dayEnd = dayStart.plusDays(1);
 
-    List<ScheduleEntry> dayEntries =
-        scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
-
-    Map<Long, ScheduleEntry> byId =
-        dayEntries.stream().collect(Collectors.toMap(ScheduleEntry::getId, e -> e));
-
-    List<ScheduleEntry> reordered = new ArrayList<>();
-
-    for (Long id : orderedIds) {
-      ScheduleEntry e = byId.get(id);
-      if (e != null) {
-        reordered.add(e);
-      }
-    }
-    for (ScheduleEntry e : dayEntries) {
-      if (!reordered.contains(e)) {
-        reordered.add(e);
-      }
-    }
-
-    rebuildDaySchedule(date, reordered);
   }
+
 
   @Override
   @Transactional
@@ -323,14 +352,12 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
             .findById(playlistId)
             .orElseThrow(() -> new NotFoundException("Playlist not found: " + playlistId));
 
-    // 2. Вычисляем, откуда начинать (хвост расписания или "прямо сейчас")
     var zone = radioTimeConfig.getRadioZoneId();
     OffsetDateTime now = OffsetDateTime.now(zone);
     OffsetDateTime maxEndTime = scheduleEntryRepository.findMaxEndTime();
 
     OffsetDateTime startTime = (maxEndTime == null || maxEndTime.isBefore(now)) ? now : maxEndTime;
 
-    // 3. Берём треки плейлиста в порядке позиций
     List<PlaylistTrack> pts =
         playlistTrackRepository.findByPlaylistIdOrderByPositionAsc(playlistId);
 
@@ -341,7 +368,6 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
       Track track = pt.getTrack();
       Integer duration = track.getDurationSeconds();
       if (duration == null || duration <= 0) {
-        // пропускаем битые треки
         continue;
       }
 
@@ -373,19 +399,23 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     return result;
   }
 
-  // ------------------------------------------------------------------------
-  // Общий помощник: пересчитать старт/конец внутри одного дня
-  // ------------------------------------------------------------------------
-  private void rebuildDaySchedule(LocalDate date, List<ScheduleEntry> entries) {
-    var zone = radioTimeConfig.getRadioZoneId();
-    OffsetDateTime currentStart = date.atStartOfDay(zone).toOffsetDateTime();
+  private void rebuildFromIndex(OffsetDateTime anchorStart, List<ScheduleEntry> entries, int fromIndex) {
+    if (fromIndex < 0) fromIndex = 0;
+    if (fromIndex >= entries.size()) {
+      eventPublisher.publishEvent(new ScheduleUpdatedEvent(anchorStart));
+      return;
+    }
 
-    for (ScheduleEntry e : entries) {
+    OffsetDateTime currentStart = anchorStart;
+
+    for (int i = fromIndex; i < entries.size(); i++) {
+      ScheduleEntry e = entries.get(i);
       Track t = e.getTrack();
-      Integer duration = t != null ? t.getDurationSeconds() : null;
+      Integer duration = (t != null) ? t.getDurationSeconds() : null;
+
       if (duration == null || duration <= 0) {
         throw new IllegalStateException(
-            "Track " + (t != null ? t.getId() : "null") + " has invalid duration");
+                "Track " + (t != null ? t.getId() : "null") + " has invalid duration");
       }
 
       e.setStartTime(currentStart);
@@ -393,10 +423,10 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
       currentStart = e.getEndTime();
     }
 
-    scheduleEntryRepository.saveAll(entries);
+    scheduleEntryRepository.saveAll(entries.subList(fromIndex, entries.size()));
+    scheduleEntryRepository.flush();
 
-    if (!entries.isEmpty()) {
-      eventPublisher.publishEvent(new ScheduleUpdatedEvent(entries.get(0).getStartTime()));
-    }
+    eventPublisher.publishEvent(new ScheduleUpdatedEvent(anchorStart));
   }
+
 }

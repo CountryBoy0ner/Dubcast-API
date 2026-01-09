@@ -576,63 +576,6 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
       security:
         - bearerAuth: []
-  /api/admin/programming/day/{date}/reorder:
-    put:
-      tags:
-        - Admin Programming
-      summary: Reorder day schedule slots
-      description: |
-        Reorders all slots for a given day according to the provided list of slot IDs.
-        All IDs must belong to that specific day.
-      operationId: reorderDay
-      parameters:
-        - name: date
-          in: path
-          description: Date of the schedule (yyyy-MM-dd)
-          required: true
-          schema:
-            type: string
-            format: date
-          example: 2025-12-08
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              description: List of slot IDs in the desired order
-              items:
-                type: integer
-                format: int64
-        required: true
-      responses:
-        "404":
-          description: Day or one of the slots not found
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "204":
-          description: Day schedule reordered
-        "400":
-          description: Invalid slot ID list
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
-          description: Unauthorized
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
-          description: Forbidden (ADMIN role required)
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-      security:
-        - bearerAuth: []
   /api/users:
     get:
       tags:
@@ -1351,74 +1294,6 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
       security:
         - bearerAuth: []
-  /api/admin/programming/day/{date}/insert-track:
-    post:
-      tags:
-        - Admin Programming
-      summary: Insert a track into a day schedule
-      description: |
-        Inserts a track into the schedule of a specific day at a given position.
-        Position is zero-based (0 — at the beginning, 1 — after the first slot, etc.).
-      operationId: insertTrackIntoDay
-      parameters:
-        - name: date
-          in: path
-          description: Date of the schedule (yyyy-MM-dd)
-          required: true
-          schema:
-            type: string
-            format: date
-          example: 2025-12-08
-        - name: trackId
-          in: query
-          description: Track ID to insert
-          required: true
-          schema:
-            type: integer
-            format: int64
-          example: 42
-        - name: position
-          in: query
-          description: Zero-based position in the day schedule
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 0
-          example: 0
-      responses:
-        "404":
-          description: Track or day not found
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "200":
-          description: Track inserted into schedule
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AdminScheduleSlotDto"
-        "400":
-          description: Invalid parameters (e.g. position out of range)
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "401":
-          description: Unauthorized
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
-          description: Forbidden (ADMIN role required)
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-      security:
-        - bearerAuth: []
   /api/schedule/range:
     get:
       tags:
@@ -1607,6 +1482,34 @@ paths:
                 $ref: "#/components/schemas/ScheduleEntryDto"
         "204":
           description: No current schedule slot (nothing is scheduled right now)
+  /api/profile/public/{username}:
+    get:
+      tags:
+        - Profile
+      summary: Get public profile by username
+      description: Returns public user profile info (username and bio) by username.
+        Does not return email.
+      operationId: getPublicProfileByUsername
+      parameters:
+        - name: username
+          in: path
+          description: Username of the user
+          required: true
+          schema:
+            type: string
+          example: tsimur
+      responses:
+        "404":
+          description: User with the given username was not found.
+          content: {}
+        "200":
+          description: Profile found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileResponse"
+      security:
+        - bearerAuth: []
   /api/profile/me:
     get:
       tags:
@@ -2156,7 +2059,7 @@ components:
         trackUrl:
           type: string
         playlistTitle:
-          type: stringf
+          type: string
     UserProfileResponse:
       type: object
       properties:

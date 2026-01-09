@@ -63,51 +63,7 @@ public class AdminProgrammingRestController {
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping("/day/{date}/insert-track")
-  @Operation(
-      summary = "Insert a track into a day schedule",
-      description =
-          """
-                    Inserts a track into the schedule of a specific day at a given position.
-                    Position is zero-based (0 — at the beginning, 1 — after the first slot, etc.).
-                    """,
-      responses = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "Track inserted into schedule",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = AdminScheduleSlotDto.class))),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Invalid parameters (e.g. position out of range)",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "401",
-            description = "Unauthorized",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "403",
-            description = "Forbidden (ADMIN role required)",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "404",
-            description = "Track or day not found",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-      })
-  public ResponseEntity<AdminScheduleSlotDto> insertTrackIntoDay(
-      @Parameter(description = "Date of the schedule (yyyy-MM-dd)", example = "2025-12-08")
-          @PathVariable
-          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-          LocalDate date,
-      @Parameter(description = "Track ID to insert", example = "42") @RequestParam Long trackId,
-      @Parameter(description = "Zero-based position in the day schedule", example = "0")
-          @RequestParam(defaultValue = "0")
-          int position) {
-    AdminScheduleSlotDto dto = radioProgrammingService.insertTrackIntoDay(date, trackId, position);
-    return ResponseEntity.ok(dto);
-  }
+
 
   @PutMapping("/slots/{id}/change-track")
   @Operation(
@@ -145,44 +101,7 @@ public class AdminProgrammingRestController {
     return ResponseEntity.ok(dto);
   }
 
-  @PutMapping("/day/{date}/reorder")
-  @Operation(
-      summary = "Reorder day schedule slots",
-      description =
-          """
-                    Reorders all slots for a given day according to the provided list of slot IDs.
-                    All IDs must belong to that specific day.
-                    """,
-      responses = {
-        @ApiResponse(responseCode = "204", description = "Day schedule reordered"),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Invalid slot ID list",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "401",
-            description = "Unauthorized",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "403",
-            description = "Forbidden (ADMIN role required)",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "404",
-            description = "Day or one of the slots not found",
-            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-      })
-  public ResponseEntity<Void> reorderDay(
-      @Parameter(description = "Date of the schedule (yyyy-MM-dd)", example = "2025-12-08")
-          @PathVariable
-          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-          LocalDate date,
-      @Parameter(description = "List of slot IDs in the desired order", example = "[10, 11, 5, 7]")
-          @RequestBody
-          List<Long> orderedIds) {
-    radioProgrammingService.reorderDay(date, orderedIds);
-    return ResponseEntity.noContent().build();
-  }
+
 
   @PostMapping("/playlists/{playlistId}/append")
   @Operation(
