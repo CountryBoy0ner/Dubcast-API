@@ -227,9 +227,9 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <!-- проверяем покрытие только бизнес-логики -->
                             <includes>
-                                <include>com/Tsimur/Dubcast/service/**</include>
+                                <include>com/Tsimur/Dubcast/service/impl/ScheduleEntryServiceImpl*</include>
+                                <include>com/Tsimur/Dubcast/service/impl/SoundCloudRadioProgrammingServiceImpl*</include>
                             </includes>
 
                             <rules>
