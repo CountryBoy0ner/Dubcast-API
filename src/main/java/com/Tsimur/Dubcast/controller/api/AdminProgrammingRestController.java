@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,8 +62,6 @@ public class AdminProgrammingRestController {
     return ResponseEntity.noContent().build();
   }
 
-
-
   @PutMapping("/slots/{id}/change-track")
   @Operation(
       summary = "Change track in an existing slot",
@@ -100,8 +97,6 @@ public class AdminProgrammingRestController {
     AdminScheduleSlotDto dto = radioProgrammingService.changeTrackInSlot(id, trackId);
     return ResponseEntity.ok(dto);
   }
-
-
 
   @PostMapping("/playlists/{playlistId}/append")
   @Operation(

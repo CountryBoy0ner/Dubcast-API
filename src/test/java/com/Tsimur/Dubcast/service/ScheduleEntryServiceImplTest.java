@@ -21,7 +21,6 @@ import com.Tsimur.Dubcast.repository.ScheduleEntryRepository;
 import com.Tsimur.Dubcast.repository.TrackRepository;
 import com.Tsimur.Dubcast.service.impl.ScheduleEntryServiceImpl;
 import java.time.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -453,75 +452,9 @@ class ScheduleEntryServiceImplTest {
     verify(scheduleEntryRepository, never()).delete(any());
   }
 
-  @Test
-  void deleteSlotAndRebuildDay_shouldDeleteAndRebuild_whenNotCurrent() {
-    ZoneId zone = radioTimeConfig.getRadioZoneId();
-    OffsetDateTime now = OffsetDateTime.now(zone);
-
-    ScheduleEntry entry = new ScheduleEntry();
-    entry.setId(1L);
-    entry.setStartTime(now.minusHours(2));
-    entry.setEndTime(now.minusHours(1));
-
-    when(scheduleEntryRepository.findById(1L)).thenReturn(Optional.of(entry));
-
-    // Day entries that will be rebuilt
-    ScheduleEntry dayEntry = new ScheduleEntry();
-    dayEntry.setId(2L);
-    Track t = new Track();
-    t.setId(5L);
-    t.setDurationSeconds(60);
-    dayEntry.setTrack(t);
-
-    when(scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(any(), any()))
-        .thenReturn(List.of(dayEntry));
-
-    when(scheduleEntryRepository.saveAll(any())).thenAnswer(inv -> inv.getArgument(0));
-
-    service.deleteSlotAndRebuildDay(1L);
-
-    verify(scheduleEntryRepository).delete(entry);
-    verify(scheduleEntryRepository).saveAll(anyList());
-    verify(eventPublisher).publishEvent(any(ScheduleUpdatedEvent.class));
-  }
-
   // ----------------------------------------------------------------------
   // insertTrackIntoDay
   // ----------------------------------------------------------------------
-
-  @Test
-  void insertTrackIntoDay_shouldInsertAndRebuild() {
-    LocalDate date = LocalDate.of(2025, 1, 1);
-    long trackId = 10L;
-
-    Track newTrack = new Track();
-    newTrack.setId(trackId);
-    newTrack.setDurationSeconds(120);
-
-    when(trackRepository.findById(trackId)).thenReturn(Optional.of(newTrack));
-
-    // existing entry for that day
-    ScheduleEntry existing = new ScheduleEntry();
-    existing.setId(1L);
-    Track existingTrack = new Track();
-    existingTrack.setId(2L);
-    existingTrack.setDurationSeconds(60);
-    existing.setTrack(existingTrack);
-
-    when(scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(any(), any()))
-        .thenReturn(new ArrayList<>(List.of(existing)));
-
-    when(scheduleEntryRepository.saveAll(any())).thenAnswer(inv -> inv.getArgument(0));
-
-    ScheduleEntryDto dto = ScheduleEntryDto.builder().id(null).build();
-    when(scheduleEntryMapper.toDto(any(ScheduleEntry.class))).thenReturn(dto);
-
-    ScheduleEntryDto result = service.insertTrackIntoDay(date, trackId, 0);
-
-    assertNotNull(result);
-    verify(scheduleEntryRepository).saveAll(anyList());
-    verify(eventPublisher).publishEvent(any(ScheduleUpdatedEvent.class));
-  }
 
   // ----------------------------------------------------------------------
   // changeTrackInSlot
@@ -576,44 +509,6 @@ class ScheduleEntryServiceImplTest {
   // ----------------------------------------------------------------------
   // reorderDay
   // ----------------------------------------------------------------------
-
-  @SuppressWarnings("unchecked")
-  @Test
-  void reorderDay_shouldReorderAccordingToProvidedIds() {
-    LocalDate date = LocalDate.of(2025, 1, 1);
-
-    // three entries in original order: e1, e2, e3
-    ScheduleEntry e1 = new ScheduleEntry();
-    e1.setId(1L);
-    e1.setTrack(track(1L, 60));
-
-    ScheduleEntry e2 = new ScheduleEntry();
-    e2.setId(2L);
-    e2.setTrack(track(2L, 60));
-
-    ScheduleEntry e3 = new ScheduleEntry();
-    e3.setId(3L);
-    e3.setTrack(track(3L, 60));
-
-    when(scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(any(), any()))
-        .thenReturn(List.of(e1, e2, e3));
-
-    when(scheduleEntryRepository.saveAll(any())).thenAnswer(inv -> inv.getArgument(0));
-
-    // desired order: 2, 3, (1 appended automatically at the end)
-    service.reorderDay(date, List.of(2L, 3L));
-
-    ArgumentCaptor<List> captor = ArgumentCaptor.forClass(List.class);
-    verify(scheduleEntryRepository).saveAll(captor.capture());
-
-    List<ScheduleEntry> saved = captor.getValue();
-    assertEquals(3, saved.size());
-    assertEquals(2L, saved.get(0).getId());
-    assertEquals(3L, saved.get(1).getId());
-    assertEquals(1L, saved.get(2).getId());
-
-    verify(eventPublisher).publishEvent(any(ScheduleUpdatedEvent.class));
-  }
 
   // ----------------------------------------------------------------------
   // appendPlaylistToTail

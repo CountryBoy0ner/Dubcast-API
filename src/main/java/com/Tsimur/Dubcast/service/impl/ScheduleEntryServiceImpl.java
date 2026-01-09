@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -199,14 +198,15 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
   @Transactional
   public void deleteSlotAndRebuildDay(Long slotId) {
     ScheduleEntry entry =
-            scheduleEntryRepository.findById(slotId)
-                    .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
+        scheduleEntryRepository
+            .findById(slotId)
+            .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
 
     var zone = radioTimeConfig.getRadioZoneId();
     OffsetDateTime now = OffsetDateTime.now(zone);
 
-    boolean started = !now.isBefore(entry.getStartTime());   // now >= start
-    boolean notFinished = now.isBefore(entry.getEndTime());  // now < end
+    boolean started = !now.isBefore(entry.getStartTime()); // now >= start
+    boolean notFinished = now.isBefore(entry.getEndTime()); // now < end
     if (started && notFinished) {
       throw new SlotCurrentlyPlayingException(slotId);
     }
@@ -221,7 +221,7 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     OffsetDateTime dayEnd = dayStart.plusDays(1);
 
     List<ScheduleEntry> dayEntries =
-            scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
+        scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
 
     if (dayEntries.isEmpty()) {
       eventPublisher.publishEvent(new ScheduleUpdatedEvent(deletedStart));
@@ -230,35 +230,32 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
 
     int fromIndex = 0;
     while (fromIndex < dayEntries.size()
-            && dayEntries.get(fromIndex).getStartTime().isBefore(deletedStart)) {
+        && dayEntries.get(fromIndex).getStartTime().isBefore(deletedStart)) {
       fromIndex++;
     }
 
     rebuildFromIndex(deletedStart, dayEntries, fromIndex);
   }
 
-
   @Override
   @Transactional
   public ScheduleEntryDto insertTrackIntoDay(LocalDate date, Long trackId, int position) {
     Track track =
-            trackRepository.findById(trackId)
-                    .orElseThrow(() -> NotFoundException.of("Track", "id", trackId));
+        trackRepository
+            .findById(trackId)
+            .orElseThrow(() -> NotFoundException.of("Track", "id", trackId));
 
     var zone = radioTimeConfig.getRadioZoneId();
     OffsetDateTime dayStart = date.atStartOfDay(zone).toOffsetDateTime();
     OffsetDateTime dayEnd = dayStart.plusDays(1);
 
     List<ScheduleEntry> dayEntries =
-            scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
+        scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
 
     if (position < 0) position = 0;
     if (position > dayEntries.size()) position = dayEntries.size();
 
-    ScheduleEntry newEntry = ScheduleEntry.builder()
-            .track(track)
-            .playlist(null)
-            .build();
+    ScheduleEntry newEntry = ScheduleEntry.builder().track(track).playlist(null).build();
 
     dayEntries.add(position, newEntry);
 
@@ -281,23 +278,24 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     return scheduleEntryMapper.toDto(newEntry);
   }
 
-
   @Override
   @Transactional
   public ScheduleEntryDto changeTrackInSlot(Long slotId, Long newTrackId) {
     ScheduleEntry entry =
-            scheduleEntryRepository.findById(slotId)
-                    .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
+        scheduleEntryRepository
+            .findById(slotId)
+            .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
 
     Track newTrack =
-            trackRepository.findById(newTrackId)
-                    .orElseThrow(() -> NotFoundException.of("Track", "id", newTrackId));
+        trackRepository
+            .findById(newTrackId)
+            .orElseThrow(() -> NotFoundException.of("Track", "id", newTrackId));
 
     var zone = radioTimeConfig.getRadioZoneId();
     OffsetDateTime now = OffsetDateTime.now(zone);
 
     // (рекомендую) не давать менять текущий проигрываемый слот, иначе "радио" и БД разъедутся
-    boolean started = !now.isBefore(entry.getStartTime());  // now >= start
+    boolean started = !now.isBefore(entry.getStartTime()); // now >= start
     boolean notFinished = now.isBefore(entry.getEndTime()); // now < end
     if (started && notFinished) {
       throw new SlotCurrentlyPlayingException(slotId);
@@ -313,7 +311,7 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     OffsetDateTime dayEnd = dayStart.plusDays(1);
 
     List<ScheduleEntry> dayEntries =
-            scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
+        scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
 
     // находим индекс изменённого слота в списке дня
     int fromIndex = -1;
@@ -331,17 +329,15 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     rebuildFromIndex(entry.getStartTime(), dayEntries, fromIndex);
 
     ScheduleEntry refreshed =
-            scheduleEntryRepository.findById(slotId)
-                    .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
+        scheduleEntryRepository
+            .findById(slotId)
+            .orElseThrow(() -> NotFoundException.of("Schedule", "id", slotId));
 
     return scheduleEntryMapper.toDto(refreshed);
   }
 
   @Override
-  public void reorderDay(LocalDate date, List<Long> orderedIds) {
-
-  }
-
+  public void reorderDay(LocalDate date, List<Long> orderedIds) {}
 
   @Override
   @Transactional
@@ -399,7 +395,8 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     return result;
   }
 
-  private void rebuildFromIndex(OffsetDateTime anchorStart, List<ScheduleEntry> entries, int fromIndex) {
+  private void rebuildFromIndex(
+      OffsetDateTime anchorStart, List<ScheduleEntry> entries, int fromIndex) {
     if (fromIndex < 0) fromIndex = 0;
     if (fromIndex >= entries.size()) {
       eventPublisher.publishEvent(new ScheduleUpdatedEvent(anchorStart));
@@ -415,7 +412,7 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
 
       if (duration == null || duration <= 0) {
         throw new IllegalStateException(
-                "Track " + (t != null ? t.getId() : "null") + " has invalid duration");
+            "Track " + (t != null ? t.getId() : "null") + " has invalid duration");
       }
 
       e.setStartTime(currentStart);
@@ -428,5 +425,4 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
 
     eventPublisher.publishEvent(new ScheduleUpdatedEvent(anchorStart));
   }
-
 }
