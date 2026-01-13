@@ -250,47 +250,6 @@ public class ScheduleEntryRestController {
     return ResponseEntity.noContent().build();
   }
 
-  @GetMapping("/range")
-  @Operation(
-      summary = "Get schedule entries in a time range",
-      description =
-          """
-                    Returns all schedule entries that intersect with the given time range.
-                    Time parameters are expected in ISO-8601 format with offset, for example:
-                    2025-12-07T10:00:00+03:00
-                    """,
-      responses = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "Day schedule entries",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    array =
-                        @ArraySchema(schema = @Schema(implementation = ScheduleEntryDto.class)))),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Invalid date/time format",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)))
-      })
-  public ResponseEntity<List<ScheduleEntryDto>> getRange(
-      @RequestParam("from")
-          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-          @Parameter(
-              description = "Start of the time range (inclusive), ISO-8601 with offset",
-              example = "2025-12-07T10:00:00+03:00")
-          OffsetDateTime from,
-      @RequestParam("to")
-          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-          @Parameter(
-              description = "End of the time range (exclusive), ISO-8601 with offset",
-              example = "2025-12-07T12:00:00+03:00")
-          OffsetDateTime to) {
-    return ResponseEntity.ok(scheduleEntryService.getRange(from, to));
-  }
 
   @GetMapping("/day")
   @Operation(
