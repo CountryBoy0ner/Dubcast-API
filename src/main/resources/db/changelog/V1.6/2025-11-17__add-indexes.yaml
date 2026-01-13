@@ -1,3 +1,4 @@
+
 databaseChangeLog:
   - changeSet:
       id: add-indexes
