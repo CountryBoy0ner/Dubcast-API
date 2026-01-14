@@ -10,7 +10,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface RadioProgrammingService { // orchestrator
+public interface RadioProgrammingService {
   Optional<ScheduleEntryDto> getCurrentSlot(OffsetDateTime now);
 
   Optional<ScheduleEntryDto> getNextSlot(OffsetDateTime now);

@@ -23,6 +23,6 @@ public interface ScheduleEntryMapper {
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createdAt", ignore = true)
-  @Mapping(target = "playlist", ignore = true) // 👈 плейлист не меняем патчем
+  @Mapping(target = "playlist", ignore = true)
   void updateEntityFromDto(ScheduleEntryDto dto, @MappingTarget ScheduleEntry entity);
 }

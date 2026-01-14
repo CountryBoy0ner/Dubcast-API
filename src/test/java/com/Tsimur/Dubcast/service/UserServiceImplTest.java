@@ -317,7 +317,6 @@ class UserServiceImplTest {
         IllegalArgumentException.class, () -> userService.updateCurrentUserUsername("taken"));
 
     verify(userRepository).existsByUsername("taken");
-    // getCurrentUserOrThrow не вызывается из-за раннего выхода
     verify(userRepository, never()).findByEmail(anyString());
   }
 
