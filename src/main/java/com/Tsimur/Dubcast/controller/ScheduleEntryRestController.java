@@ -1,12 +1,9 @@
-package com.Tsimur.Dubcast.controller.api;
+package com.Tsimur.Dubcast.controller;
 
 import com.Tsimur.Dubcast.config.ApiPaths;
-import com.Tsimur.Dubcast.dto.UserDto;
-import com.Tsimur.Dubcast.dto.request.ChangePasswordRequest;
-import com.Tsimur.Dubcast.dto.request.CreateUserRequest;
-import com.Tsimur.Dubcast.dto.request.UpdateUserRequest;
+import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
 import com.Tsimur.Dubcast.exception.ErrorResponse;
-import com.Tsimur.Dubcast.service.UserService;
+import com.Tsimur.Dubcast.service.ScheduleEntryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -16,177 +13,91 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(ApiPaths.USERS)
+@RequestMapping(ApiPaths.SCHEDULE)
 @Tag(
-    name = "Users (Admin)",
+    name = "Schedule entries (Admin)",
     description =
-        "Admin endpoints for managing users: create, read, update, delete and change password.")
+        "CRUD endpoints for managing radio schedule entries. Typically used from admin tools.")
 @SecurityRequirement(name = "bearerAuth")
-public class UserRestController {
+public class ScheduleEntryRestController {
 
-  private final UserService userService;
+  private final ScheduleEntryService scheduleEntryService;
+
+  // --- CRUD ---
 
   @PostMapping
   @Operation(
-      summary = "Create a new user",
+      summary = "Create schedule entry",
       description =
           """
-                    Creates a new user with a given email, role and password.
-                    This endpoint is intended for admin usage (e.g. back-office user management).
+                    Creates a new schedule entry (track slot in the radio timeline).
+                    Only accessible for ADMIN users.
                     """,
       responses = {
         @ApiResponse(
             responseCode = "201",
-            description = "User created successfully",
+            description = "Schedule entry created",
             content =
                 @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = UserDto.class))),
+                    schema = @Schema(implementation = ScheduleEntryDto.class))),
         @ApiResponse(
             responseCode = "400",
-            description = "Validation error in request body",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "409",
-            description = "User with this email already exists",
+            description = "Validation error",
             content =
                 @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class))),
         @ApiResponse(
             responseCode = "401",
-            description = "Unauthorized (no or invalid JWT)",
+            description = "Unauthorized (no or invalid token)",
             content =
                 @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class))),
         @ApiResponse(
             responseCode = "403",
-            description = "Forbidden (caller is not an admin)",
+            description = "Forbidden (user is not an admin)",
             content =
                 @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class)))
       })
-  public ResponseEntity<UserDto> create(
-      @Valid @RequestBody @Parameter(description = "User data and password to create")
-          CreateUserRequest request) {
-    UserDto dto = UserDto.builder().email(request.getEmail()).role(request.getRole()).build();
-
-    UserDto created = userService.create(dto, request.getPassword());
+  public ResponseEntity<ScheduleEntryDto> create(@Valid @RequestBody ScheduleEntryDto dto) {
+    ScheduleEntryDto created = scheduleEntryService.create(dto);
     return ResponseEntity.status(HttpStatus.CREATED).body(created);
   }
 
-  @GetMapping("/{id}")
+  // /api/schedule/10  (digits only, so it does not conflict with /day and /range)
+  @GetMapping("/{id:\\d+}")
   @Operation(
-      summary = "Get user by ID",
-      description = "Returns full user information for the given user ID.",
-      responses = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "User found",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = UserDto.class))),
-        @ApiResponse(
-            responseCode = "404",
-            description = "User not found",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "401",
-            description = "Unauthorized",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "403",
-            description = "Forbidden (caller is not an admin)",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)))
-      })
-  public ResponseEntity<UserDto> getById(
-      @PathVariable
-          @Parameter(description = "User ID", example = "550e8400-e29b-41d4-a716-446655440000")
-          UUID id) {
-    return ResponseEntity.ok(userService.getById(id));
-  }
-
-  @GetMapping
-  @Operation(
-      summary = "Get all users",
-      description = "Returns the full list of users in the system.",
-      responses = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "List of users",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    array = @ArraySchema(schema = @Schema(implementation = UserDto.class)))),
-        @ApiResponse(
-            responseCode = "401",
-            description = "Unauthorized",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "403",
-            description = "Forbidden (caller is not an admin)",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)))
-      })
-  public ResponseEntity<List<UserDto>> getAll() {
-    return ResponseEntity.ok(userService.getAll());
-  }
-
-  @PutMapping("/{id}")
-  @Operation(
-      summary = "Update user",
+      summary = "Get schedule entry by ID",
       description =
           """
-                    Updates user's email and role.
-                    Password is not changed here – use the dedicated change password endpoint.
+                    Returns a single schedule entry by its identifier.
+                    Only accessible for ADMIN users.
                     """,
       responses = {
         @ApiResponse(
             responseCode = "200",
-            description = "User updated",
+            description = "Schedule entry found",
             content =
                 @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = UserDto.class))),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Validation error in request body",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
+                    schema = @Schema(implementation = ScheduleEntryDto.class))),
         @ApiResponse(
             responseCode = "404",
-            description = "User not found",
+            description = "Schedule entry not found",
             content =
                 @Content(
                     mediaType = "application/json",
@@ -200,46 +111,119 @@ public class UserRestController {
                     schema = @Schema(implementation = ErrorResponse.class))),
         @ApiResponse(
             responseCode = "403",
-            description = "Forbidden (caller is not an admin)",
+            description = "Forbidden",
             content =
                 @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class)))
       })
-  public ResponseEntity<UserDto> update(
-      @PathVariable
-          @Parameter(
-              description = "User ID to update",
-              example = "550e8400-e29b-41d4-a716-446655440000")
-          UUID id,
-      @Valid @RequestBody @Parameter(description = "Updated email and role")
-          UpdateUserRequest request) {
-    UserDto dto = UserDto.builder().email(request.getEmail()).role(request.getRole()).build();
+  public ResponseEntity<ScheduleEntryDto> getById(
+      @PathVariable @Parameter(description = "Schedule entry ID", example = "10") Long id) {
+    return ResponseEntity.ok(scheduleEntryService.getById(id));
+  }
 
-    UserDto updated = userService.update(id, dto);
+  // /api/schedule  -> all entries
+  @GetMapping
+  @Operation(
+      summary = "Get all schedule entries",
+      description =
+          """
+                    Returns the full list of schedule entries.
+                    Intended for admin tools / back-office operations, not for end users.
+                    """,
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "List of schedule entries",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    array =
+                        @ArraySchema(schema = @Schema(implementation = ScheduleEntryDto.class)))),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Forbidden",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)))
+      })
+  public ResponseEntity<List<ScheduleEntryDto>> getAll() {
+    return ResponseEntity.ok(scheduleEntryService.getAll());
+  }
+
+  @PutMapping("/{id:\\d+}")
+  @Operation(
+      summary = "Update schedule entry",
+      description =
+          """
+                    Updates an existing schedule entry.
+                    Only accessible for ADMIN users.
+                    """,
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Schedule entry updated",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ScheduleEntryDto.class))),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Validation error",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Schedule entry not found",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "401",
+            description = "Unauthorized",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(
+            responseCode = "403",
+            description = "Forbidden",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)))
+      })
+  public ResponseEntity<ScheduleEntryDto> update(
+      @PathVariable @Parameter(description = "Schedule entry ID", example = "10") Long id,
+      @Valid @RequestBody ScheduleEntryDto dto) {
+    ScheduleEntryDto updated = scheduleEntryService.update(id, dto);
     return ResponseEntity.ok(updated);
   }
 
-  @PostMapping("/{id}/password")
+  @DeleteMapping("/{id:\\d+}")
   @Operation(
-      summary = "Change user password",
+      summary = "Delete schedule entry",
       description =
           """
-                    Changes password for the specified user.
-                    This is an admin-only operation and does not require the old password.
+                    Deletes a schedule entry by ID.
+                    Only accessible for ADMIN users.
                     """,
       responses = {
-        @ApiResponse(responseCode = "204", description = "Password changed successfully"),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Validation error in request body",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "204", description = "Schedule entry deleted"),
         @ApiResponse(
             responseCode = "404",
-            description = "User not found",
+            description = "Schedule entry not found",
             content =
                 @Content(
                     mediaType = "application/json",
@@ -253,63 +237,50 @@ public class UserRestController {
                     schema = @Schema(implementation = ErrorResponse.class))),
         @ApiResponse(
             responseCode = "403",
-            description = "Forbidden (caller is not an admin)",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class)))
-      })
-  public ResponseEntity<Void> changePassword(
-      @PathVariable
-          @Parameter(
-              description = "User ID whose password is changed",
-              example = "550e8400-e29b-41d4-a716-446655440000")
-          UUID id,
-      @Valid @RequestBody @Parameter(description = "New password payload")
-          ChangePasswordRequest request) {
-    userService.changePassword(id, request.getPassword());
-    return ResponseEntity.noContent().build();
-  }
-
-  @DeleteMapping("/{id}")
-  @Operation(
-      summary = "Delete user",
-      description =
-          """
-                    Deletes a user by ID.
-                    This operation is irreversible and should be used with care.
-                    """,
-      responses = {
-        @ApiResponse(responseCode = "204", description = "User deleted (no content)"),
-        @ApiResponse(
-            responseCode = "404",
-            description = "User not found",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "401",
-            description = "Unauthorized",
-            content =
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
-            responseCode = "403",
-            description = "Forbidden (caller is not an admin)",
+            description = "Forbidden",
             content =
                 @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ErrorResponse.class)))
       })
   public ResponseEntity<Void> delete(
-      @PathVariable
-          @Parameter(
-              description = "User ID to delete",
-              example = "550e8400-e29b-41d4-a716-446655440000")
-          UUID id) {
-    userService.delete(id);
+      @PathVariable @Parameter(description = "Schedule entry ID", example = "10") Long id) {
+    scheduleEntryService.delete(id);
     return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping("/day")
+  @Operation(
+      summary = "Get schedule for a day",
+      description =
+          """
+                    Returns all schedule entries for a specific calendar day.
+                    Date parameter is expected in ISO format, e.g. 2025-12-07.
+                    """,
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Day schedule entries",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    array =
+                        @ArraySchema(schema = @Schema(implementation = ScheduleEntryDto.class)))),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Invalid date format",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)))
+      })
+  public ResponseEntity<List<ScheduleEntryDto>> getDay(
+      @RequestParam("date")
+          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+          @Parameter(
+              description = "Day for which to return schedule, ISO date",
+              example = "2025-12-07")
+          LocalDate date) {
+    return ResponseEntity.ok(scheduleEntryService.getDay(date));
   }
 }

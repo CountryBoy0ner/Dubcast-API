@@ -1,4 +1,4 @@
-package com.Tsimur.Dubcast.controller.api;
+package com.Tsimur.Dubcast.controller;
 
 import com.Tsimur.Dubcast.config.ApiPaths;
 import com.Tsimur.Dubcast.dto.ScheduleEntryDto;
@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.OffsetDateTime;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -28,51 +27,49 @@ import org.springframework.web.bind.annotation.*;
 public class RadioProgrammingRestController {
 
   private final RadioProgrammingService radioProgrammingService;
-    private final ScheduleEntryService scheduleEntryService;
+  private final ScheduleEntryService scheduleEntryService;
 
-
-
-    @GetMapping("/range")
-    @Operation(
-            summary = "Get schedule entries in a time range",
-            description =
-                    """
+  @GetMapping("/range")
+  @Operation(
+      summary = "Get schedule entries in a time range",
+      description =
+          """
                     Returns schedule entries that intersect with the given time range.
                     Time parameters must be in ISO-8601 format with offset, for example:
                     2026-01-13T10:00:00+02:00
                     """,
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Schedule entries for the given time range",
-                            content =
-                            @Content(
-                                    mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = ScheduleEntryDto.class)))),
-                    @ApiResponse(
-                            responseCode = "400",
-                            description = "Invalid date/time format",
-                            content = @Content)
-            })
-    public ResponseEntity<List<ScheduleEntryDto>> getRange(
-            @RequestParam("from")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            @Parameter(
-                    description = "Start of the time range (inclusive), ISO-8601 with offset",
-                    example = "2026-01-13T10:00:00+02:00")
-            OffsetDateTime from,
-            @RequestParam("to")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            @Parameter(
-                    description = "End of the time range (exclusive), ISO-8601 with offset",
-                    example = "2026-01-13T12:00:00+02:00")
-            OffsetDateTime to) {
+      responses = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Schedule entries for the given time range",
+            content =
+                @Content(
+                    mediaType = "application/json",
+                    array =
+                        @ArraySchema(schema = @Schema(implementation = ScheduleEntryDto.class)))),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Invalid date/time format",
+            content = @Content)
+      })
+  public ResponseEntity<List<ScheduleEntryDto>> getRange(
+      @RequestParam("from")
+          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+          @Parameter(
+              description = "Start of the time range (inclusive), ISO-8601 with offset",
+              example = "2026-01-13T10:00:00+02:00")
+          OffsetDateTime from,
+      @RequestParam("to")
+          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+          @Parameter(
+              description = "End of the time range (exclusive), ISO-8601 with offset",
+              example = "2026-01-13T12:00:00+02:00")
+          OffsetDateTime to) {
 
-        return ResponseEntity.ok(scheduleEntryService.getRange(from, to));
-    }
+    return ResponseEntity.ok(scheduleEntryService.getRange(from, to));
+  }
 
-
-    @GetMapping("/current")
+  @GetMapping("/current")
   @Operation(
       summary = "Get current schedule slot",
       description =

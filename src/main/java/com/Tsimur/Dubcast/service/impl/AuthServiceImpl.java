@@ -12,6 +12,7 @@ import com.Tsimur.Dubcast.model.User;
 import com.Tsimur.Dubcast.repository.UserRepository;
 import com.Tsimur.Dubcast.security.jwt.JwtService;
 import com.Tsimur.Dubcast.service.AuthService;
+import io.jsonwebtoken.JwtException;
 import jakarta.transaction.Transactional;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;
@@ -63,9 +64,7 @@ public class AuthServiceImpl implements AuthService {
         role = jwtService.extractRole(token);
         valid = true;
       }
-    } catch (io.jsonwebtoken.ExpiredJwtException ex) {
-      valid = false;
-    } catch (io.jsonwebtoken.JwtException ex) {
+    } catch (JwtException ex) {
       valid = false;
     }
 

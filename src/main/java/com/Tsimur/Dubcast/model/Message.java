@@ -15,7 +15,6 @@ public class Message {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  // кто отправил
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User sender;

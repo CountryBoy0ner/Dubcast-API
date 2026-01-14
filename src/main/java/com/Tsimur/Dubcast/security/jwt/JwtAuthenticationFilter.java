@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
     String path = request.getServletPath();
-    return path.startsWith(ApiPaths.AUTH); // вместо "/api/auth/"
+    return path.startsWith(ApiPaths.AUTH);
   }
 
   @Override
@@ -50,9 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     String userEmail;
     try {
       userEmail = jwtService.extractEmail(jwt);
-    } catch (Exception e) { // ExpiredJwtException, MalformedJwtException и т.п.
-      // логируем и пропускаем запрос без аутентификации, а не 500
-      // log.warn("Invalid JWT: {}", e.getMessage());
+    } catch (Exception e) {
       filterChain.doFilter(request, response);
       return;
     }

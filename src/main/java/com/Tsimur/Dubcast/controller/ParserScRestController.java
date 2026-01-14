@@ -1,4 +1,4 @@
-package com.Tsimur.Dubcast.controller.api;
+package com.Tsimur.Dubcast.controller;
 
 import com.Tsimur.Dubcast.config.ApiPaths;
 import com.Tsimur.Dubcast.dto.TrackDto;

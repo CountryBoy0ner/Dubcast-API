@@ -8,5 +8,5 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
 
   boolean existsByScUrl(String scUrl);
 
-  Optional<Track> findByScUrl(String scUrl); // <-- вот этот
+  Optional<Track> findByScUrl(String scUrl);
 }

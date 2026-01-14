@@ -82,7 +82,6 @@ public class SoundCloudRadioProgrammingServiceImpl implements RadioProgrammingSe
   public Page<AdminScheduleSlotDto> getDaySchedule(LocalDate date, Pageable pageable) {
     Page<ScheduleEntryDto> page = scheduleEntryService.getDayPage(date, pageable);
 
-    // заранее вытаскиваем имена плейлистов, чтобы не делать N+1
     Set<Long> playlistIds =
         page.stream()
             .map(ScheduleEntryDto::getPlaylistId)

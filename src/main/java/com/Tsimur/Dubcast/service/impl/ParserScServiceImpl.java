@@ -94,8 +94,6 @@ public class ParserScServiceImpl implements ParserService {
     throw new IllegalStateException("Cannot determine duration for url: " + url);
   }
 
-  // --- плейлист -----------------------------------------------------------
-
   public List<TrackDto> parsePlaylistByUrl(String playlistUrl) {
     List<TrackDto> result = new ArrayList<>();
 
@@ -231,8 +229,6 @@ public class ParserScServiceImpl implements ParserService {
         .build();
   }
 
-  // --- oEmbed html (для фронта) ------------------------------------------
-
   @Override
   public String fetchOEmbedHtml(String url) {
     String oEmbedUrl =
@@ -256,7 +252,7 @@ public class ParserScServiceImpl implements ParserService {
     return response.getHtml();
   }
 
-  // --- старый HTML-скрейпер длительности (fallback) ----------------------
+  // old HTML-scrapper for duration (fallback)
   @Deprecated
   private Integer extractDurationSecondsByScraping(String trackUrl) {
     try {
@@ -278,7 +274,6 @@ public class ParserScServiceImpl implements ParserService {
         }
       }
 
-      // 2) перебор <script> с поиском "duration": <millis>
       for (Element script : doc.select("script")) {
         String data = script.data();
         if (data == null || data.isEmpty()) {
@@ -330,7 +325,6 @@ public class ParserScServiceImpl implements ParserService {
 
   private String toArtworkSize(String url, String size) {
     if (url == null) return null;
-    // size примеры: "t500x500", "t300x300", "large", "t67x67"
     return url.replace("-large.", "-" + size + ".")
         .replace("-t300x300.", "-" + size + ".")
         .replace("-t500x500.", "-" + size + ".");

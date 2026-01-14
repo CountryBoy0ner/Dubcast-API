@@ -73,7 +73,7 @@ public class SoundcloudClientIdProviderImpl implements SoundcloudClientIdProvide
 
       page.navigate("https://soundcloud.com/discover");
       page.waitForLoadState(LoadState.NETWORKIDLE);
-      page.waitForTimeout(5000); // даем странице время пострелять запросами
+      page.waitForTimeout(5000);
 
       browser.close();
 
