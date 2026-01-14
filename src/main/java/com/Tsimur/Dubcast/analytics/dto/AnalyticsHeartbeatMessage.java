@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AnalyticsHeartbeatMessage {
-  private String page; // например "/radio"
-  private boolean listening; // true = слушаю, false = перестал
-  private Long trackId; // опционально, можно пока не использовать
+  private String page;
+  private boolean listening;
+  private Long trackId;
 }

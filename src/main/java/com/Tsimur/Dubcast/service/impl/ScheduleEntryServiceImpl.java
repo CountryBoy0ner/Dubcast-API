@@ -38,12 +38,9 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
   private final RadioTimeConfig radioTimeConfig;
   private final ApplicationEventPublisher eventPublisher;
 
-  private final PlaylistRepository playlistRepository; // <-- NEW
-  private final PlaylistTrackRepository playlistTrackRepository; // <-- NEW
+  private final PlaylistRepository playlistRepository;
+  private final PlaylistTrackRepository playlistTrackRepository;
 
-  // ------------------------------------------------------------------------
-  // CRUD
-  // ------------------------------------------------------------------------
   @Override
   public ScheduleEntryDto create(ScheduleEntryDto dto) {
     dto.setId(null);
@@ -88,9 +85,6 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     scheduleEntryRepository.deleteById(id);
   }
 
-  // ------------------------------------------------------------------------
-  // Поиск текущего / следующего / предыдущего слота
-  // ------------------------------------------------------------------------
   @Override
   @Transactional(readOnly = true)
   public Optional<ScheduleEntryDto> getCurrent(OffsetDateTime now) {
@@ -113,9 +107,6 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
         .map(scheduleEntryMapper::toDto);
   }
 
-  // ------------------------------------------------------------------------
-  // Диапазоны / день
-  // ------------------------------------------------------------------------
   @Override
   @Transactional(readOnly = true)
   public List<ScheduleEntryDto> getRange(OffsetDateTime from, OffsetDateTime to) {
@@ -151,9 +142,6 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     return getRangePage(from, to, pageable);
   }
 
-  // ------------------------------------------------------------------------
-  // Добавить трек в хвост расписания
-  // ------------------------------------------------------------------------
   @Override
   public ScheduleEntryDto appendTrackToTail(Long trackId) {
     Track track =
@@ -185,15 +173,11 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
 
     ScheduleEntry saved = scheduleEntryRepository.save(entry);
 
-    // уведомляем RadioClock, что расписание обновилось
     eventPublisher.publishEvent(new ScheduleUpdatedEvent(saved.getStartTime()));
 
     return scheduleEntryMapper.toDto(saved);
   }
 
-  // ------------------------------------------------------------------------
-  // Админские операции над днём: удалить / вставить / поменять / переупорядочить
-  // ------------------------------------------------------------------------
   @Override
   @Transactional
   public void deleteSlotAndRebuildDay(Long slotId) {
@@ -205,8 +189,8 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     var zone = radioTimeConfig.getRadioZoneId();
     OffsetDateTime now = OffsetDateTime.now(zone);
 
-    boolean started = !now.isBefore(entry.getStartTime()); // now >= start
-    boolean notFinished = now.isBefore(entry.getEndTime()); // now < end
+    boolean started = !now.isBefore(entry.getStartTime());
+    boolean notFinished = now.isBefore(entry.getEndTime());
     if (started && notFinished) {
       throw new SlotCurrentlyPlayingException(slotId);
     }
@@ -294,14 +278,12 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     var zone = radioTimeConfig.getRadioZoneId();
     OffsetDateTime now = OffsetDateTime.now(zone);
 
-    // (рекомендую) не давать менять текущий проигрываемый слот, иначе "радио" и БД разъедутся
-    boolean started = !now.isBefore(entry.getStartTime()); // now >= start
-    boolean notFinished = now.isBefore(entry.getEndTime()); // now < end
+    boolean started = !now.isBefore(entry.getStartTime());
+    boolean notFinished = now.isBefore(entry.getEndTime());
     if (started && notFinished) {
       throw new SlotCurrentlyPlayingException(slotId);
     }
 
-    // меняем трек
     entry.setTrack(newTrack);
     scheduleEntryRepository.save(entry);
     scheduleEntryRepository.flush();
@@ -313,7 +295,6 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
     List<ScheduleEntry> dayEntries =
         scheduleEntryRepository.findByStartTimeBetweenOrderByStartTime(dayStart, dayEnd);
 
-    // находим индекс изменённого слота в списке дня
     int fromIndex = -1;
     for (int i = 0; i < dayEntries.size(); i++) {
       if (Objects.equals(dayEntries.get(i).getId(), slotId)) {
@@ -322,7 +303,6 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
       }
     }
     if (fromIndex == -1) {
-      // теоретически не должно случиться, но пусть будет понятная ошибка
       throw new IllegalStateException("Slot " + slotId + " not found in dayEntries after reload");
     }
 
@@ -342,7 +322,6 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
   @Override
   @Transactional
   public List<ScheduleEntryDto> appendPlaylistToTail(Long playlistId) {
-    // 1. Берём плейлист
     Playlist playlist =
         playlistRepository
             .findById(playlistId)
@@ -372,7 +351,7 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
       ScheduleEntry entry =
           ScheduleEntry.builder()
               .track(track)
-              .playlist(playlist) // важно: связываем с плейлистом
+              .playlist(playlist)
               .startTime(startTime)
               .endTime(endTime)
               .build();
@@ -387,7 +366,6 @@ public class ScheduleEntryServiceImpl implements ScheduleEntryService {
       startTime = endTime;
     }
 
-    // 4. Если что-то реально добавили — уведомляем радио-часы
     if (firstStartTime != null) {
       eventPublisher.publishEvent(new ScheduleUpdatedEvent(firstStartTime));
     }

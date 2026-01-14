@@ -56,9 +56,8 @@ public class MessageServiceImpl implements MessageService {
 
     var page = messageRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(0, size));
 
-    // ДЕЛАЕМ МУТИРУЕМУЮ КОПИЮ
     List<Message> messages = new ArrayList<>(page.getContent());
-    Collections.reverse(messages); // теперь работает нормально
+    Collections.reverse(messages);
 
     return chatMessageMapper.toDtoList(messages);
   }
@@ -72,7 +71,6 @@ public class MessageServiceImpl implements MessageService {
     var pageable = PageRequest.of(safePage, safeSize);
     var pageResult = messageRepository.findAllByOrderByCreatedAtDesc(pageable);
 
-    // Тоже самое — копия + reverse
     List<Message> messages = new ArrayList<>(pageResult.getContent());
     Collections.reverse(messages);
 

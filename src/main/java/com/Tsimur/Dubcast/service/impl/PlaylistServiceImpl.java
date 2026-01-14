@@ -76,8 +76,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     Track track =
         trackRepository
             .findById(trackId)
-            .orElseThrow(
-                () -> new NotFoundException("Track not found: " + trackId)); // todo refactor .of
+            .orElseThrow(() -> new NotFoundException("Track not found: " + trackId));
 
     Integer maxPos = playlistTrackRepository.findMaxPositionByPlaylistId(playlistId);
     int newPos = (maxPos == null ? 0 : maxPos + 1);
@@ -150,6 +149,6 @@ public class PlaylistServiceImpl implements PlaylistService {
   private Playlist getPlaylistOrThrow(Long id) {
     return playlistRepository
         .findById(id)
-        .orElseThrow(() -> new NotFoundException("Playlist not found: " + id)); // todo refactor .of
+        .orElseThrow(() -> new NotFoundException("Playlist not found: " + id));
   }
 }

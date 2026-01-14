@@ -1,4 +1,4 @@
-package com.Tsimur.Dubcast.exception.handler.api;
+package com.Tsimur.Dubcast.exception.handler;
 
 import com.Tsimur.Dubcast.exception.ErrorResponse;
 import com.Tsimur.Dubcast.exception.type.EmailAlreadyUsedException;
