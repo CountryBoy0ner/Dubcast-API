@@ -115,7 +115,6 @@ public class ParserScServiceImpl implements ParserService {
               .launch(
                   new BrowserType.LaunchOptions()
                       .setHeadless(true)
-                      // иногда помогает против “бот-режима”
                       .setArgs(List.of("--disable-blink-features=AutomationControlled")));
 
       BrowserContext context =
@@ -131,7 +130,6 @@ public class ParserScServiceImpl implements ParserService {
 
       AtomicReference<String> clientIdRef = new AtomicReference<>(null);
 
-      // 1) СНИФФИМ client_id из сетевых запросов страницы (самый надежный способ)
       page.onRequest(
           req -> {
             String u = req.url();
@@ -151,11 +149,8 @@ public class ParserScServiceImpl implements ParserService {
       log.info("[SCRAPER] goto {}", playlistUrl);
       page.navigate(playlistUrl);
       page.waitForLoadState(LoadState.DOMCONTENTLOADED);
-
-      // просто чтобы страница успела сходить в api-v2
       page.waitForTimeout(1500);
 
-      // 2) Парсим hydration -> playlist + tracks (включая stub)
       JsonNode playlistData = extractPlaylistDataFromHydration(page);
       if (playlistData == null) {
         log.error("[SCRAPER] playlist data not found in __sc_hydration");
@@ -174,7 +169,6 @@ public class ParserScServiceImpl implements ParserService {
 
       log.info("[SCRAPER] playlist.tracks size = {}", tracks.size());
 
-      // 3) Если из network не поймали client_id — достаем из HTML regex-ом
       if (clientIdRef.get() == null) {
         String html = page.content();
         String cid = tryExtractClientIdFromHtml(html);
@@ -188,7 +182,6 @@ public class ParserScServiceImpl implements ParserService {
 
       final String clientId = clientIdRef.get();
 
-      // 4) Собираем треки. Если stub — дозаполняем через api-v2 с актуальным client_id
       for (int i = 0; i < tracks.size(); i++) {
         JsonNode t = tracks.get(i);
 
@@ -210,7 +203,6 @@ public class ParserScServiceImpl implements ParserService {
             title != null,
             durationMs);
 
-        // если stub — пробуем api-v2 /tracks/{id} с РЕАЛЬНЫМ client_id страницы
         if (!ok && id > 0 && clientId != null) {
           JsonNode full = apiV2GetTrackById(id, clientId);
           if (full != null) {
@@ -223,7 +215,6 @@ public class ParserScServiceImpl implements ParserService {
           }
         }
 
-        // если всё ещё stub — пробуем построить URL из permalink/user.permalink и уйти в oEmbed
         if (!ok) {
           String builtUrl = buildUrlFromHydrationStub(t);
           if (builtUrl != null) {
@@ -306,8 +297,6 @@ public class ParserScServiceImpl implements ParserService {
     Matcher m = CLIENT_ID_PATTERN.matcher(html);
     if (m.find()) return m.group(1);
 
-    // иногда client_id спрятан URL-encoded в конфиге
-    // пробуем дешево “распаковать” пару раз
     String decoded = html;
     for (int i = 0; i < 2; i++) {
       try {

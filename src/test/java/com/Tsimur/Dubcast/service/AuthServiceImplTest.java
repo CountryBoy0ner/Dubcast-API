@@ -34,11 +34,9 @@ class AuthServiceImplTest {
 
   @InjectMocks private AuthServiceImpl authService;
 
-  // ---------- login ----------
 
   @Test
   void login_success() {
-    // given
     LoginRequest request = new LoginRequest();
     request.setEmail("user@example.com");
     request.setPassword("plainPassword");
