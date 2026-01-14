@@ -41,12 +41,14 @@ public class NowPlayingResponseFactory {
 
     return NowPlayingResponse.builder()
         .playing(true)
+        .trackId(track.getId())
         .title(track.getTitle())
         .artworkUrl(track.getArtworkUrl())
         .startedAt(entry.getStartTime())
         .durationSeconds(duration)
         .trackUrl(track.getSoundcloudUrl())
         .playlistTitle(playlistTitle)
+        .likesCount(track.getLikesCount() == null ? 0 : track.getLikesCount())
         .build();
   }
 }

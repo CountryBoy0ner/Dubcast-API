@@ -19,4 +19,6 @@ public class TrackDto {
   @NotNull @Positive private Integer durationSeconds;
 
   private String artworkUrl;
+
+  private Integer likesCount;
 }

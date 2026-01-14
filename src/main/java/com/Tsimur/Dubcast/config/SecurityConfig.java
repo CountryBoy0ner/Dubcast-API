@@ -55,6 +55,14 @@ public class SecurityConfig {
                     .permitAll()
                     .requestMatchers(HttpMethod.GET, ApiPaths.PLAYLIST + "/**")
                     .permitAll()
+                    .requestMatchers(HttpMethod.POST, ApiPaths.LIKES + "/**")
+                    .hasAnyAuthority(Role.ROLE_USER.name(), Role.ROLE_ADMIN.name())
+                    .requestMatchers(HttpMethod.DELETE, ApiPaths.LIKES + "/**")
+                    .hasAnyAuthority(Role.ROLE_USER.name(), Role.ROLE_ADMIN.name())
+                    .requestMatchers(HttpMethod.GET, ApiPaths.LIKES + "/**")
+                    .hasAnyAuthority(Role.ROLE_USER.name(), Role.ROLE_ADMIN.name())
+                    .requestMatchers(HttpMethod.POST, ApiPaths.CHAT + "/**")
+                    .hasAnyAuthority(Role.ROLE_USER.name(), Role.ROLE_ADMIN.name())
                     .requestMatchers(
                         ApiPaths.ADMIN + "/**",
                         ApiPaths.USERS + "/**",

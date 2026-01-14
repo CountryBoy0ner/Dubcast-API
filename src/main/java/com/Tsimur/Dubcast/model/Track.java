@@ -33,4 +33,8 @@ public class Track {
   @Setter(AccessLevel.NONE)
   @Column(nullable = false)
   private OffsetDateTime createdAt;
+
+  @Builder.Default
+  @Column(name = "likes_count", nullable = false)
+  private Integer likesCount = 0;
 }

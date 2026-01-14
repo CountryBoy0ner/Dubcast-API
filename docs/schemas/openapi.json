@@ -58,6 +58,10 @@
       "description": "CRUD endpoints for managing tracks in the system. Intended for admin/back-office usage."
     },
     {
+      "name": "Track Likes",
+      "description": "Endpoints for liking/unliking tracks and checking current user's like status."
+    },
+    {
       "name": "Radio Programming (Public)",
       "description": "Read-only endpoints to inspect radio schedule around the current time."
     }
@@ -85,22 +89,22 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "User found",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -163,16 +167,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "User updated",
             "content": {
@@ -185,6 +179,16 @@
           },
           "400": {
             "description": "Validation error in request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -241,6 +245,9 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "User deleted (no content)"
+          },
           "404": {
             "description": "User not found",
             "content": {
@@ -250,9 +257,6 @@
                 }
               }
             }
-          },
-          "204": {
-            "description": "User deleted (no content)"
           },
           "401": {
             "description": "Unauthorized",
@@ -304,22 +308,22 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Track not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Track found",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/TrackDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Track not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -372,16 +376,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Track not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Track updated",
             "content": {
@@ -394,6 +388,16 @@
           },
           "400": {
             "description": "Validation error in request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Track not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -440,6 +444,9 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "Track deleted (no content)"
+          },
           "404": {
             "description": "Track not found",
             "content": {
@@ -449,9 +456,6 @@
                 }
               }
             }
-          },
-          "204": {
-            "description": "Track deleted (no content)"
           },
           "401": {
             "description": "Unauthorized",
@@ -493,22 +497,22 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Schedule entry not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Schedule entry found",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ScheduleEntryDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Schedule entry not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -571,16 +575,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Schedule entry not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Schedule entry updated",
             "content": {
@@ -593,6 +587,16 @@
           },
           "400": {
             "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Schedule entry not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -649,6 +653,9 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "Schedule entry deleted"
+          },
           "404": {
             "description": "Schedule entry not found",
             "content": {
@@ -658,9 +665,6 @@
                 }
               }
             }
-          },
-          "204": {
-            "description": "Schedule entry deleted"
           },
           "401": {
             "description": "Unauthorized",
@@ -709,16 +713,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "204": {
             "description": "Username updated"
           },
@@ -779,16 +773,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "204": {
             "description": "Bio updated"
           },
@@ -853,16 +837,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Slot or track not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Slot updated with new track",
             "content": {
@@ -902,6 +876,16 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Slot or track not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -920,16 +904,6 @@
         "description": "Returns the full list of users in the system.",
         "operationId": "getAll",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "List of users",
             "content": {
@@ -988,16 +962,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "User created successfully",
             "content": {
@@ -1088,8 +1052,11 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "User not found",
+          "204": {
+            "description": "Password changed successfully"
+          },
+          "400": {
+            "description": "Validation error in request body",
             "content": {
               "application/json": {
                 "schema": {
@@ -1098,11 +1065,8 @@
               }
             }
           },
-          "204": {
-            "description": "Password changed successfully"
-          },
-          "400": {
-            "description": "Validation error in request body",
+          "404": {
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1148,16 +1112,6 @@
         "description": "Returns the full list of tracks in the catalog.\nCan be used in admin UI to browse or search tracks.\n",
         "operationId": "getAll_1",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "List of tracks",
             "content": {
@@ -1206,16 +1160,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Track created",
             "content": {
@@ -1273,16 +1217,6 @@
         "description": "Returns the full list of schedule entries.\nIntended for admin tools / back-office operations, not for end users.\n",
         "operationId": "getAll_2",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "List of schedule entries",
             "content": {
@@ -1341,16 +1275,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Schedule entry created",
             "content": {
@@ -1418,16 +1342,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Playlist successfully imported.",
             "content": {
@@ -1466,16 +1380,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Track was successfully parsed.",
             "content": {
@@ -1514,16 +1418,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Playlist was successfully parsed.",
             "content": {
@@ -1565,10 +1459,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Track not found or duration could not be determined.",
-            "content": {}
-          },
           "200": {
             "description": "Duration was successfully calculated.",
             "content": {
@@ -1584,10 +1474,151 @@
           "400": {
             "description": "Invalid URL format or unsupported resource."
           },
+          "404": {
+            "description": "Track not found or duration could not be determined."
+          },
           "500": {
             "description": "Unexpected server error while contacting SoundCloud or parsing metadata."
           }
         }
+      }
+    },
+    "/api/likes/{trackId}": {
+      "post": {
+        "tags": [
+          "Track Likes"
+        ],
+        "summary": "Like a track",
+        "description": "Adds a like from the current authenticated user to the specified track.\nIf the track is already liked by the user, the operation is idempotent.\nReturns the updated likes counter and current user's like state.\n",
+        "operationId": "like",
+        "parameters": [
+          {
+            "name": "trackId",
+            "in": "path",
+            "description": "Track ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Like state returned (liked=true)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackLikeStateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (no or invalid token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (user has no access)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Track not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Track Likes"
+        ],
+        "summary": "Unlike a track",
+        "description": "Removes the like from the current authenticated user for the specified track.\nIf the track is not liked, the operation is idempotent.\nReturns the updated likes counter and current user's like state.\n",
+        "operationId": "unlike",
+        "parameters": [
+          {
+            "name": "trackId",
+            "in": "path",
+            "description": "Track ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Like state returned (liked=false)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackLikeStateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (no or invalid token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (user has no access)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Track not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/chat/messages": {
@@ -1613,16 +1644,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "List of chat messages successfully returned",
             "content": {
@@ -1662,16 +1683,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Message successfully created",
             "content": {
@@ -1714,16 +1725,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Token successfully validated",
             "content": {
@@ -1777,16 +1778,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "User successfully registered",
             "content": {
@@ -1840,16 +1831,6 @@
           "required": true
         },
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Login successful",
             "content": {
@@ -1905,16 +1886,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Track not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "201": {
             "description": "Track appended to schedule",
             "content": {
@@ -1937,6 +1908,16 @@
           },
           "403": {
             "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Track not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -1975,16 +1956,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Playlist not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Playlist appended to schedule",
             "content": {
@@ -2014,75 +1985,11 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
-    "/api/schedule/range": {
-      "get": {
-        "tags": [
-          "Schedule entries (Admin)"
-        ],
-        "summary": "Get schedule entries in a time range",
-        "description": "Returns all schedule entries that intersect with the given time range.\nTime parameters are expected in ISO-8601 format with offset, for example:\n2025-12-07T10:00:00+03:00\n",
-        "operationId": "getRange",
-        "parameters": [
-          {
-            "name": "from",
-            "in": "query",
-            "description": "Start of the time range (inclusive), ISO-8601 with offset",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "example": "2025-12-07T10:00:00+03:00"
           },
-          {
-            "name": "to",
-            "in": "query",
-            "description": "End of the time range (exclusive), ISO-8601 with offset",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "example": "2025-12-07T12:00:00+03:00"
-          }
-        ],
-        "responses": {
           "404": {
-            "description": "Not Found",
+            "description": "Playlist not found",
             "content": {
               "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "Day schedule entries",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ScheduleEntryDto"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid date/time format",
-            "content": {
-              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
                 }
@@ -2119,16 +2026,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Day schedule entries",
             "content": {
@@ -2169,16 +2066,6 @@
         "description": "Returns information about the track that is currently playing on the radio.\nIf there is no scheduled track at the current time, the API responds with HTTP 204 No Content.\n",
         "operationId": "getNow",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "A track is currently playing",
             "content": {
@@ -2195,6 +2082,58 @@
         }
       }
     },
+    "/api/programming/range": {
+      "get": {
+        "tags": [
+          "Radio Programming (Public)"
+        ],
+        "summary": "Get schedule entries in a time range",
+        "description": "Returns schedule entries that intersect with the given time range.\nTime parameters must be in ISO-8601 format with offset, for example:\n2026-01-13T10:00:00+02:00\n",
+        "operationId": "getRange",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Start of the time range (inclusive), ISO-8601 with offset",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2026-01-13T10:00:00+02:00"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "End of the time range (exclusive), ISO-8601 with offset",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2026-01-13T12:00:00+02:00"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Schedule entries for the given time range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScheduleEntryDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid date/time format"
+          }
+        }
+      }
+    },
     "/api/programming/previous": {
       "get": {
         "tags": [
@@ -2204,16 +2143,6 @@
         "description": "Returns the previous schedule entry before the current time.\nIf there is no previous slot, the API responds with HTTP 204 No Content.\n",
         "operationId": "getPrevious",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Previous schedule slot found",
             "content": {
@@ -2239,16 +2168,6 @@
         "description": "Returns the next schedule entry after the current time.\nIf there is no upcoming slot, the API responds with HTTP 204 No Content.\n",
         "operationId": "getNext",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Next schedule slot found",
             "content": {
@@ -2274,16 +2193,6 @@
         "description": "Returns the schedule entry (track/slot) that is active at the current time.\nIf there is no active slot, the API responds with HTTP 204 No Content.\n",
         "operationId": "getCurrent",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Current schedule slot found",
             "content": {
@@ -2321,10 +2230,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "User with the given username was not found.",
-            "content": {}
-          },
           "200": {
             "description": "Profile found.",
             "content": {
@@ -2334,6 +2239,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "User with the given username was not found."
           }
         },
         "security": [
@@ -2352,16 +2260,6 @@
         "description": "Returns email, username, bio and other data of the currently authenticated user.",
         "operationId": "getMe",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Profile found",
             "content": {
@@ -2399,16 +2297,6 @@
         "description": "Returns a list of all playlists available in the system.",
         "operationId": "getAll_3",
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "List of playlists successfully returned.",
             "content": {
@@ -2447,10 +2335,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Playlist with the given ID was not found.",
-            "content": {}
-          },
           "200": {
             "description": "Playlist found.",
             "content": {
@@ -2460,6 +2344,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Playlist with the given ID was not found."
           }
         }
       },
@@ -2484,14 +2371,106 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Playlist with the given ID was not found.",
-            "content": {}
-          },
           "204": {
             "description": "Playlist successfully deleted."
+          },
+          "404": {
+            "description": "Playlist with the given ID was not found."
           }
         }
+      }
+    },
+    "/api/likes/{trackId}/me": {
+      "get": {
+        "tags": [
+          "Track Likes"
+        ],
+        "summary": "Get current user's like status for a track",
+        "description": "Returns whether the current authenticated user has liked the specified track.\n\nUse this endpoint to render UI state (e.g., heart icon filled/unfilled).\nThe response is user-specific and requires authentication.\n",
+        "operationId": "me",
+        "parameters": [
+          {
+            "name": "trackId",
+            "in": "path",
+            "description": "Track ID to check like status for",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Like status for current user returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrackLikeMeResponse"
+                },
+                "examples": {
+                  "Liked": {
+                    "summary": "User has liked the track",
+                    "description": "Liked",
+                    "value": {
+                      "trackId": 1,
+                      "liked": true
+                    }
+                  },
+                  "Not liked": {
+                    "summary": "User has not liked the track",
+                    "description": "Not liked",
+                    "value": {
+                      "trackId": 1,
+                      "liked": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (no or invalid token)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Unauthorized",
+                  "status": 401,
+                  "path": "/api/likes/1/me"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (user has no access)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Track not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/api/chat/messages/page": {
@@ -2529,16 +2508,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "A page of chat messages successfully returned",
             "content": {
@@ -2592,16 +2561,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "200": {
             "description": "Day schedule returned",
             "content": {
@@ -2682,16 +2641,6 @@
           }
         ],
         "responses": {
-          "404": {
-            "description": "Slot not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
           "204": {
             "description": "Slot deleted"
           },
@@ -2707,6 +2656,16 @@
           },
           "403": {
             "description": "Forbidden (ADMIN role required)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Slot not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -2828,6 +2787,10 @@
           },
           "artworkUrl": {
             "type": "string"
+          },
+          "likesCount": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "required": [
@@ -2996,6 +2959,22 @@
           "title"
         ]
       },
+      "TrackLikeStateResponse": {
+        "type": "object",
+        "properties": {
+          "trackId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "likesCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "liked": {
+            "type": "boolean"
+          }
+        }
+      },
       "SendMessageAPIRequest": {
         "type": "object",
         "properties": {
@@ -3127,6 +3106,10 @@
           "playing": {
             "type": "boolean"
           },
+          "trackId": {
+            "type": "integer",
+            "format": "int64"
+          },
           "title": {
             "type": "string"
           },
@@ -3146,6 +3129,10 @@
           },
           "playlistTitle": {
             "type": "string"
+          },
+          "likesCount": {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
@@ -3157,6 +3144,14 @@
           },
           "bio": {
             "type": "string"
+          }
+        }
+      },
+      "TrackLikeMeResponse": {
+        "type": "object",
+        "properties": {
+          "liked": {
+            "type": "boolean"
           }
         }
       },

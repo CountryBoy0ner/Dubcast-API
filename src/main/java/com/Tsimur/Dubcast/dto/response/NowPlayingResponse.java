@@ -7,11 +7,12 @@ import lombok.*;
 @Data
 public class NowPlayingResponse {
   private boolean playing;
+  private Long trackId;
   private String title;
   private String artworkUrl;
   private Instant startedAt;
   private int durationSeconds;
   private String trackUrl;
-
   private String playlistTitle;
+  private long likesCount;
 }

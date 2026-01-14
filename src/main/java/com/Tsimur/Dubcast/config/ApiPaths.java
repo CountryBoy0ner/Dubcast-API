@@ -18,5 +18,7 @@ public final class ApiPaths {
   public static final String SCHEDULE = API + "/schedule";
   public static final String TRACK = API + "/tracks";
   public static final String ADMIN = API + "/admin";
+  public static final String LIKES = API + "/likes";
+
   public static final String ADMIN_PROGRAMMING = ADMIN + "/programming";
 }

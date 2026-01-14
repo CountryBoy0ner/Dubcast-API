@@ -43,6 +43,8 @@ databaseChangeLog:
 
   - includeAll:
       path: db/changelog/V2.5
+  - includeAll:
+      path: db/changelog/V2.6
 
 
 

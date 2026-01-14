@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2026-01-14-track-likes
+      author: dubcast
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              -- 1) Table: track_likes
+              CREATE TABLE IF NOT EXISTS track_likes (
+                id BIGSERIAL PRIMARY KEY,
+                user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                track_id BIGINT NOT NULL REFERENCES tracks(id) ON DELETE CASCADE,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+                CONSTRAINT uq_track_likes_user_track UNIQUE (user_id, track_id)
+              );
+              
+              CREATE INDEX IF NOT EXISTS idx_track_likes_track_id ON track_likes(track_id);
+              CREATE INDEX IF NOT EXISTS idx_track_likes_user_id ON track_likes(user_id);
+              
+              -- 2) Cached counter on tracks
+              ALTER TABLE tracks
+                ADD COLUMN IF NOT EXISTS likes_count INT NOT NULL DEFAULT 0;
+              
+              -- 3) Backfill counter (safe even if table is empty)
+              UPDATE tracks t
+              SET likes_count = x.cnt
+              FROM (
+                SELECT track_id, COUNT(*)::int AS cnt
+                FROM track_likes
+                GROUP BY track_id
+              ) x
+              WHERE t.id = x.track_id;
+              
+              -- 4) Trigger function to keep likes_count in sync
+              CREATE OR REPLACE FUNCTION trg_track_likes_sync_count()
+              RETURNS trigger AS $$
+              BEGIN
+                IF TG_OP = 'INSERT' THEN
+                  UPDATE tracks SET likes_count = likes_count + 1 WHERE id = NEW.track_id;
+                  RETURN NEW;
+                ELSIF TG_OP = 'DELETE' THEN
+                  UPDATE tracks SET likes_count = GREATEST(likes_count - 1, 0) WHERE id = OLD.track_id;
+                  RETURN OLD;
+                END IF;
+              
+                RETURN NULL;
+              END;
+              $$ LANGUAGE plpgsql;
+              
+              DROP TRIGGER IF EXISTS track_likes_sync_count ON track_likes;
+              
+              CREATE TRIGGER track_likes_sync_count
+              AFTER INSERT OR DELETE ON track_likes
+              FOR EACH ROW
+              EXECUTE FUNCTION trg_track_likes_sync_count();
