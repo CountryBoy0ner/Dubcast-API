@@ -6,15 +6,12 @@ import static org.mockito.Mockito.*;
 
 import com.Tsimur.Dubcast.dto.TrackDto;
 import com.Tsimur.Dubcast.dto.response.SoundcloudOEmbedResponse;
-import com.Tsimur.Dubcast.service.SoundcloudApiClient;
 import com.Tsimur.Dubcast.service.impl.ParserScServiceImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,7 +50,7 @@ class ParserScServiceImplTest {
     oembed.setThumbnail_url("https://img.example/art.jpg");
 
     when(restTemplate.getForObject(eq(expectedOEmbedUrl), eq(SoundcloudOEmbedResponse.class)))
-            .thenReturn(oembed);
+        .thenReturn(oembed);
 
     doReturn(180).when(service).getDurationSecondsByUrl(trackUrl);
 
@@ -72,9 +69,10 @@ class ParserScServiceImplTest {
     String expectedOEmbedUrl = "https://soundcloud.com/oembed?format=json&url=" + trackUrl;
 
     when(restTemplate.getForObject(eq(expectedOEmbedUrl), eq(SoundcloudOEmbedResponse.class)))
-            .thenThrow(new RestClientException("Boom"));
+        .thenThrow(new RestClientException("Boom"));
 
-    RuntimeException ex = assertThrows(RuntimeException.class, () -> service.parseTracksByUrl(trackUrl));
+    RuntimeException ex =
+        assertThrows(RuntimeException.class, () -> service.parseTracksByUrl(trackUrl));
     assertTrue(ex.getMessage().contains("Failed to call SoundCloud oEmbed API"));
   }
 
@@ -84,9 +82,10 @@ class ParserScServiceImplTest {
     String expectedOEmbedUrl = "https://soundcloud.com/oembed?format=json&url=" + trackUrl;
 
     when(restTemplate.getForObject(eq(expectedOEmbedUrl), eq(SoundcloudOEmbedResponse.class)))
-            .thenReturn(null);
+        .thenReturn(null);
 
-    RuntimeException ex = assertThrows(RuntimeException.class, () -> service.parseTracksByUrl(trackUrl));
+    RuntimeException ex =
+        assertThrows(RuntimeException.class, () -> service.parseTracksByUrl(trackUrl));
     assertTrue(ex.getMessage().contains("Empty response from SoundCloud oEmbed API"));
   }
 
@@ -117,7 +116,7 @@ class ParserScServiceImplTest {
     oembed.setHtml("<iframe>player</iframe>");
 
     when(restTemplate.getForObject(eq(expectedOEmbedUrl), eq(SoundcloudOEmbedResponse.class)))
-            .thenReturn(oembed);
+        .thenReturn(oembed);
 
     String html = service.fetchOEmbedHtml(trackUrl);
 
@@ -130,9 +129,10 @@ class ParserScServiceImplTest {
     String expectedOEmbedUrl = "https://soundcloud.com/oembed?format=json&url=" + trackUrl;
 
     when(restTemplate.getForObject(eq(expectedOEmbedUrl), eq(SoundcloudOEmbedResponse.class)))
-            .thenThrow(new RestClientException("Boom"));
+        .thenThrow(new RestClientException("Boom"));
 
-    RuntimeException ex = assertThrows(RuntimeException.class, () -> service.fetchOEmbedHtml(trackUrl));
+    RuntimeException ex =
+        assertThrows(RuntimeException.class, () -> service.fetchOEmbedHtml(trackUrl));
     assertTrue(ex.getMessage().contains("Failed to call SoundCloud oEmbed API"));
   }
 
@@ -142,9 +142,10 @@ class ParserScServiceImplTest {
     String expectedOEmbedUrl = "https://soundcloud.com/oembed?format=json&url=" + trackUrl;
 
     when(restTemplate.getForObject(eq(expectedOEmbedUrl), eq(SoundcloudOEmbedResponse.class)))
-            .thenReturn(null);
+        .thenReturn(null);
 
-    RuntimeException ex = assertThrows(RuntimeException.class, () -> service.fetchOEmbedHtml(trackUrl));
+    RuntimeException ex =
+        assertThrows(RuntimeException.class, () -> service.fetchOEmbedHtml(trackUrl));
     assertTrue(ex.getMessage().contains("Empty response from SoundCloud oEmbed API"));
   }
 
@@ -188,8 +189,7 @@ class ParserScServiceImplTest {
 
   @Test
   void parsePlaylistByUrl_tracksNotArray_returnsEmpty() {
-    String hydrationJson =
-            "[{\"hydratable\":\"playlist\",\"data\":{\"tracks\":{}}}]";
+    String hydrationJson = "[{\"hydratable\":\"playlist\",\"data\":{\"tracks\":{}}}]";
 
     try (MockedStatic<Playwright> mocked = Mockito.mockStatic(Playwright.class)) {
       Playwright pw = mock(Playwright.class);
@@ -219,24 +219,21 @@ class ParserScServiceImplTest {
     }
   }
 
-
-
-
   @Test
   void parsePlaylistByUrl_noClientId_fallsBackToBuiltUrl_andParseTracksByUrl() {
     String hydrationJson =
-            "[{\"hydratable\":\"playlist\",\"data\":{\"tracks\":["
-                    + "{\"id\":404,\"duration\":0,\"user\":{\"permalink\":\"user404\"},\"permalink\":\"track404\"}"
-                    + "]}}]";
+        "[{\"hydratable\":\"playlist\",\"data\":{\"tracks\":["
+            + "{\"id\":404,\"duration\":0,\"user\":{\"permalink\":\"user404\"},\"permalink\":\"track404\"}"
+            + "]}}]";
 
     TrackDto mockedDto =
-            TrackDto.builder()
-                    .id(null)
-                    .soundcloudUrl("https://soundcloud.com/user404/track404")
-                    .title("BUILT")
-                    .durationSeconds(10)
-                    .artworkUrl(null)
-                    .build();
+        TrackDto.builder()
+            .id(null)
+            .soundcloudUrl("https://soundcloud.com/user404/track404")
+            .title("BUILT")
+            .durationSeconds(10)
+            .artworkUrl(null)
+            .build();
 
     doReturn(mockedDto).when(service).parseTracksByUrl("https://soundcloud.com/user404/track404");
 
@@ -269,7 +266,8 @@ class ParserScServiceImplTest {
       assertEquals("https://soundcloud.com/user404/track404", res.get(0).getSoundcloudUrl());
 
       verify(service).parseTracksByUrl("https://soundcloud.com/user404/track404");
-      verify(restTemplate, never()).getForObject(startsWith("https://api-v2.soundcloud.com/tracks/"), eq(String.class));
+      verify(restTemplate, never())
+          .getForObject(startsWith("https://api-v2.soundcloud.com/tracks/"), eq(String.class));
     }
   }
 }
