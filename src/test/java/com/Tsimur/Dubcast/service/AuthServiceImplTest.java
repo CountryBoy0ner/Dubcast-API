@@ -34,7 +34,6 @@ class AuthServiceImplTest {
 
   @InjectMocks private AuthServiceImpl authService;
 
-
   @Test
   void login_success() {
     LoginRequest request = new LoginRequest();

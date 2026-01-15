@@ -56,7 +56,6 @@ public class RestExceptionHandler {
     return build(HttpStatus.CONFLICT, "User with this email already exists", request);
   }
 
-
   @ExceptionHandler({
     NotFoundException.class,
     EntityNotFoundException.class,

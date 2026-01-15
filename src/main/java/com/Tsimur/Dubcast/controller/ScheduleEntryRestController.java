@@ -33,7 +33,6 @@ public class ScheduleEntryRestController {
 
   private final ScheduleEntryService scheduleEntryService;
 
-
   @PostMapping
   @Operation(
       summary = "Create schedule entry",
