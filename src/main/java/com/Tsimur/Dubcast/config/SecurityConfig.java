@@ -42,7 +42,7 @@ public class SecurityConfig {
                     .requestMatchers("/actuator/health", "/actuator/health/**", "/actuator/info")
                     .permitAll()
                     .requestMatchers("/radio-ws/**")
-                    .permitAll() // SockJS/WebSocket handshake
+                    .permitAll()
                     .requestMatchers(ApiPaths.AUTH + "/**")
                     .permitAll()
                     .requestMatchers(ApiPaths.RADIO + "/**")

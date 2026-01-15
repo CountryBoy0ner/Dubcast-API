@@ -77,7 +77,6 @@ public class ScheduleEntryRestController {
     return ResponseEntity.status(HttpStatus.CREATED).body(created);
   }
 
-  // /api/schedule/10  (digits only, so it does not conflict with /day and /range)
   @GetMapping("/{id:\\d+}")
   @Operation(
       summary = "Get schedule entry by ID",
@@ -121,7 +120,6 @@ public class ScheduleEntryRestController {
     return ResponseEntity.ok(scheduleEntryService.getById(id));
   }
 
-  // /api/schedule  -> all entries
   @GetMapping
   @Operation(
       summary = "Get all schedule entries",

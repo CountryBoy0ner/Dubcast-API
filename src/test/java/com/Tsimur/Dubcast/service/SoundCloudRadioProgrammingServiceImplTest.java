@@ -223,7 +223,6 @@ class SoundCloudRadioProgrammingServiceImplTest {
     assertEquals(playlistId, slot.getPlaylistId());
     assertEquals("Morning Playlist", slot.getPlaylistName());
 
-    // Проверяем, что время сконвертировано в OffsetDateTime с тем же Instant
     assertEquals(seDto.getStartTime(), slot.getStartTime().toInstant());
     assertEquals(seDto.getEndTime(), slot.getEndTime().toInstant());
 
@@ -270,7 +269,7 @@ class SoundCloudRadioProgrammingServiceImplTest {
             .track(trackDto)
             .startTime(start)
             .endTime(end)
-            .playlistId(null) // важно: чтобы не дергался playlistRepository
+            .playlistId(null)
             .build();
 
     when(scheduleEntryService.insertTrackIntoDay(date, trackId, position)).thenReturn(seDto);

@@ -1,24 +1,19 @@
-version: "3.9" # Опционально, Docker уже не требует, но можно оставить для явности
+version: "3.9"
 
 services:
-  # --- PostgreSQL база данных ---
   servicesite-db:
-    image: postgres:16-alpine          # Лёгкий официальный образ PostgreSQL
-    # Все чувствительные значения (пароли) кладём в .env.docker, а не в compose
+    image: postgres:16-alpine
     env_file:
       - .env.docker
     environment:
-      # Фолбэки на случай отсутствия переменных в .env.docker
       POSTGRES_DB: ${DB_NAME:-dubcast}
       POSTGRES_USER: ${DB_USERNAME:-dubcast}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me}
     volumes:
-      # Персистентный volume для данных БД (stateful, но вынесен за пределы контейнера)
       - dubcast_db-data:/var/lib/postgresql/data
     networks:
       - app-net
     healthcheck:
-      # Ждём, пока PostgreSQL станет доступен внутри сети
       test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-dubcast} -d ${DB_NAME:-dubcast} || exit 1"]
       interval: 10s
       timeout: 5s
@@ -29,21 +24,17 @@ services:
           cpus: "1.0"
           memory: 512M
 
-  # --- Backend: Dubcast Spring Boot + Playwright ---
   servicesite-backend:
     build:
-      context: .                       # Корень backend-проекта
-      dockerfile: Dockerfile           # Наш Dockerfile с multi-stage и Playwright
-    # Backend стартует только после того, как БД "здоровая"
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       servicesite-db:
         condition: service_healthy
     env_file:
-      - .env.docker                           # Тот же .env.docker, чтобы не дублировать переменные
+      - .env.docker
     environment:
-      # Порт, на котором слушает Spring Boot внутри контейнера
       SERVER_PORT: 8080
-      # JDBC-URL до Postgres по имени сервиса внутри docker-сети
       DB_URL: jdbc:postgresql://servicesite-db:${DB_PORT:-5432}/${DB_NAME:-dubcast}
       DB_USERNAME: ${DB_USERNAME:-dubcast}
       DB_PASSWORD: ${DB_PASSWORD:-change_me}
@@ -51,7 +42,7 @@ services:
       - "8089:8080"
     networks:
       - app-net
-    restart: unless-stopped            # Автоматический рестарт при падении
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q '\"status\":\"UP\"' || exit 1"]
       interval: 15s
@@ -63,11 +54,9 @@ services:
           cpus: "1.0"
           memory: 1G
 
-# Изолированная сеть для взаимодействия backend <-> db
 networks:
   app-net:
     driver: bridge
 
-# Персистентный volume для данных PostgreSQL
 volumes:
   dubcast_db-data:

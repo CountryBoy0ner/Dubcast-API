@@ -114,7 +114,6 @@ class AuthServiceImplTest {
     when(passwordEncoder.encode("plainPass")).thenReturn("hashedPass");
     when(jwtService.generateToken(any(User.class))).thenReturn("new-token");
 
-    // мок save, чтобы вернуть того же юзера
     when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
     // when

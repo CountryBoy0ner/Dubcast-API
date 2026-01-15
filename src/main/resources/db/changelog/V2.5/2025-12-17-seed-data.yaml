@@ -6,17 +6,14 @@ databaseChangeLog:
         - sql:
             splitStatements: false
             sql: |
-              -- удалить расписание, которое ссылается на старый тест-трек
               DELETE FROM schedule_entries se
               USING tracks t
               WHERE se.track_id = t.id
                 AND t.sc_url = 'https://soundcloud.com/cppradio/xtra-spice-mikey-dobro-club-wroclaw-pl';
 
-              -- удалить старый тест-трек
               DELETE FROM tracks
               WHERE sc_url = 'https://soundcloud.com/cppradio/xtra-spice-mikey-dobro-club-wroclaw-pl';
 
-              -- удалить старого тест-юзера
               DELETE FROM users
               WHERE email = 'test@example.com';
 
@@ -27,7 +24,6 @@ databaseChangeLog:
         - sql:
             splitStatements: false
             sql: |
-              -- ADMIN (если нет)
               INSERT INTO users (id, email, password, role, created_at, bio, username)
               SELECT
                 'd4d48610-d52a-411b-9a61-843e44834425',
@@ -41,7 +37,6 @@ databaseChangeLog:
                 SELECT 1 FROM users WHERE email = 'roleadmin@mail.ru'
               );
 
-              -- USER (если нет)
               INSERT INTO users (id, email, password, role, created_at, bio, username)
               SELECT
                 'c0f30d34-0530-4ab5-a36d-fdcecc6a600d',
@@ -62,7 +57,6 @@ databaseChangeLog:
         - sql:
             splitStatements: false
             sql: |
-              -- делаем sc_url уникальным (нужно для ON CONFLICT)
               CREATE UNIQUE INDEX IF NOT EXISTS ux_tracks_sc_url
                 ON tracks (sc_url);
 

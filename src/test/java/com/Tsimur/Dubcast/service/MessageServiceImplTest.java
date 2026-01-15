@@ -77,7 +77,7 @@ class MessageServiceImplTest {
     Message toSave = messageCaptor.getValue();
 
     assertEquals(user, toSave.getSender());
-    assertEquals("Hello world", toSave.getText()); // trimmed
+    assertEquals("Hello world", toSave.getText());
     assertNotNull(toSave.getCreatedAt());
 
     verify(userRepository).findByEmail(email);

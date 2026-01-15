@@ -15,7 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
             columnNames = {"user_id", "track_id"}))
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // <-- ВАЖНО
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class TrackLike {

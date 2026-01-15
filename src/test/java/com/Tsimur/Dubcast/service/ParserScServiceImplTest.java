@@ -63,8 +63,6 @@ class ParserScServiceImplTest {
     when(restTemplate.getForObject(eq(expectedOEmbedUrl), eq(SoundcloudOEmbedResponse.class)))
         .thenReturn(oembed);
 
-    // we don't want to go через реальный getDurationSecondsByUrl (там SoundcloudApiClient +
-    // scraping)
     doReturn(180).when(service).getDurationSecondsByUrl(trackUrl);
 
     // when

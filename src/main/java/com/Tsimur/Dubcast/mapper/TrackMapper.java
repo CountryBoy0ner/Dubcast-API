@@ -25,7 +25,7 @@ public interface TrackMapper {
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "createdAt", ignore = true)
-  @Mapping(target = "likesCount", ignore = true) // NEW
+  @Mapping(target = "likesCount", ignore = true)
   @Mapping(target = "scUrl", source = "soundcloudUrl")
   void updateEntityFromDto(TrackDto dto, @MappingTarget Track entity);
 }
