@@ -153,18 +153,30 @@ Exact endpoints can differ. Check your WebSocket configuration class and the fro
 Run backend tests:
 
 ```bash
-mvn test
+.\mvnw.cmd test
 ```
 
 Run full verification (tests + coverage checks, depends on your build):
 
 ```bash
-mvn verify
+.\mvnw.cmd verify
+
 ```
 
 JaCoCo reports are typically generated under `target/site/jacoco/`.
 
 ## Code style and quality gates
+
+Check styles
+
+```bash
+.\mvnw.cmd -B -ntp spotless:check
+```
+Apply styles
+
+```bash
+.\mvnw.cmd -B -ntp spotless:apply
+```
 
 - Spotless enforces formatting in CI.
 - Trivy scans the repo and the container image in CI.
@@ -190,3 +202,4 @@ Stop the process using it or change the port mapping in `docker-compose.yml`.
 ## License
 
 Educational project. Add a license file if you plan to publish under a specific license.
+ь

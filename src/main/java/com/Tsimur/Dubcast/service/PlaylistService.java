@@ -18,7 +18,5 @@ public interface PlaylistService {
 
   PlaylistTrackDto addTrack(Long playlistId, Long trackId);
 
-  //
-
   PlaylistDto importPlaylistFromUrl(String playlistUrl);
 }
