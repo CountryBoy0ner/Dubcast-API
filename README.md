@@ -81,46 +81,6 @@ Logs:
 docker compose logs -f servicesite-backend
 ```
 
-## Run locally (without Docker)
-
-### Prerequisites
-
-- JDK 17
-- Maven (or Maven Wrapper if the repo provides `mvnw`)
-- PostgreSQL running locally
-
-### Steps
-
-1. Create a database and user in PostgreSQL.
-2. Configure backend settings via environment variables or `application.yml`.
-3. Run migrations (Liquibase runs automatically on app startup in most setups).
-4. Start the app:
-
-If you have Maven Wrapper:
-
-```bash
-./mvnw spring-boot:run
-```
-
-If you use system Maven:
-
-```bash
-mvn spring-boot:run
-```
-
-## Configuration
-
-The exact set of variables depends on your repo version. Use `.env.example` as the source of truth.
-
-Common configuration groups you will see:
-
-- Server port (default is 8089)
-- PostgreSQL connection (URL, username, password)
-- JWT settings (secret, expiration)
-- Google OAuth client id (if enabled)
-- SoundCloud integration settings (if enabled)
-- CORS and frontend origin
-
 ## API documentation
 
 Swagger UI is available when the backend is running:
@@ -147,6 +107,7 @@ Exact endpoints can differ. Check your WebSocket configuration class and the fro
 - Liquibase manages schema changes.
 - On startup, migrations apply automatically in most setups.
 - For a clean state during demos, use `docker compose down -v` to reset the DB volume.
+- For convenient testing of application performance, track data with a duration of 10 seconds has been added to the v2.5 migration so that you can easily test that the main feature is working correctly.
 
 ## Tests and coverage
 
